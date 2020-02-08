@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.WorkflowNodeMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.model.WorkflowNode" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="workflow_id" property="workflowId" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="business_id" property="businessId" jdbcType="BIGINT" />
+    <result column="paramter" property="paramter" jdbcType="VARCHAR" />
+    <result column="is_intention" property="isIntention" jdbcType="INTEGER" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="enable_interupt" property="enableInterupt" jdbcType="INTEGER" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+    <result column="jump" property="jump" jdbcType="BIGINT" />
+    <result column="craft_id" property="craftId" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, workflow_id, company_id, business_id, paramter, is_intention, answer, enable_interupt,
+    flag, jump, craft_id, score
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from workflow_node
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey">
+    delete from workflow_node
+    where paramter = #{paramter} and workflow_id = #{workflowId}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.WorkflowNode" >
+    insert into workflow_node (id, name, workflow_id, 
+      company_id, business_id, paramter, is_intention,
+      answer, enable_interupt, flag, 
+      jump, craft_id)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{workflowId,jdbcType=BIGINT}, 
+      #{companyId,jdbcType=BIGINT}, #{businessId,jdbcType=BIGINT}, #{paramter,jdbcType=VARCHAR}, #{isIntention,jdbcType=INTEGER},
+      #{answer,jdbcType=VARCHAR}, #{enableInterupt,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, 
+      #{jump,jdbcType=BIGINT}, #{craftId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pl.model.WorkflowNode" useGeneratedKeys="true" keyProperty="id">
+    insert into workflow_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="workflowId != null" >
+        workflow_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="paramter != null" >
+        paramter,
+      </if>
+      <if test="isIntention != null" >
+        is_intention,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="enableInterupt != null" >
+        enable_interupt,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="jump != null" >
+        jump,
+      </if>
+      <if test="craftId != null" >
+        craft_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="workflowId != null" >
+        #{workflowId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="paramter != null" >
+        #{paramter,jdbcType=VARCHAR},
+      </if>
+      <if test="isIntention != null" >
+        #{isIntention,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="enableInterupt != null" >
+        #{enableInterupt,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="jump != null" >
+        #{jump,jdbcType=BIGINT},
+      </if>
+      <if test="craftId != null" >
+        #{craftId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.WorkflowNode" >
+    update workflow_node
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="workflowId != null" >
+        workflow_id = #{workflowId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null" >
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="paramter != null" >
+        paramter = #{paramter,jdbcType=VARCHAR},
+      </if>
+      <if test="isIntention != null" >
+        is_intention = #{isIntention,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="enableInterupt != null" >
+        enable_interupt = #{enableInterupt,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="jump != null" >
+        jump = #{jump,jdbcType=BIGINT},
+      </if>
+      <if test="craftId != null" >
+        craft_id = #{craftId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where workflow_id =#{workflowId} and paramter =#{paramter}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.WorkflowNode" >
+    update workflow_node
+    set name = #{name,jdbcType=VARCHAR},
+      workflow_id = #{workflowId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      paramter = #{paramter,jdbcType=VARCHAR},
+      is_intention = #{isIntention,jdbcType=INTEGER},
+      answer = #{answer,jdbcType=VARCHAR},
+      enable_interupt = #{enableInterupt,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      jump = #{jump,jdbcType=BIGINT},
+      craft_id = #{craftId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByParamter" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from workflow_node
+    where workflow_id =#{flowId} and paramter =#{paramter}
+  </select>
+
+  <delete id="deleteByFlowId">
+    delete from workflow_node
+    where workflow_id = #{flowId}
+  </delete>
+
+  <select id="selectByCompanyIdAndBusinessId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from workflow_node
+    where company_id =#{companyId} and business_id =#{businessId}
+  </select>
+  <select id="selectWorkNodeByFlowId" resultType="com.pl.model.WorkflowNode">
+    select
+    <include refid="Base_Column_List" />
+    from workflow_node
+    where business_id =#{businessId} and workflow_id =#{flowId}
+  </select>
+
+  <!--查询特殊标识的worknode-->
+  <select id="getWorkFlowNodeByFlag" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from workflow_node
+    where workflow_id =#{workflowId} and flag =#{flag} order by id
+  </select>
+
+  <!--根据节点id param参数查询节点类型flag-->
+  <select id="selectFlagByWorkNodeId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM workflow_node
+    WHERE paramter = #{worknodeId};
+  </select>
+
+  <select id="selectFlagByNextWorkNodeId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM workflow_node
+    WHERE paramter = #{nextId};
+  </select>
+
+  <!--hgl-->
+  <select id="selecFlowIdtByParamter" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM workflow_node
+    WHERE paramter = #{worknodeId};
+  </select>
+
+  <select id="selectJumpByParamter" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM workflow_node
+    WHERE workflow_id = #{jump} and jump = 0 and flag = 10;
+  </select>
+
+  <select id="selectNameByBusinessId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM workflow_node
+    WHERE business_id = #{businessId};
+  </select>
+</mapper>

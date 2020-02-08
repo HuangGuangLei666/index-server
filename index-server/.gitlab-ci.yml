@@ -1,0 +1,38 @@
+stages:
+  - test
+  - deploy
+
+before_script:
+  - APP_NAME=index-server
+  - APP_VERSION=0.0.1-SNAPSHOT
+  - APP_HOME=/root/java_app/$APP_NAME
+  - APP_JAR=$APP_NAME-$APP_VERSION.jar
+
+test:
+  stage: test
+  only:
+    - master
+    - dev
+    - future-20181120-syn
+  script:
+    - rm -rf ./src/main/resources/static/doc/
+    - /usr/local/nodejs/node-v8.1.2-linux-x64/bin/apidoc -i ./src -o ./src/main/resources/static/doc -c ./src/main/resources/ -v
+    - mvn package -Dmaven.test.skip=true
+    - cp target/$APP_JAR $APP_HOME
+    - cp $APP_NAME.sh $APP_HOME
+    - cd $APP_HOME
+    - chmod +x $APP_NAME.sh
+    - setsid ./$APP_NAME.sh restart $APP_JAR test
+  tags:
+    - yousayido-tag
+
+deploy:
+  stage: deploy
+  only:
+    - master
+    - dev
+  script:
+    - cd $APP_HOME
+    - ./$APP_NAME.sh deploy
+  tags:
+      - common-tag

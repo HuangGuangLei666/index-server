@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TGroupMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.wx.TGroup">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="group_name" jdbcType="VARCHAR" property="groupName"/>
+        <result column="group_memberphones" jdbcType="VARCHAR" property="groupMemberphones"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, open_id, group_name, group_memberphones
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_group
+        where id = #{groupId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectGroupDetailByOpenidAndName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_group
+        <where>
+            open_id = #{openId}
+            <if test="groupName != null and groupName != ''">
+                and group_name = #{groupName}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectGroupNameByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_group
+        WHERE open_id = #{openId}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_group
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <delete id="delGroupByOpenIdAndGroupName" parameterType="java.lang.String">
+    delete from wx.t_group
+    where open_id = #{openId}
+    AND group_name = #{groupName}
+  </delete>
+
+    <insert id="insert" parameterType="com.pl.model.wx.TGroup">
+    insert into wx.t_group (id, open_id, group_name,
+      group_memberphones)
+    values (#{id,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR},
+      #{groupMemberphones,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.wx.TGroup">
+        insert into t_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="groupName != null">
+                group_name,
+            </if>
+            <if test="groupMemberphones != null">
+                group_memberphones,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=INTEGER},
+            </if>
+            <if test="groupName != null">
+                #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupMemberphones != null">
+                #{groupMemberphones,jdbcType=VARCHAR},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TGroup">
+        update t_group
+        <set>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=INTEGER},
+            </if>
+            <if test="groupName != null">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupMemberphones != null">
+                group_memberphones = #{groupMemberphones,jdbcType=VARCHAR},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TGroup">
+    update t_group
+    set open_id = #{openId,jdbcType=INTEGER},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      group_memberphones = #{groupMemberphones,jdbcType=VARCHAR},
+      business_id = #{businessId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <update id="updateGroup" parameterType="com.pl.model.wx.TGroup">
+        update wx.t_group
+        <set>
+            <if test="groupName != null and groupName != ''">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupMemberPhones != null and groupMemberPhones != ''">
+                group_memberphones = #{groupMemberPhones,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

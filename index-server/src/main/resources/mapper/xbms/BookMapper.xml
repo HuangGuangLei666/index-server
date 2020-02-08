@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.xbms.BookMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.xbms.Book">
+    <id column="phone" jdbcType="VARCHAR" property="phone" />
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="friend_name" jdbcType="VARCHAR" property="friendName" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    phone, user_id, friend_name, create_date
+  </sql>
+
+  <select id="selectByPhoneAndUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from wx_back.t_book
+    where phone = #{telephone,jdbcType=VARCHAR}
+    and user_id = #{userId}
+  </select>
+
+  <select id="selectByPhoneAnduserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from wx_back.t_book
+    where phone = #{phone}
+    and user_id = #{userId}
+  </select>
+
+  <insert id="insertNotFriendName" parameterType="com.pl.model.xbms.Book">
+    insert into wx_back.t_book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="friendName != null">
+        friend_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="friendName != null">
+        #{friendName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    ON DUPLICATE KEY UPDATE phone=VALUES(phone),user_id=VALUES(user_id)
+  </insert>
+
+  <insert id="insert" parameterType="com.pl.model.xbms.Book">
+    insert into wx_back.t_book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="friendName != null">
+        friend_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="friendName != null">
+        #{friendName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    ON DUPLICATE KEY UPDATE phone=VALUES(phone),user_id=VALUES(user_id),friend_name=VALUES(friend_name)
+  </insert>
+
+  <delete id="delByUserIdAndFriendName">
+    delete from wx_back.t_book
+    where user_id = #{userId}
+    AND friend_name = #{friendName}
+  </delete>
+
+  <delete id="deletePhonesDto1" >
+    delete from wx_back.t_book
+    where user_id = #{userId}
+    AND friend_name = #{friendName}
+  </delete>
+</mapper>

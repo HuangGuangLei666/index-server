@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.TDialogDetailExtMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.model.TDialogDetailExt" >
+    <id column="dialog_id" property="dialogId" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pl.model.TDialogDetailExt" extends="BaseResultMap" >
+    <result column="detail_records" property="detailRecords" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dialog_id, create_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    detail_records
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_dialog_detail${postfix}
+    where dialog_id = #{dialogId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectCallInByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_dialog_detail_in
+    where dialog_id = #{dialogId,jdbcType=BIGINT}
+  </select>
+
+  <select id="getDialogRecordByDialogId" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_dialog_detail${postfix}
+    where dialog_id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByDialoginId" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map" >
+    select
+    <include refid="Blob_Column_List" />
+    from t_dialog_detail_in
+    where dialog_id = #{id,jdbcType=BIGINT}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_dialog_detail_201806
+    where dialog_id = #{dialogId,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="delDetailById" parameterType="java.lang.Long" >
+    delete from t_dialog_detail_in
+    where dialog_id = #{dialogId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.pl.model.TDialogDetailExt" >
+    insert into t_dialog_detail${tablePostfix} (dialog_id, create_date, detail_records
+      )
+    values (#{dialogId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{detailRecords,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pl.model.TDialogDetailExt" >
+    insert into t_dialog_detail_201806
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dialogId != null" >
+        dialog_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="detailRecords != null" >
+        detail_records,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dialogId != null" >
+        #{dialogId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailRecords != null" >
+        #{detailRecords,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.TDialogDetailExt" >
+    update t_dialog_detail_201806
+    <set >
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailRecords != null" >
+        detail_records = #{detailRecords,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where dialog_id = #{dialogId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pl.model.TDialogDetailExt" >
+    update t_dialog_detail_201806
+    set create_date = #{createDate,jdbcType=TIMESTAMP},
+      detail_records = #{detailRecords,jdbcType=LONGVARCHAR}
+    where dialog_id = #{dialogId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.TDialogDetailExt" >
+    update t_dialog_detail_201806
+    set create_date = #{createDate,jdbcType=TIMESTAMP}
+    where dialog_id = #{dialogId,jdbcType=BIGINT}
+  </update>
+</mapper>

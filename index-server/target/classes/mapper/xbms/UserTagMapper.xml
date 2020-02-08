@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.xbms.UserTagMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.xbms.UserTag">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="tag_id" jdbcType="INTEGER" property="tagId"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="TusertagBaseResultMap" type="com.pl.model.xbms.UserTagDto">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="tag_id" jdbcType="INTEGER" property="tagId"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="friend_name" jdbcType="VARCHAR" property="friendName"/>
+    </resultMap>
+
+    <resultMap id="TtagBaseResultMap" type="com.pl.model.wx.TTag">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, phone, tag_id, tag_name, type, create_time
+  </sql>
+
+    <select id="selectUsertagByPhone" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_back.t_user_tag
+        where user_id = #{userId}
+        and phone = #{telephone}
+    </select>
+
+    <select id="selectByUseridAndTagname" resultMap="TusertagBaseResultMap">
+        select
+        a.id, a.user_id, a.phone, a.tag_id, a.tag_name, a.type, a.create_time
+        from wx_back.t_user_tag a
+        <where>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId}
+            </if>
+            <if test="tagName != null and tagName != ''">
+                and tag_name = #{tagName}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByPhone" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_back.t_user_tag
+        where user_id = #{userId}
+        and phone = #{phone}
+    </select>
+
+    <insert id="insertUserTag" parameterType="com.pl.model.xbms.UserTag">
+        insert into wx_back.t_user_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="tagId != null">
+                tag_id,
+            </if>
+            <if test="tagName != null">
+                tag_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            create_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="tagId != null">
+                #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            now(),
+        </trim>
+        ON DUPLICATE KEY UPDATE user_id=VALUES(user_id),phone=VALUES(phone),tag_id=VALUES(tag_id),tag_name=VALUES(tag_name),type=VALUES(type),create_time=now()
+    </insert>
+
+    <delete id="deleteByUseridAndPhone">
+        delete from wx_back.t_user_tag
+        where user_id = #{userId}
+        and phone = #{phone}
+    </delete>
+
+</mapper>

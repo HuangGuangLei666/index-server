@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TUserinfoMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.wx.TUserinfo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="subscribe" jdbcType="VARCHAR" property="subscribe"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+        <result column="unionid" jdbcType="VARCHAR" property="unionid"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="language" jdbcType="VARCHAR" property="language"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="country" jdbcType="VARCHAR" property="country"/>
+        <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl"/>
+        <result column="subscribe_time" jdbcType="TIMESTAMP" property="subscribeTime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="groupid" jdbcType="INTEGER" property="groupid"/>
+        <result column="tagid_list" jdbcType="VARCHAR" property="tagidList"/>
+        <result column="subscribe_scene" jdbcType="VARCHAR" property="subscribeScene"/>
+        <result column="qr_scene" jdbcType="VARCHAR" property="qrScene"/>
+        <result column="qr_scene_str" jdbcType="VARCHAR" property="qrSceneStr"/>
+        <result column="phonenumber" jdbcType="VARCHAR" property="phonenumber"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="recommender_id" jdbcType="INTEGER" property="recommenderId"/>
+        <result column="son_id" jdbcType="VARCHAR" property="sonId"/>
+        <result column="voice_id" jdbcType="INTEGER" property="voiceId"/>
+        <result column="is_membership" jdbcType="INTEGER" property="isMembership"/>
+        <result column="emp_num" jdbcType="VARCHAR" property="empNum"/>
+        <result column="identity" jdbcType="INTEGER" property="identity"/>
+        <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime"/>
+        <result column="sosphone" jdbcType="VARCHAR" property="sosPhone"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, subscribe, openid, unionid, nickname, language, city, province, country, headimgurl, subscribe_time,
+    remark, groupid, tagid_list, subscribe_scene, qr_scene, qr_scene_str, phonenumber, 
+    create_time,status,recommender_id,son_id,voice_id,is_membership,emp_num,identity,expire_time,sosphone
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_userinfo
+        where openid = #{openid,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUnionid" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_userinfo
+        where unionid = #{unionid,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectUserByPhoneNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_userinfo
+        where phonenumber = #{phoneNumber}
+    </select>
+
+    <select id="selectByPhoneNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_back.t_userinfo
+        where phonenumber = #{phoneNumber}
+    </select>
+
+    <select id="selectUserByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_userinfo
+        where openid = #{openid}
+    </select>
+
+    <select id="selectOpenidByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_userinfo
+        where id = #{userId}
+    </select>
+
+    <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_back.t_userinfo
+        where id = #{userid}
+    </select>
+
+    <select id="selectUserIdByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_userinfo
+        where openid = #{openId}
+    </select>
+
+    <select id="selectByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_userinfo
+        where phonenumber = #{phone}
+    </select>
+
+    <select id="selectByRelationOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+            a.id, a.subscribe, a.openid, a.nickname, a.language, a.city, a.province, a.country, a.headimgurl, a.subscribe_time,
+            a.remark, a.groupid, a.tagid_list, a.subscribe_scene, a.qr_scene, a.qr_scene_str, a.phonenumber,
+            a.create_time,a.status,a.recommender_id,a.son_id,a.voice_id,a.is_membership,a.emp_num,a.identity
+        FROM
+            wx.t_userinfo a,
+            wx.t_relation b
+        WHERE
+            a.openid = b.openid_relation
+            AND b.openid = #{openid}
+            AND b.status = 2
+    </select>
+
+    <select id="selectByRelationUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        a.id, a.subscribe, a.openid, a.nickname, a.language, a.city, a.province, a.country, a.headimgurl, a.subscribe_time,
+        a.remark, a.groupid, a.tagid_list, a.subscribe_scene, a.qr_scene, a.qr_scene_str, a.phonenumber,
+        a.create_time,a.status,a.recommender_id,a.son_id,a.voice_id,a.is_membership,a.emp_num,a.identity
+        FROM
+        wx_back.t_userinfo a,
+        wx_back.t_relation b
+        WHERE
+        a.id = b.user_id_relation
+        AND b.user_id = #{userId}
+        AND b.status = 2
+    </select>
+
+    <select id="selectByRecommenderid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            wx.t_userinfo
+        WHERE
+            recommender_id = #{id}
+    </select>
+
+    <select id="selectByRecommender" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        wx_back.t_userinfo
+        WHERE
+        recommender_id = #{userId}
+    </select>
+
+    <select id="selectByPhoneIsNull" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            wx.t_userinfo
+        WHERE
+            phonenumber is NULL
+    </select>
+
+    <select id="selectByPhoneIsnotNull" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+              <include refid="Base_Column_List"/>
+        FROM
+            wx.t_userinfo
+        WHERE
+            phonenumber is not NULL
+    </select>
+
+    <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+            a.id, a.subscribe, a.openid, a.nickname, a.language, a.city, a.province, a.country, a.headimgurl, a.subscribe_time,
+            a.remark, a.groupid, a.tagid_list, a.subscribe_scene, a.qr_scene, a.qr_scene_str, a.phonenumber,
+            a.create_time,a.status,a.recommender_id,a.son_id,a.voice_id,a.is_membership,a.emp_num,a.identity
+        FROM
+            wx.t_userinfo a
+            LEFT JOIN wx.t_mechanism b ON a.openid = b.openid
+        WHERE
+            b.code = #{code}
+    </select>
+
+    <select id="selectUserByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        a.id, a.subscribe, a.openid, a.nickname, a.language, a.city, a.province, a.country, a.headimgurl, a.subscribe_time,
+        a.remark, a.groupid, a.tagid_list, a.subscribe_scene, a.qr_scene, a.qr_scene_str, a.phonenumber,
+        a.create_time,a.status,a.recommender_id,a.son_id,a.voice_id,a.is_membership,a.emp_num,a.identity
+        FROM
+        wx_back.t_userinfo a
+        LEFT JOIN wx_back.t_mechanism b ON a.id = b.user_id
+        WHERE
+        b.code = #{code}
+    </select>
+
+    <select id="selectByRecommenderId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        wx.t_userinfo
+        WHERE
+        recommender_id IN ( SELECT id FROM wx.t_userinfo WHERE recommender_id = #{recommenderId} ) UNION
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        wx.t_userinfo
+        WHERE
+        recommender_id = #{recommenderId}
+    </select>
+
+    <select id="selectBySonId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+          <include refid="Base_Column_List"/>
+        FROM
+          wx.t_userinfo
+        WHERE
+          son_id LIKE CONCAT( '%', #{userId}, '%' )
+    </select>
+
+    <select id="selectAllAgentBySonId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        wx_back.t_userinfo
+        WHERE
+        son_id LIKE CONCAT( '%', #{userId}, '%' )
+    </select>
+
+    <select id="selectMembershipExpireTime" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+            id,openid,is_membership,expire_time
+        FROM
+            wx.t_userinfo
+        WHERE
+            ISNULL( expire_time ) IS FALSE
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx.t_userinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.wx.TUserinfo">
+    insert into wx.t_userinfo (id, subscribe, openid,unionid,sex,
+      nickname, language, city, 
+      province, country, headimgurl, 
+      subscribe_time, remark, groupid, 
+      tagid_list, subscribe_scene, qr_scene, 
+      qr_scene_str, phonenumber, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{subscribe,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR},#{unionid,jdbcType=VARCHAR},
+    #{sex,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
+      #{province,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{headimgurl,jdbcType=VARCHAR}, 
+      #{subscribeTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{groupid,jdbcType=INTEGER}, 
+      #{tagidList,jdbcType=VARCHAR}, #{subscribeScene,jdbcType=VARCHAR}, #{qrScene,jdbcType=VARCHAR}, 
+      #{qrSceneStr,jdbcType=VARCHAR}, #{phonenumber,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.wx.TUserinfo">
+        insert into wx.t_userinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="subscribe != null">
+                subscribe,
+            </if>
+            <if test="openid != null">
+                openid,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="language != null">
+                language,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="country != null">
+                country,
+            </if>
+            <if test="headimgurl != null">
+                headimgurl,
+            </if>
+            <if test="subscribeTime != null">
+                subscribe_time,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="groupid != null">
+                groupid,
+            </if>
+            <if test="tagidList != null">
+                tagid_list,
+            </if>
+            <if test="subscribeScene != null">
+                subscribe_scene,
+            </if>
+            <if test="qrScene != null">
+                qr_scene,
+            </if>
+            <if test="qrSceneStr != null">
+                qr_scene_str,
+            </if>
+            <if test="phonenumber != null">
+                phonenumber,
+            </if>
+                create_time,
+            <if test="status != null">
+                status,
+            </if>
+            <if test="recommenderId != null and recommenderId != ''">
+                recommender_id,
+            </if>
+            <if test="sonId != null and sonId != ''">
+                son_id,
+            </if>
+            <if test="voiceId != null">
+                voice_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="subscribe != null">
+                #{subscribe,jdbcType=VARCHAR},
+            </if>
+            <if test="openid != null">
+                #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="language != null">
+                #{language,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="headimgurl != null">
+                #{headimgurl,jdbcType=VARCHAR},
+            </if>
+            <if test="subscribeTime != null">
+                #{subscribeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="groupid != null">
+                #{groupid,jdbcType=INTEGER},
+            </if>
+            <if test="tagidList != null">
+                #{tagidList,jdbcType=VARCHAR},
+            </if>
+            <if test="subscribeScene != null">
+                #{subscribeScene,jdbcType=VARCHAR},
+            </if>
+            <if test="qrScene != null">
+                #{qrScene,jdbcType=VARCHAR},
+            </if>
+            <if test="qrSceneStr != null">
+                #{qrSceneStr,jdbcType=VARCHAR},
+            </if>
+            <if test="phonenumber != null">
+                #{phonenumber,jdbcType=VARCHAR},
+            </if>
+                now(),
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
+            <if test="recommenderId != null and recommenderId != ''">
+                #{recommenderId},
+            </if>
+            <if test="sonId != null and sonId != ''">
+                #{sonId},
+            </if>
+            <if test="voiceId != null">
+                #{voiceId},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="addUser" parameterType="com.pl.model.wx.TUserinfo">
+        insert into wx.t_userinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="openid != null">
+                openid,
+            </if>
+            <if test="phonenumber != null">
+                phonenumber,
+            </if>
+                create_time,
+            <if test="recommenderId != null and recommenderId != ''">
+                recommender_id,
+            </if>
+            <if test="sonId != null and sonId != ''">
+                son_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="openid != null">
+                #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="phonenumber != null">
+                #{phonenumber,jdbcType=VARCHAR},
+            </if>
+                now(),
+            <if test="recommenderId != null and recommenderId != ''">
+                #{recommenderId},
+            </if>
+            <if test="sonId != null and sonId != ''">
+                #{sonId},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TUserinfo">
+        update wx.t_userinfo
+        <set>
+            <if test="subscribe != null">
+                subscribe = #{subscribe,jdbcType=VARCHAR},
+            </if>
+            <if test="openid != null">
+                openid = #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="language != null">
+                language = #{language,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                country = #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="headimgurl != null">
+                headimgurl = #{headimgurl,jdbcType=VARCHAR},
+            </if>
+            <if test="subscribeTime != null">
+                subscribe_time = #{subscribeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="groupid != null">
+                groupid = #{groupid,jdbcType=INTEGER},
+            </if>
+            <if test="tagidList != null">
+                tagid_list = #{tagidList,jdbcType=VARCHAR},
+            </if>
+            <if test="subscribeScene != null">
+                subscribe_scene = #{subscribeScene,jdbcType=VARCHAR},
+            </if>
+            <if test="qrScene != null">
+                qr_scene = #{qrScene,jdbcType=VARCHAR},
+            </if>
+            <if test="qrSceneStr != null">
+                qr_scene_str = #{qrSceneStr,jdbcType=VARCHAR},
+            </if>
+            <if test="phonenumber != null">
+                phonenumber = #{phonenumber,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        <set>
+            phonenumber = #{phoneNumber},
+            <if test="recommenderId != null and recommenderId != ''">
+                recommender_id = #{recommenderId},
+            </if>
+            <if test="sonIds != null and sonIds != ''">
+                son_id = #{sonIds}
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateUser" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
+        <set>
+            phonenumber = #{phoneNumber},
+            <if test="recommenderId != null and recommenderId != ''">
+                recommender_id = #{recommenderId},
+            </if>
+            <if test="sonIds != null and sonIds != ''">
+                son_id = #{sonIds}
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateMyStatus" parameterType="com.pl.model.wx.TUserinfo">
+    UPDATE wx.t_userinfo
+    SET status = #{id}
+    WHERE
+    id = #{userId}
+  </update>
+
+    <update id="updateMyVoice" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET voice_id = #{voiceId}
+        WHERE
+        id = #{userId}
+    </update>
+
+    <update id="updatePhoneByOpenid" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET phonenumber = NULL
+        WHERE
+        openid = #{openid}
+    </update>
+
+    <update id="updateMemberInfo" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET is_membership = 2,
+            expire_time = DATE_ADD(now(),INTERVAL #{useDays} day)
+        WHERE
+        openid = #{openid}
+    </update>
+
+    <update id="updateMemberDay" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
+        SET is_membership = 2,
+        expire_time = DATE_ADD(now(),INTERVAL #{useDays} day)
+        WHERE
+        id = #{userId}
+    </update>
+
+    <update id="updateMemberInfoByUnionid" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET is_membership = 2,
+        expire_time = DATE_ADD(now(),INTERVAL #{useDays} day)
+        WHERE
+        unionid = #{unionid}
+    </update>
+
+    <update id="updateMemberinfo" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET is_membership = 1,
+            expire_time = DATE_ADD(now(),INTERVAL #{useDays} day)
+        WHERE
+        openid = #{openid}
+    </update>
+
+    <update id="updateMemberday" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
+        SET is_membership = 1,
+        expire_time = DATE_ADD(now(),INTERVAL #{useDays} day)
+        WHERE
+        id = #{userId}
+    </update>
+
+    <update id="updateMemberinfoByUnionid" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET is_membership = 1,
+        expire_time = DATE_ADD(now(),INTERVAL #{useDays} day)
+        WHERE
+        unionid = #{unionid}
+    </update>
+
+    <update id="updateMemberinfoAdd" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET is_membership = 1,
+        expire_time = DATE_ADD(expire_time,INTERVAL #{useDays} day)
+        WHERE
+        openid = #{openid}
+    </update>
+
+    <update id="updateMemberdayAdd" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
+        SET is_membership = 1,
+        expire_time = DATE_ADD(expire_time,INTERVAL #{useDays} day)
+        WHERE
+        id = #{userId}
+    </update>
+
+    <update id="updateMemberinfoAddByUnionid" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET is_membership = 1,
+        expire_time = DATE_ADD(expire_time,INTERVAL #{useDays} day)
+        WHERE
+        unionid = #{unionid}
+    </update>
+
+    <update id="updateMemberInfoAdd" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET is_membership = 2,
+        expire_time = DATE_ADD(expire_time,INTERVAL #{useDays} day)
+        WHERE
+        openid = #{openid}
+    </update>
+
+    <update id="updateMemberDayAdd" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET is_membership = 2,
+        expire_time = DATE_ADD(expire_time,INTERVAL #{useDays} day)
+        WHERE
+        id = #{userId}
+    </update>
+
+    <update id="updateMemberInfoAddByUnionid" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET is_membership = 2,
+        expire_time = DATE_ADD(expire_time,INTERVAL #{useDays} day)
+        WHERE
+        unionid = #{unionid}
+    </update>
+
+    <update id="updateSosPhoneByOpenid" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET
+        sosphone = #{sosPhone}
+        WHERE
+        openid = #{openid}
+    </update>
+
+    <update id="updateSosPhoneByUserid" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
+        SET
+        sosphone = #{sosPhone}
+        WHERE
+        id = #{userId}
+    </update>
+
+    <update id="updateEmpByOpenid" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET
+            recommender_id = #{recommenderId},
+            son_id = #{sonId},
+            emp_num = #{empNum},
+            identity = 2
+        WHERE
+        openid = #{openid}
+    </update>
+
+    <update id="updateEmpnumByUserId" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
+        SET
+        recommender_id = #{id},
+        son_id = #{sonId},
+        emp_num = #{empNum},
+        identity = 2
+        WHERE
+        id = #{userId}
+    </update>
+
+    <update id="updatePhoneByUserId" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
+        SET phonenumber = NULL
+        WHERE
+        id = #{userId}
+    </update>
+
+    <update id="updateIdeByOpenid" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET
+        identity = 1
+        WHERE
+        openid = #{openId}
+    </update>
+
+    <update id="updateRegisterStatus" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET
+        remark = '99999'
+        WHERE
+        openid = #{openid}
+    </update>
+
+    <update id="updateByExpireTime" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET
+        is_membership = NULL
+        WHERE
+        expire_time = #{expireTime}
+    </update>
+
+    <update id="cancelMyStatus" parameterType="com.pl.model.wx.TUserinfo">
+    UPDATE wx.t_userinfo
+    SET status = NULL
+    WHERE
+    id = #{userId}
+  </update>
+
+    <update id="cancelMyVoice" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET voice_id = #{voiceId}
+        WHERE
+        id = #{userId}
+    </update>
+
+    <update id="cancelAndUpdateMyStatus" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx.t_userinfo
+        SET status = #{id}
+        WHERE
+        id = #{userId}
+    </update>
+    <update id="setPhoneByUnionid">
+        update wx.t_userinfo
+        set phonenumber = #{phone}
+        where
+        unionid = #{unionid}
+    </update>
+</mapper>

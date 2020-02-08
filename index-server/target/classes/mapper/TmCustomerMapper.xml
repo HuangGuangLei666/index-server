@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.TmCustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.model.TmCustomer" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ctid" property="ctid" jdbcType="VARCHAR" />
+    <result column="task_id" property="task_id" jdbcType="BIGINT" />
+    <result column="ctname" property="ctname" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="ct_address" property="ctAddress" jdbcType="VARCHAR" />
+    <result column="ct_sex" property="ctSex" jdbcType="VARCHAR" />
+    <result column="ct_position" property="ctPosition" jdbcType="VARCHAR" />
+    <result column="ct_phone" property="ctPhone" jdbcType="VARCHAR" />
+    <result column="ct_type" property="ctType" jdbcType="VARCHAR" />
+    <result column="car_numbers" property="car_numbers" jdbcType="VARCHAR" />
+    <result column="cm_type" property="cmType"/>
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, task_id,ctid, ctname, company_id, ct_address, ct_sex, ct_position, ct_phone, ct_type, car_numbers,cm_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tm_customer
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tm_customer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.TmCustomer" >
+    insert into tm_customer (id, task_id,ctid, ctname,
+      company_id, ct_address, ct_sex,
+      ct_position, ct_phone, ct_type,cmType)
+    values (#{id,jdbcType=BIGINT},#{task_id,jdbcType=BIGINT} ,#{ctid,jdbcType=VARCHAR}, #{ctname,jdbcType=VARCHAR},
+      #{companyId,jdbcType=BIGINT}, #{ctAddress,jdbcType=VARCHAR}, #{ctSex,jdbcType=VARCHAR},
+      #{ctPosition,jdbcType=VARCHAR}, #{ctPhone,jdbcType=VARCHAR}, #{ctType,jdbcType=VARCHAR},#{cmType})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pl.model.TmCustomer" >
+    insert into tm_customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ctid != null" >
+        ctid,
+      </if>
+      <if test="task_id != null" >
+        task_id,
+      </if>
+      <if test="ctname != null" >
+        ctname,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="ctAddress != null" >
+        ct_address,
+      </if>
+      <if test="ctSex != null" >
+        ct_sex,
+      </if>
+      <if test="ctPosition != null" >
+        ct_position,
+      </if>
+      <if test="ctPhone != null" >
+        ct_phone,
+      </if>
+      <if test="ctType != null" >
+        ct_type,
+      </if>
+      <if test="cmType != null" >
+        cm_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ctid != null" >
+        #{ctid,jdbcType=VARCHAR},
+      </if>
+      <if test="task_id != null" >
+        #{task_id,jdbcType=BIGINT},
+      </if>
+      <if test="ctname != null" >
+        #{ctname,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="ctAddress != null" >
+        #{ctAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ctSex != null" >
+        #{ctSex,jdbcType=VARCHAR},
+      </if>
+      <if test="ctPosition != null" >
+        #{ctPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="ctPhone != null" >
+        #{ctPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="ctType != null" >
+        #{ctType,jdbcType=VARCHAR},
+      </if>
+      <if test="cmType != null" >
+        #{cmType},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.TmCustomer" >
+    update tm_customer
+    <set >
+      <if test="ctid != null" >
+        ctid = #{ctid,jdbcType=VARCHAR},
+      </if>
+      <if test="task_id != null" >
+        task_id = #{task_id,jdbcType=BIGINT},
+      </if>
+      <if test="ctname != null" >
+        ctname = #{ctname,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="ctAddress != null" >
+        ct_address = #{ctAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ctSex != null" >
+        ct_sex = #{ctSex,jdbcType=VARCHAR},
+      </if>
+      <if test="ctPosition != null" >
+        ct_position = #{ctPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="ctPhone != null" >
+        ct_phone = #{ctPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="ctType != null" >
+        ct_type = #{ctType,jdbcType=VARCHAR},
+      </if>
+      <if test="cmType != null" >
+        cm_type = #{cmType},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.TmCustomer" >
+    update tm_customer
+    set ctid = #{ctid,jdbcType=VARCHAR},
+        task_id=#{task_id,jdbcType=BIGINT},
+      ctname = #{ctname,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      ct_address = #{ctAddress,jdbcType=VARCHAR},
+      ct_sex = #{ctSex,jdbcType=VARCHAR},
+      ct_position = #{ctPosition,jdbcType=VARCHAR},
+      ct_phone = #{ctPhone,jdbcType=VARCHAR},
+      car_numbers = #{car_numbers,jdbcType=VARCHAR},
+      ct_type = #{ctType,jdbcType=VARCHAR},
+      cm_type = #{cmType}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="addCustomer" parameterType="java.util.Set">
+    insert into tm_customer (  ctid, task_id,ctname,
+    company_id, ct_address, ct_sex,
+    ct_position, ct_phone,`car_numbers` , ct_type,cm_type
+    )
+    values
+    <foreach collection="set" index="index" item="item" separator="," >
+      ( #{item.ctid,jdbcType=VARCHAR},#{item.task_id,jdbcType=BIGINT},
+      #{item.ctname,jdbcType=VARCHAR},#{item.companyId,jdbcType=BIGINT},
+      #{item.ctAddress,jdbcType=VARCHAR}, #{item.ctSex,jdbcType=VARCHAR},
+      #{item.ctPosition,jdbcType=VARCHAR}, #{item.ctPhone,jdbcType=VARCHAR},
+      #{item.car_numbers,jdbcType=VARCHAR}, #{item.ctType,jdbcType=VARCHAR},#{cmType}
+      )
+    </foreach>
+  </insert>
+
+  <insert id="addCustonerBatch" parameterType="java.util.Set">
+    insert into tm_customer (  ctid, task_id,ctname,
+    company_id, ct_address, ct_sex,
+    ct_position, ct_phone,`car_numbers` , ct_type,cm_type)
+    values
+    <foreach collection="set" index="index" item="item" separator="," >
+      ( #{item.ctid,jdbcType=VARCHAR},#{item.task_id,jdbcType=BIGINT},
+      #{item.ctname,jdbcType=VARCHAR},#{item.companyId,jdbcType=BIGINT},
+      #{item.ctAddress,jdbcType=VARCHAR}, #{item.ctSex,jdbcType=VARCHAR},
+      #{item.ctPosition,jdbcType=VARCHAR}, #{item.ctPhone,jdbcType=VARCHAR},
+      #{item.car_numbers,jdbcType=VARCHAR}, #{item.ctType,jdbcType=VARCHAR},#{item.cmType}
+      )
+    </foreach>
+      ON DUPLICATE KEY UPDATE ctname=VALUES(ctname),car_numbers=VALUES(car_numbers);
+  </insert>
+
+  <delete id="deleteTmCustomerByCtType">
+    delete from tm_customer
+    where ct_type =#{ct_type}
+  </delete>
+
+  <select id="getTmCustomerList" resultType="com.pl.model.TmCustomer">
+    select
+    <include refid="Base_Column_List" />
+    from tm_customer
+    where task_id = #{task_id}
+  </select>
+
+  <select id="selectByTelephoneAndCompanyId" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tm_customer
+    where ct_phone = #{telephone}
+    AND company_id=#{companyId}
+    GROUP BY ct_phone,id, task_id,ctid, ctname, company_id, ct_address, ct_sex, ct_position, ct_type, car_numbers
+  </select>
+
+  <select id="selectByCompanyId" parameterType="java.lang.String" resultType="java.lang.String">
+    select
+    ct_phone
+    from tm_customer
+    where
+      company_id=#{companyId}
+  </select>
+</mapper>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.WorkflowLinkMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.WorkflowLink">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="from_id" property="fromId" jdbcType="BIGINT"/>
+        <result column="next_id" property="nextId" jdbcType="BIGINT"/>
+        <result column="workflow_id" property="workflowId" jdbcType="BIGINT"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="business_id" property="businessId" jdbcType="BIGINT"/>
+        <result column="rule_id" property="rule_id" jdbcType="BIGINT"/>
+        <result column="priority" property="priority" jdbcType="INTEGER"/>
+        <result column="by_algorithm" property="byAlgorithm" jdbcType="INTEGER"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="response_id" property="responseId" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, from_id, next_id, workflow_id, company_id, business_id, rule_id, priority, by_algorithm, state,
+    response_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+      from workflow_link
+      where rule_id =#{ruleId} and workflow_id =#{flowId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+      delete from workflow_link
+      where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.pl.model.WorkflowLink">
+    insert into workflow_link (id, from_id, next_id, 
+      workflow_id, company_id, business_id, rule_id,
+      priority, by_algorithm, state, 
+      response_id)
+    values (#{id,jdbcType=BIGINT}, #{fromId,jdbcType=BIGINT}, #{nextId,jdbcType=BIGINT}, 
+      #{workflowId,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{businessId,jdbcType=BIGINT}, #{ruleId,jdbcType=BIGINT},
+      #{priority,jdbcType=INTEGER}, #{byAlgorithm,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
+      #{responseId,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.WorkflowLink" useGeneratedKeys="true" keyProperty="id">
+        insert into workflow_link
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="fromId != null">
+                from_id,
+            </if>
+            <if test="nextId != null">
+                next_id,
+            </if>
+            <if test="workflowId != null">
+                workflow_id,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="rule_id != null">
+                rule_id,
+            </if>
+            <if test="priority != null">
+                priority,
+            </if>
+            <if test="byAlgorithm != null">
+                by_algorithm,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="responseId != null">
+                response_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="fromId != null">
+                #{fromId,jdbcType=BIGINT},
+            </if>
+            <if test="nextId != null">
+                #{nextId,jdbcType=BIGINT},
+            </if>
+            <if test="workflowId != null">
+                #{workflowId,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="rule_id != null">
+                #{rule_id,jdbcType=BIGINT},
+            </if>
+            <if test="priority != null">
+                #{priority,jdbcType=INTEGER},
+            </if>
+            <if test="byAlgorithm != null">
+                #{byAlgorithm,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="responseId != null">
+                #{responseId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.WorkflowLink">
+        update workflow_link
+        <set>
+            <if test="fromId != null">
+                from_id = #{fromId,jdbcType=BIGINT},
+            </if>
+            <if test="nextId != null">
+                next_id = #{nextId,jdbcType=BIGINT},
+            </if>
+            <if test="workflowId != null">
+                workflow_id = #{workflowId,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="rule_id != null">
+                rule_id = #{rule_id,jdbcType=BIGINT},
+            </if>
+            <if test="priority != null">
+                priority = #{priority,jdbcType=INTEGER},
+            </if>
+            <if test="byAlgorithm != null">
+                by_algorithm = #{byAlgorithm,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="responseId != null">
+                response_id = #{responseId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where rule_id =#{rule_id} and workflow_id = #{workflowId}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.WorkflowLink">
+    update workflow_link
+    set from_id = #{fromId,jdbcType=BIGINT},
+      next_id = #{nextId,jdbcType=BIGINT},
+      workflow_id = #{workflowId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      rule_id = #{rule_id,jdbcType=BIGINT},
+      priority = #{priority,jdbcType=INTEGER},
+      by_algorithm = #{byAlgorithm,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      response_id = #{responseId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--删除节点前的查询-->
+  <select id="getWorkFlowLinksByWorkNodeId" resultType="int">
+    SELECT
+	  COUNT( id )
+    FROM
+	  workflow_link
+    WHERE
+	  workflow_id = #{flowId}
+	AND ( from_id = #{ruleId} OR next_id = #{ruleId})
+  </select>
+  <delete id="deleteWorkLinkByWorkFlowId">
+    delete from workflow_link
+    where rule_id = #{ruleId} and workflow_id =#{flowId}
+  </delete>
+  <select id="selectByResponseId" resultType="int" parameterType="java.lang.String">
+    SELECT COUNT(id)
+    FROM workflow_link
+    WHERE response_id = #{responseId}
+  </select>
+
+    <delete id="deleteByFlowId">
+        delete from workflow_link
+        where workflow_id = #{flowId}
+    </delete>
+
+    <select id="selectByCompanyIdAndBusinessId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from workflow_link
+        where company_id =#{companyId} and business_id =#{businessId}
+    </select>
+
+    <!--根据优先级查询worklink-->
+    <select id="getWorkFlowLink" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from workflow_link
+        where from_id =#{workNodeId} and workflow_id = #{workFlowId} order by id asc
+    </select>
+
+
+    <select id="getWorkFlowLinkByFromId" resultMap="BaseResultMap">
+        SELECT next_id ,a.response_id,b.rule_type rule_id
+        FROM `workflow_link` a , response_mode b
+        where a.response_id = b.id
+        and from_id =#{workNodeId}
+        and workflow_id = #{workFlowId}
+    </select>
+
+
+
+</mapper>

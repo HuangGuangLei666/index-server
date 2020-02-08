@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.TAuhPermissionMapper">
+
+	<select id="selectByUserIdOrPositionId" parameterType="String"
+		resultType="com.pl.indexserver.model.PermissionDto">
+		SELECT DISTINCT
+			t.menu_id menuId,t.url,m.id detailId,m.url detailUrl
+		FROM
+		(
+			SELECT
+				tp.menu_id,tm.parent_id,tm.url
+			FROM
+				t_auh_permission tp
+			LEFT JOIN
+				t_auh_menu tm
+			ON
+				tp.menu_id=tm.id
+			WHERE 
+				<if test="null!=userId and ''!=userId">
+					tp.user_id=#{userId}
+				</if>
+				<if test="null!=positionId and ''!=positionId">
+					tp.position_id=#{positionId}
+				</if>
+			AND
+				tm.is_validate=1
+		) t
+		LEFT JOIN
+			t_auh_menu m
+		ON
+			t.menu_id=m.parent_id
+	</select>
+	
+	<select id="selectByIsValidate" parameterType="int"
+		resultType="com.pl.indexserver.model.MenuDto">
+		SELECT *
+		FROM t_auh_menu
+		WHERE
+		is_validate=#{isValidate}
+		ORDER
+		BY id
+	</select>
+</mapper>

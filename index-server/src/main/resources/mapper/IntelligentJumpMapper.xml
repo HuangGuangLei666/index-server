@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.IntelligentJumpMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.indexserver.model.IntelligentJumpDto" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="desc" property="desc" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="paramter" property="paramter" jdbcType="BIGINT" />
+    <result column="times" property="times" jdbcType="BIGINT" />
+    <result column="business_id" property="businessId" jdbcType="BIGINT" />    
+    <result column="responseModeCount" property="responseModeCount" jdbcType="BIGINT" />
+    <result column="knowledgeQuestionCount" property="knowledgeQuestionCount" jdbcType="BIGINT" />
+    <result column="commCount" property="commCount" jdbcType="BIGINT" />
+    <result column="workflowNodeName" property="workflowNodeName" jdbcType="VARCHAR" /> 
+  </resultMap>
+  
+  
+  
+  <resultMap id="IntelligentJumpMapMap" type="com.pl.indexserver.model.IntelligentJumpMapDto" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="map_id" property="isChecked" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  
+  
+  <sql id="Base_Column_List" >
+     id,name, `desc`,status,updatetime,paramter,times,business_id 
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_intelligent_jump
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  
+  
+  <select id="selectByBusinessId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT
+	a.id,
+	a.NAME,
+	a.`desc`,
+	a.STATUS,
+	a.updatetime,
+	a.paramter,
+	a.times,
+	a.business_id,
+	( SELECT count( 1 ) FROM t_intelligent_jump_map c WHERE c.intelligent_jump_id = a.id AND c.type = 1 ) responseModeCount,
+	( SELECT count( 1 ) FROM t_intelligent_jump_map c WHERE c.intelligent_jump_id = a.id AND c.type = 2 ) commCount,
+	( SELECT count( 1 ) FROM t_intelligent_jump_map c WHERE c.intelligent_jump_id = a.id AND c.type = 3 ) knowledgeQuestionCount,
+	(select name from  dialog_workflow b where b.id = a.paramter  )   workflowNodeName 
+	FROM
+		t_intelligent_jump a  
+		where  a.business_id =  #{businessId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectcraftByBusinessId" resultMap="IntelligentJumpMapMap" parameterType="java.lang.Long" >
+SELECT DISTINCT
+	x.id id,
+	y.map_id,
+	x.`name` 
+FROM
+	(
+SELECT
+	sp.craft_id id,
+	sp.business_id,
+	any_value ( sp.NAME ) `name` 
+FROM
+	speechcraft sp
+	LEFT JOIN workflow_node wn ON sp.craft_id = wn.craft_id 
+WHERE
+	sp.business_id = #{businessId,jdbcType=BIGINT}  
+GROUP BY
+	sp.craft_id 
+	) x
+	LEFT JOIN ( SELECT b.* FROM t_intelligent_jump_map b WHERE b.intelligent_jump_id = #{id,jdbcType=BIGINT} AND b.type = 4 ) y ON x.id = y.map_id 
+WHERE
+	x.business_id = #{businessId,jdbcType=BIGINT} 
+ 
+	  
+  </select> 
+ 
+   <select id="selectResponseModeByBusinessId" resultMap="IntelligentJumpMapMap" parameterType="java.lang.Long" >
+SELECT distinct
+	x.response_id id,
+	y.map_id,
+	z.`name` 
+FROM
+	workflow_link x
+	LEFT JOIN ( SELECT b.* FROM t_intelligent_jump_map b WHERE b.intelligent_jump_id = #{id,jdbcType=BIGINT} AND b.type = 1 ) y ON x.response_id = y.map_id
+	INNER JOIN response_mode z ON x.response_id = z.id 
+WHERE
+	x.business_id = #{businessId,jdbcType=BIGINT} 
+	  
+  </select>
+  
+  
+	<select id="selectCommByBusinessId" resultMap="IntelligentJumpMapMap" parameterType="java.lang.Long" >
+		SELECT
+			x.craft_id id,
+			y.map_id,
+			x.`name` 
+		FROM
+			q_common_craft x
+			LEFT JOIN ( ( SELECT b.* FROM t_intelligent_jump_map b WHERE b.intelligent_jump_id = #{id,jdbcType=BIGINT} AND b.type = 2 ) ) y ON x.craft_id = y.map_id 
+		WHERE
+			x.business_id = #{businessId,jdbcType=BIGINT} 
+			and x.status = 0	
+    </select>  
+
+   <select id="selectKnowledgeByBusinessId" resultMap="IntelligentJumpMapMap" parameterType="java.lang.Long" >
+		SELECT
+			x.knowledge_id id,
+			y.map_id,
+			x.`name` 
+		FROM
+			knowledge_question x
+			LEFT JOIN ( SELECT b.* FROM t_intelligent_jump_map b WHERE b.intelligent_jump_id = #{id,jdbcType=BIGINT}  AND b.type = 3 ) y ON x.knowledge_id = y.map_id 
+		WHERE
+			x.business_id = #{businessId,jdbcType=BIGINT} 
+  </select>  
+      
+  
+
+  
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_intelligent_jump
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteMapById" parameterType="java.lang.Long" >
+    delete from t_intelligent_jump_map
+    where intelligent_jump_id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  
+   <delete id="deleteMap" parameterType="java.lang.String" >
+    delete from t_intelligent_jump_map
+    where intelligent_jump_id = #{id,jdbcType=BIGINT} 
+    and type = #{type,jdbcType=BIGINT}
+    and map_id = #{mapId,jdbcType=BIGINT}
+  </delete>
+
+
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id"  >
+    INSERT INTO t_intelligent_jump( `name`, `desc`, `status`, `updatetime`, `paramter`, `times`, `business_id`) 
+    VALUES (#{name,jdbcType=VARCHAR},'', #{status,jdbcType=VARCHAR}, now(), #{paramter,jdbcType=BIGINT}, #{times,jdbcType=BIGINT}, #{businessId,jdbcType=BIGINT});
+ 
+    
+  </insert>
+  
+    
+  <insert id="insertMap"   >
+    INSERT INTO t_intelligent_jump_map(  type, intelligent_jump_id, map_id) 
+    VALUES ( #{type,jdbcType=VARCHAR}, #{intelligentJumpId,jdbcType=VARCHAR}, #{mapId,jdbcType=VARCHAR});
+
+  </insert>
+   
+    <insert id="insertMapByBatch" parameterType="java.util.List">
+        insert into t_intelligent_jump_map (  type, intelligent_jump_id, map_id) 
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.type,jdbcType=VARCHAR}, #{item.intelligentJumpId,jdbcType=VARCHAR}, #{item.mapId,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+  
+  <update id="update" parameterType="com.pl.indexserver.model.IntelligentJumpDto" >
+    update t_intelligent_jump
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+       
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+       
+        updatetime = now(),
+       
+      <if test="paramter != null" >
+        paramter = #{paramter,jdbcType=BIGINT},
+      </if>
+      <if test="times != null" >
+        times = #{times,jdbcType=BIGINT},
+      </if>
+       
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+</mapper>

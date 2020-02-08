@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.ReportSpeechcraftStatisticsMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.model.ReportSpeechcraftStatistics" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="business_id" property="businessId" jdbcType="BIGINT" />
+    <result column="task_id" property="taskId" jdbcType="BIGINT" />
+    <result column="dialog_id" property="dialogId" jdbcType="BIGINT" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pl.model.ReportSpeechcraftStatistics" extends="BaseResultMap" >
+    <result column="result" property="result" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, company_id, business_id, task_id, dialog_id, telephone, status, create_by, create_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    result
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from report_speechcraft_statistics
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from report_speechcraft_statistics
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.ReportSpeechcraftStatistics" >
+    insert into report_speechcraft_statistics (id, company_id, business_id, 
+      task_id, dialog_id, telephone, 
+      status, create_by, create_date, 
+      result)
+    values (#{id,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{businessId,jdbcType=BIGINT}, 
+      #{taskId,jdbcType=BIGINT}, #{dialogId,jdbcType=BIGINT}, #{telephone,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{result,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  
+  <insert id="insertList" parameterType="java.util.List">
+         insert into report_speechcraft_statistics (id, company_id, business_id, 
+      task_id, dialog_id, telephone, 
+      status, create_by, create_date, 
+      result) values
+        <foreach collection="list" index="index" item="item" separator="," >
+        (#{item.id,jdbcType=INTEGER}, #{item.companyId,jdbcType=BIGINT}, #{item.businessId,jdbcType=BIGINT}, 
+      #{item.taskId,jdbcType=BIGINT}, #{item.dialogId,jdbcType=BIGINT}, #{item.telephone,jdbcType=VARCHAR}, 
+      #{item.status,jdbcType=VARCHAR}, #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP}, 
+      #{item.result,jdbcType=LONGVARCHAR}) 
+        </foreach>
+   </insert>
+  
+  
+  <insert id="insertSelective" parameterType="com.pl.model.ReportSpeechcraftStatistics" >
+    insert into report_speechcraft_statistics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="dialogId != null" >
+        dialog_id,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="dialogId != null" >
+        #{dialogId,jdbcType=BIGINT},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.ReportSpeechcraftStatistics" >
+    update report_speechcraft_statistics
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null" >
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="dialogId != null" >
+        dialog_id = #{dialogId,jdbcType=BIGINT},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pl.model.ReportSpeechcraftStatistics" >
+    update report_speechcraft_statistics
+    set company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=BIGINT},
+      dialog_id = #{dialogId,jdbcType=BIGINT},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.ReportSpeechcraftStatistics" >
+    update report_speechcraft_statistics
+    set company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=BIGINT},
+      dialog_id = #{dialogId,jdbcType=BIGINT},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <!--**************************** extend begin here start *******************************-->
+  <select id="selectReportSpeechcraftStatisticsByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT r.id, r.company_id, r.business_id, r.task_id, r.dialog_id, r.telephone, r.result, r.status, tts_info,dd.detail_records
+    FROM report_speechcraft_statistics r
+    LEFT JOIN t_dialog${postfix} d
+    on d.id = r.dialog_id
+    LEFT JOIN t_dialog_detail${postfix} dd
+    on d.id = dd.dialog_id
+    <where>
+      r.task_id = #{id}
+      <if test="beginDate != null and beginDate != ''">
+        <![CDATA[ and d.begin_date>= #{beginDate,jdbcType=TIMESTAMP}]]>
+      </if>
+
+      <if test="endDate != null and endDate != ''">
+        <![CDATA[ and d.end_date  <=  #{endDate,jdbcType=TIMESTAMP}]]>
+      </if>
+
+      <if test="intentionLevel != null and intentionLevel != ''">
+        <if test="type == &quot;all&quot;">
+          AND (d.intention_level = #{intentionLevel,jdbcType=VARCHAR} or d.focus_level =
+          #{intentionLevel,jdbcType=VARCHAR} or d.intent_level = #{intentionLevel,jdbcType=VARCHAR})
+        </if>
+        <if test="type == &quot;intention&quot;">
+          and d.intention_level = #{intentionLevel,jdbcType=VARCHAR}
+        </if>
+        <if test="type == &quot;focus&quot;">
+          and d.focus_level = #{intentionLevel,jdbcType=VARCHAR}
+        </if>
+        <if test="type == &quot;intent&quot;">
+          and d.intent_level = #{intentionLevel,jdbcType=VARCHAR}
+        </if>
+      </if>
+
+      <if test="status != null and status != '' ">
+        <choose>
+          <when test="status == 18">
+            and d.status in (10,18,19,22,30)
+          </when>
+          <otherwise>
+            and d.status = #{status,jdbcType=INTEGER}
+          </otherwise>
+        </choose>
+      </if>
+
+      <if test="isIntention != null and isIntention != '' ">
+        <if test="isIntention == 24">
+          and d.is_intention = #{isIntention,jdbcType=INTEGER}
+        </if>
+        <if test="isIntention == 23">
+          <if test="type == &quot;all&quot;">
+            AND (d.intention_level not in ('A','B','C','D') and d.focus_level not in ('A','B','C','D') and
+            d.intent_level not in ('A','B','C','D')) and d.status=2
+          </if>
+          <if test="type == &quot;intention&quot;">
+            AND d.intention_level = 'E' and d.status=2
+          </if>
+          <if test="type == &quot;focus&quot;">
+            AND d.focus_level = 'E' and d.status=2
+          </if>
+          <if test="type == &quot;intent&quot;">
+            AND d.intent_level = 'E' and d.status=2
+          </if>
+        </if>
+      </if>
+      <if test="allIsIntention != null and allIsIntention == 'true' ">
+        <if test="type == &quot;all&quot;">
+          AND (d.intention_level IN ('A','B','C') or d.focus_level in ('A','B','C') or d.intent_level in
+          ('A','B','C'))
+        </if>
+        <if test="type == &quot;intention&quot;">
+          and d.intention_level in ('A','B','C')
+        </if>
+        <if test="type == &quot;focus&quot;">
+          and d.focus_level in ('A','B','C')
+        </if>
+        <if test="type == &quot;intent&quot;">
+          and d.intent_level in ('A','B','C')
+        </if>
+      </if>
+    </where>
+    order by
+    CASE d.STATUS
+    WHEN 0 then 3
+    END,`status` asc
+  </select>
+</mapper>

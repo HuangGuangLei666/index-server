@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TContentMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.wx.TContent">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="cp_name" jdbcType="VARCHAR" property="cpName"/>
+        <result column="cp_id" jdbcType="INTEGER" property="cpId"/>
+        <result column="business_id" jdbcType="INTEGER" property="businessId"/>
+        <result column="business_name" jdbcType="VARCHAR" property="businessName"/>
+        <result column="cp_image" jdbcType="VARCHAR" property="cpImage"/>
+        <result column="business_image" jdbcType="VARCHAR" property="businessImage"/>
+        <result column="click_times" jdbcType="INTEGER" property="clickTimes"/>
+        <result column="buy_times" jdbcType="INTEGER" property="buyTimes"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="business_desc" jdbcType="VARCHAR" property="businessDesc"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, cp_name, cp_id, business_id, business_name, cp_image, business_image, click_times, 
+    buy_times, create_time, business_desc
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_content
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectContentByBusinessId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_content
+        where business_id = #{businessId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectContentList" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_content
+        <where>
+            <if test="cpName != null and cpName != ''">
+                cp_name = #{cpName}
+            </if>
+            <if test="businessDesc != null and businessDesc != ''">
+                AND business_desc = #{businessDesc}
+            </if>
+        </where>
+        ORDER BY
+        click_times DESC,
+        buy_times DESC,
+        create_time DESC
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wx.t_content
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.wx.TContent">
+    insert into wx.t_content (id, cp_name, cp_id, 
+      business_id, business_name, cp_image, 
+      business_image, click_times, buy_times, 
+      create_time, business_desc)
+    values (#{id,jdbcType=BIGINT}, #{cpName,jdbcType=VARCHAR}, #{cpId,jdbcType=INTEGER}, 
+      #{businessId,jdbcType=INTEGER}, #{businessName,jdbcType=VARCHAR}, #{cpImage,jdbcType=VARCHAR}, 
+      #{businessImage,jdbcType=VARCHAR}, #{clickTimes,jdbcType=INTEGER}, #{buyTimes,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{business_desc,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.wx.TContent">
+        insert into wx.t_content
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="cpName != null">
+                cp_name,
+            </if>
+            <if test="cpId != null">
+                cp_id,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="businessName != null">
+                business_name,
+            </if>
+            <if test="cpImage != null">
+                cp_image,
+            </if>
+            <if test="businessImage != null">
+                business_image,
+            </if>
+            <if test="clickTimes != null">
+                click_times,
+            </if>
+            <if test="buyTimes != null">
+                buy_times,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="business_desc != null">
+                business_desc,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="cpName != null">
+                #{cpName,jdbcType=VARCHAR},
+            </if>
+            <if test="cpId != null">
+                #{cpId,jdbcType=INTEGER},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=INTEGER},
+            </if>
+            <if test="businessName != null">
+                #{businessName,jdbcType=VARCHAR},
+            </if>
+            <if test="cpImage != null">
+                #{cpImage,jdbcType=VARCHAR},
+            </if>
+            <if test="businessImage != null">
+                #{businessImage,jdbcType=VARCHAR},
+            </if>
+            <if test="clickTimes != null">
+                #{clickTimes,jdbcType=INTEGER},
+            </if>
+            <if test="buyTimes != null">
+                #{buyTimes,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="business_desc != null">
+                #{business_desc,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TContent">
+        update wx.t_content
+        <set>
+            <if test="cpName != null">
+                cp_name = #{cpName,jdbcType=VARCHAR},
+            </if>
+            <if test="cpId != null">
+                cp_id = #{cpId,jdbcType=INTEGER},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=INTEGER},
+            </if>
+            <if test="businessName != null">
+                business_name = #{businessName,jdbcType=VARCHAR},
+            </if>
+            <if test="cpImage != null">
+                cp_image = #{cpImage,jdbcType=VARCHAR},
+            </if>
+            <if test="businessImage != null">
+                business_image = #{businessImage,jdbcType=VARCHAR},
+            </if>
+            <if test="clickTimes != null">
+                click_times = #{clickTimes,jdbcType=INTEGER},
+            </if>
+            <if test="buyTimes != null">
+                buy_times = #{buyTimes,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="business_desc != null">
+                business_desc = #{business_desc,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TContent">
+    update wx.t_content
+    set cp_name = #{cpName,jdbcType=VARCHAR},
+      cp_id = #{cpId,jdbcType=INTEGER},
+      business_id = #{businessId,jdbcType=INTEGER},
+      business_name = #{businessName,jdbcType=VARCHAR},
+      cp_image = #{cpImage,jdbcType=VARCHAR},
+      business_image = #{businessImage,jdbcType=VARCHAR},
+      click_times = #{clickTimes,jdbcType=INTEGER},
+      buy_times = #{buyTimes,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      business_desc = #{business_desc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

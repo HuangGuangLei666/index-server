@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TLabelMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.wx.TLabel">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="level" jdbcType="VARCHAR" property="level"/>
+        <result column="fathId" jdbcType="INTEGER" property="fathid"/>
+        <result column="imageURL" jdbcType="VARCHAR" property="imageurl"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, level, fathId, imageURL
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_label
+        where id = #{sysLabelId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectLabelListByFathId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_label
+        where fathId = #{fathId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectLabelByLevel" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_label
+        <where>
+            <if test="level != null and level != ''">
+                level = '1'
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAllData" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_label
+        ORDER BY id
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx.t_label
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.wx.TLabel">
+    insert into wx.t_label (id, name, level, 
+      fathId, imageURL)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, 
+      #{fathid,jdbcType=INTEGER}, #{imageurl,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.wx.TLabel">
+        insert into wx.t_label
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="fathid != null">
+                fathId,
+            </if>
+            <if test="imageurl != null">
+                imageURL,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="fathid != null">
+                #{fathid,jdbcType=INTEGER},
+            </if>
+            <if test="imageurl != null">
+                #{imageurl,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TLabel">
+        update wx.t_label
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="fathid != null">
+                fathId = #{fathid,jdbcType=INTEGER},
+            </if>
+            <if test="imageurl != null">
+                imageURL = #{imageurl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TLabel">
+    update wx.t_label
+    set name = #{name,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      fathId = #{fathid,jdbcType=INTEGER},
+      imageURL = #{imageurl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

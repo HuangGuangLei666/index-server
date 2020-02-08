@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.xbms.UserQaMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.xbms.UserQa">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="knowledge_id" jdbcType="VARCHAR" property="knowledgeId" />
+    <result column="answer_id" jdbcType="BIGINT" property="answerId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, knowledge_id, answer_id
+  </sql>
+
+  <select id="selectAnswerId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_user_qa
+    where knowledge_id = #{knowledgeId}
+    and user_id = #{userId}
+  </select>
+
+
+  <insert id="addCustomerresp" parameterType="com.pl.model.wx.TUserQa">
+    insert into wx_back.t_user_qa
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id,
+      </if>
+      <if test="answerId != null">
+        answer_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeId != null">
+        #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerId != null">
+        #{answerId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    ON DUPLICATE KEY UPDATE user_id=VALUES(user_id),knowledge_id=VALUES(knowledge_id),answer_id=VALUES(answer_id)
+  </insert>
+</mapper>

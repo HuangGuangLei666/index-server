@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.ScheduledMapper">
+
+    <sql id="CallTask_Column_List" >
+        id, task_name, ct_type, company_id, business_id, uid, task_state, status, begin_date,
+        end_date, total_number, time_quantum, create_date, modify_date
+    </sql>
+
+    <select id="getCallTaskList" resultType="com.pl.model.CallTask">
+        select
+        <include refid="CallTask_Column_List" />
+        from call_task
+    </select>
+
+    <select id="getCompany_Id" resultType="java.lang.Integer">
+        select id from t_company
+    </select>
+
+    <select id="getCallTaskListByCompany_id" resultType="com.pl.model.CallTask">
+        select
+        <include refid="CallTask_Column_List" />
+        from call_task
+        where company_id = #{company_id}
+        and status != 4
+    </select>
+
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.indexserver.mapper.UserDao">
+    <!--<select id="getUserById" resultType="com.pl.indexserver.model.User">-->
+        <!--select * from tm_user where userid = #{userid}-->
+    <!--</select>-->
+    <!--<select id="getUserByName" resultType="com.pl.indexserver.model.User">-->
+        <!--select * from tm_user where username = #{username}-->
+    <!--</select>-->
+    <!--<update id="updatePassword" >-->
+        <!--update tm_user set `password`=#{password} where  userid =#{userid}-->
+    <!--</update>-->
+    <!--<select id="getUser" resultType="com.pl.indexserver.model.User">-->
+        <!--select * from tm_user where username = #{username} and password =#{password}-->
+    <!--</select>-->
+</mapper>

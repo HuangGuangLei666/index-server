@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.UserOperateRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.model.UserOperateRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="object_type" property="objectType" jdbcType="INTEGER" />
+    <result column="object" property="object" jdbcType="VARCHAR" />
+    <result column="operate_id" property="operateId" jdbcType="VARCHAR" />
+    <result column="operate_name" property="operateName" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, user_name, company_id, object_type, object, operate_id, operate_name, detail,remark, create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_operate_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByObject"  resultType="com.pl.indexserver.model.UserOperateRecordDto" parameterType="java.util.Map" >
+    SELECT
+    uor.id, uor.user_name username, uor.company_id, uor.object_type,
+    uor.object, uor.operate_id, uor.operate_name,
+    uor.detail,uor.create_date
+    FROM user_operate_record uor
+    WHERE uor.user_id = #{userId}
+    and uor.object_type = #{objectType,jdbcType=INTEGER}
+    AND uor.object =#{object,jdbcType=VARCHAR}
+    ORDER BY id DESC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_operate_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.UserOperateRecord" >
+    insert into user_operate_record (id, user_id, user_name,
+      company_id, object_type, object, operate_id,
+      operate_name, remark, detail, create_date
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR},
+      #{userName,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT},
+      #{objectType,jdbcType=INTEGER}, #{object,jdbcType=VARCHAR}, #{operateId,jdbcType=VARCHAR}, 
+      #{operateName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pl.model.UserOperateRecord" >
+    insert into user_operate_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="objectType != null" >
+        object_type,
+      </if>
+      <if test="object != null" >
+        object,
+      </if>
+      <if test="operateId != null" >
+        operate_id,
+      </if>
+      <if test="operateName != null" >
+        operate_name,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="objectType != null" >
+        #{objectType,jdbcType=INTEGER},
+      </if>
+      <if test="object != null" >
+        #{object,jdbcType=VARCHAR},
+      </if>
+      <if test="operateId != null" >
+        #{operateId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateName != null" >
+        #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.UserOperateRecord" >
+    update user_operate_record
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="objectType != null" >
+        object_type = #{objectType,jdbcType=INTEGER},
+      </if>
+      <if test="object != null" >
+        object = #{object,jdbcType=VARCHAR},
+      </if>
+      <if test="operateId != null" >
+        operate_id = #{operateId,jdbcType=VARCHAR},
+      </if>
+      <if test="operateName != null" >
+        operate_name = #{operateName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.UserOperateRecord" >
+    update user_operate_record
+    set user_id = #{userId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      object_type = #{objectType,jdbcType=INTEGER},
+      object = #{object,jdbcType=VARCHAR},
+      operate_id = #{operateId,jdbcType=VARCHAR},
+      operate_name = #{operateName,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getLogger" resultType="com.pl.indexserver.model.UserOperateRecordDto">
+    SELECT
+    uor.id, uor.user_name username, uor.company_id, uor.object_type,
+    uor.object, uor.operate_id, uor.operate_name,
+    uor.detail, uor.create_date
+    FROM user_operate_record uor
+    WHERE uor.user_id = #{callTask.uid}
+    AND uor.company_id = #{callTask.companyId}
+    AND uor.object = #{callTask.taskName}
+    <if test="type != null" >
+      AND object_type = #{type,jdbcType=INTEGER}
+    </if>
+    ORDER BY id  DESC
+  </select>
+</mapper>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.TUnknownRecordMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.TUnknownRecord">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="task_id" property="taskId" jdbcType="BIGINT"/>
+        <result column="task_name" property="taskName" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="dialog_id" property="dialogId" jdbcType="BIGINT"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, company_id, task_id, task_name, telephone, content, dialog_id, state, create_date
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_unknown_record
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_unknown_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.TUnknownRecord">
+    insert into t_unknown_record (id, company_id, task_id, 
+      task_name, telephone, content, 
+      dialog_id, create_date,state)
+    values (#{id,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, 
+      #{taskName,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{dialogId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP},#{state})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.TUnknownRecord">
+        insert into t_unknown_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="taskId != null">
+                task_id,
+            </if>
+            <if test="taskName != null">
+                task_name,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="dialogId != null">
+                dialog_id,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="taskId != null">
+                #{taskId,jdbcType=BIGINT},
+            </if>
+            <if test="taskName != null">
+                #{taskName,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="dialogId != null">
+                #{dialogId,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                #{state},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.TUnknownRecord">
+        update t_unknown_record
+        <set>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=BIGINT},
+            </if>
+            <if test="taskName != null">
+                task_name = #{taskName,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="dialogId != null">
+                dialog_id = #{dialogId,jdbcType=BIGINT},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.TUnknownRecord">
+    update t_unknown_record
+    set company_id = #{companyId,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=BIGINT},
+      task_name = #{taskName,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      dialog_id = #{dialogId,jdbcType=BIGINT},
+      state = #{state},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="countByQuery" resultType="Long" parameterType="com.pl.indexserver.query.TUnknownRecordQuery">
+        select
+        count(tur.business_id)
+        from
+        (select
+        tur.business_id
+        from
+        t_unknown_record tur
+        LEFT JOIN
+        call_task ct
+        ON
+        tur.task_id = ct.id
+        LEFT JOIN
+        t_business tb
+        ON
+        ct.business_id = tb.id
+        where
+        tur.company_id=#{companyId}
+        and
+        tur.state=0
+        <if test="null!=name">
+            and tb.`name` like concat('%',#{name},'%')
+        </if>
+        GROUP BY
+        tur.business_id,tur.content
+        )tur
+    </select>
+
+    <select id="selectByQuery" resultType="com.pl.indexserver.model.TUnknownRecordDto"
+            parameterType="com.pl.indexserver.query.TUnknownRecordQuery">
+        SELECT
+        tur.content, ct.business_id businessId, tb.`name` businessName,COUNT(tur.id) frequency
+        FROM
+        t_unknown_record tur
+        LEFT JOIN
+        call_task ct
+        ON
+        tur.task_id = ct.id
+        LEFT JOIN
+        t_business tb
+        ON
+        ct.business_id = tb.id
+        WHERE
+        tur.company_id=#{companyId}
+        AND
+        tur.state=0
+        <if test="null!=name">
+            AND tb.`name` LIKE CONCAT('%',#{name},'%')
+        </if>
+        GROUP BY
+        ct.business_id,tur.content,tb.`name`
+        ORDER BY
+        any_value(tur.create_date) DESC
+        <if test="isLimit">
+            LIMIT #{begin},#{pageNum}
+        </if>
+    </select>
+
+    <update id="neglectByBusinessIdAndContent">
+    update t_unknown_record
+    set  state= 1
+    where task_id in (${taskIds})
+    and content=#{content}
+  </update>
+</mapper>

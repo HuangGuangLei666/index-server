@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TUserVoiceMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.wx.TUserVoice">
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <id column="voice_id" jdbcType="INTEGER" property="voiceId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    user_id, voice_id, create_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="com.pl.model.wx.TUserVoice" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_user_voice
+        where user_id = #{userId,jdbcType=INTEGER}
+        and voice_id = #{voiceId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUserIdAndVoiceId" parameterType="com.pl.model.wx.TUserVoice" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_user_voice
+        where user_id = #{userId,jdbcType=INTEGER}
+        and voice_id = #{voiceId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectUserBusinessCenter" parameterType="com.pl.model.wx.TUserVoice" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_user_voice
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectVoiceIdByUserId" parameterType="com.pl.model.wx.TUserVoice" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_user_voice
+        <where>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.pl.model.wx.TUserVoice">
+    delete from wx.t_user_voice
+    where user_id = #{userId,jdbcType=INTEGER}
+      and voice_id = #{voiceId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.wx.TUserVoice">
+    insert into wx.t_user_voice (user_id, voice_id, create_time
+      )
+    values (#{userId,jdbcType=INTEGER}, #{voiceId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+    <insert id="insertVoiceToUserCenter" parameterType="com.pl.model.wx.TUserVoice">
+    insert into wx.t_user_voice (user_id, voice_id, create_time
+    )
+    values (#{userId,jdbcType=INTEGER}, #{voiceId,jdbcType=INTEGER}, now()
+    )
+  </insert>
+
+    <insert id="insertSelective" parameterType="com.pl.model.wx.TUserVoice">
+        insert into wx.t_user_voice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="voiceId != null">
+                voice_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="voiceId != null">
+                #{voiceId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TUserVoice">
+        update wx.t_user_voice
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+        and voice_id = #{voiceId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TUserVoice">
+    update wx.t_user_voice
+    set create_time = #{createTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+      and voice_id = #{voiceId,jdbcType=INTEGER}
+  </update>
+</mapper>

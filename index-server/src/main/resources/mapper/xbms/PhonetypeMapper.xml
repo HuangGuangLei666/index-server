@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.xbms.PhonetypeMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.xbms.Phonetype">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+  <resultMap id="InterceptPhoneBaseResultMap" type="com.pl.model.wx.InterceptSta">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="callerphone" jdbcType="VARCHAR" property="callerphone" />
+    <result column="calleephone" jdbcType="VARCHAR" property="calleephone" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, phone, type, create_time
+  </sql>
+  <sql id="InterceptBase_Column_List">
+    id, callerphone, calleephone, create_time, type
+  </sql>
+
+  <select id="selectByUseridAndType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_phonetype
+    where user_id = #{userId}
+    and type = #{type}
+  </select>
+
+
+  <insert id="addPhoneType" parameterType="com.pl.model.xbms.Phonetype">
+    insert into wx_back.t_phonetype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      create_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      now(),
+    </trim>
+    ON DUPLICATE KEY UPDATE user_id=VALUES(user_id),phone=VALUES(phone),type=VALUES(type),create_time=VALUES(create_time)
+  </insert>
+</mapper>

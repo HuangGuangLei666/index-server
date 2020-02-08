@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.xbms.CustomrespMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.xbms.Customresp">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="knowledge_id" jdbcType="VARCHAR" property="knowledgeId" />
+    <result column="ans_content" jdbcType="VARCHAR" property="ansContent" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="filename" jdbcType="VARCHAR" property="fileName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, knowledge_id, ans_content, create_time,filename
+  </sql>
+
+  <select id="selectByUseridAndKnowledgeId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_customresp
+    where user_id = #{userId}
+    and knowledge_id = #{knowledgeId}
+  </select>
+
+  <select id="selectByUserIdAndKnowId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_customresp
+    where id = #{answerId}
+    and user_id = #{userId}
+    and knowledge_id = #{knowledgeId}
+  </select>
+
+  <insert id="addCustomerresp" parameterType="com.pl.model.xbms.Customresp">
+    insert into wx_back.t_customresp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id,
+      </if>
+      <if test="ansContent != null">
+        ans_content,
+      </if>
+      create_time,
+      <if test="fileName != null and fileName != ''">
+        filename,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeId != null">
+        #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="ansContent != null">
+        #{ansContent,jdbcType=VARCHAR},
+      </if>
+      now(),
+      <if test="fileName != null and fileName != ''">
+        #{fileName},
+      </if>
+    </trim>
+  </insert>
+</mapper>

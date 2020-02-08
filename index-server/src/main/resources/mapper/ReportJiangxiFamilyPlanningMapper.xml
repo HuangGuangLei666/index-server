@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.ReportJiangxiFamilyPlanningMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.ReportJiangxiFamilyPlanning">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="dialog_id" property="dialogId" jdbcType="BIGINT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="medical_examination" property="medicalExamination" jdbcType="VARCHAR"/>
+        <result column="free" property="free" jdbcType="VARCHAR"/>
+        <result column="satisfaction" property="satisfaction" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, dialog_id, phone, name, medical_examination, free, satisfaction, status, create_by, 
+    create_date, update_by, update_date, remark
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from report_jiangxi_family_planning
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from report_jiangxi_family_planning
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.ReportJiangxiFamilyPlanning">
+    insert into report_jiangxi_family_planning (id, dialog_id, phone, 
+      name, medical_examination, free, 
+      satisfaction, status, create_by, 
+      create_date, update_by, update_date, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{dialogId,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{medicalExamination,jdbcType=VARCHAR}, #{free,jdbcType=VARCHAR}, 
+      #{satisfaction,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.ReportJiangxiFamilyPlanning">
+        insert into report_jiangxi_family_planning
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="dialogId != null">
+                dialog_id,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="medicalExamination != null">
+                medical_examination,
+            </if>
+            <if test="free != null">
+                free,
+            </if>
+            <if test="satisfaction != null">
+                satisfaction,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="dialogId != null">
+                #{dialogId,jdbcType=BIGINT},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="medicalExamination != null">
+                #{medicalExamination,jdbcType=VARCHAR},
+            </if>
+            <if test="free != null">
+                #{free,jdbcType=VARCHAR},
+            </if>
+            <if test="satisfaction != null">
+                #{satisfaction,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.ReportJiangxiFamilyPlanning">
+        update report_jiangxi_family_planning
+        <set>
+            <if test="dialogId != null">
+                dialog_id = #{dialogId,jdbcType=BIGINT},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="medicalExamination != null">
+                medical_examination = #{medicalExamination,jdbcType=VARCHAR},
+            </if>
+            <if test="free != null">
+                free = #{free,jdbcType=VARCHAR},
+            </if>
+            <if test="satisfaction != null">
+                satisfaction = #{satisfaction,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.ReportJiangxiFamilyPlanning">
+    update report_jiangxi_family_planning
+    set dialog_id = #{dialogId,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      medical_examination = #{medicalExamination,jdbcType=VARCHAR},
+      free = #{free,jdbcType=VARCHAR},
+      satisfaction = #{satisfaction,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <!--**************************** extend begin here start *******************************-->
+    <select id="selectReportFamilyPlaningByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT r.id, r.name, r.phone,r.medical_examination, r.free, r.satisfaction, r.status
+        FROM report_jiangxi_family_planning r
+        LEFT JOIN t_dialog${postfix} d
+        on d.id = r.dialog_id
+        <where>
+            d.task_id = #{id}
+            <if test="beginDate != null and beginDate != ''">
+                <![CDATA[ and d.begin_date>= #{beginDate,jdbcType=TIMESTAMP}]]>
+            </if>
+
+            <if test="endDate != null and endDate != ''">
+                <![CDATA[ and d.end_date  <=  #{endDate,jdbcType=TIMESTAMP}]]>
+            </if>
+
+            <if test="intentionLevel != null and intentionLevel != ''">
+                <if test="type == &quot;all&quot;">
+                    AND (d.intention_level = #{intentionLevel,jdbcType=VARCHAR} or d.focus_level =
+                    #{intentionLevel,jdbcType=VARCHAR} or d.intent_level = #{intentionLevel,jdbcType=VARCHAR})
+                </if>
+                <if test="type == &quot;intention&quot;">
+                    and d.intention_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+                <if test="type == &quot;focus&quot;">
+                    and d.focus_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+                <if test="type == &quot;intent&quot;">
+                    and d.intent_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+            </if>
+
+            <if test="status != null and status != '' ">
+                <choose>
+                    <when test="status == 18">
+                        and d.status in (10,18,19,22,30)
+                    </when>
+                    <otherwise>
+                        and d.status = #{status,jdbcType=INTEGER}
+                    </otherwise>
+                </choose>
+            </if>
+
+            <if test="isIntention != null and isIntention != '' ">
+                <if test="isIntention == 24">
+                    and d.is_intention = #{isIntention,jdbcType=INTEGER}
+                </if>
+                <if test="isIntention == 23">
+                    <if test="type == &quot;all&quot;">
+                        AND (d.intention_level not in ('A','B','C','D') and d.focus_level not in ('A','B','C','D') and
+                        d.intent_level not in ('A','B','C','D')) and d.status=2
+                    </if>
+                    <if test="type == &quot;intention&quot;">
+                        AND d.intention_level = 'E' and d.status=2
+                    </if>
+                    <if test="type == &quot;focus&quot;">
+                        AND d.focus_level = 'E' and d.status=2
+                    </if>
+                    <if test="type == &quot;intent&quot;">
+                        AND d.intent_level = 'E' and d.status=2
+                    </if>
+                </if>
+            </if>
+            <if test="allIsIntention != null and allIsIntention == 'true' ">
+                <if test="type == &quot;all&quot;">
+                    AND (d.intention_level IN ('A','B','C') or d.focus_level in ('A','B','C') or d.intent_level in
+                    ('A','B','C'))
+                </if>
+                <if test="type == &quot;intention&quot;">
+                    and d.intention_level in ('A','B','C')
+                </if>
+                <if test="type == &quot;focus&quot;">
+                    and d.focus_level in ('A','B','C')
+                </if>
+                <if test="type == &quot;intent&quot;">
+                    and d.intent_level in ('A','B','C')
+                </if>
+            </if>
+        </where>
+        order by
+        CASE d.STATUS
+        WHEN 0 then 3
+        END,`status` asc
+    </select>
+</mapper>

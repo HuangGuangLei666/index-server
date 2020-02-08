@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TWechatRecordMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.TWechatRecord">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="robot_wechatid" jdbcType="VARCHAR" property="robotWechatid" />
+    <result column="user_wechatid" jdbcType="VARCHAR" property="userWechatid" />
+    <result column="business_id" jdbcType="BIGINT" property="businessId" />
+    <result column="worknode_id" jdbcType="VARCHAR" property="workNodeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, robot_wechatid, user_wechatid, business_id, worknode_id
+  </sql>
+
+  <select id="selectOneWorkNodeByWechatIds" parameterType="com.pl.model.TWechatRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_wechat_record
+    where robot_wechatid = #{robotWechatid,jdbcType=VARCHAR}
+    and user_wechatid = #{userWechatid,jdbcType=VARCHAR}
+    and business_id = #{businessId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="com.pl.model.TWechatRecord" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_wechat_record
+    where robot_wechatid = #{robotWechatid,jdbcType=VARCHAR}
+      and user_wechatid = #{userWechatid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.pl.model.TWechatRecord">
+    delete from t_wechat_record
+    where robot_wechatid = #{robotWechatid,jdbcType=VARCHAR}
+      and user_wechatid = #{userWechatid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.TWechatRecord">
+    insert into t_wechat_record (robot_wechatid, user_wechatid, business_id, 
+      worknode_id)
+    values (#{robotWechatid,jdbcType=VARCHAR}, #{userWechatid,jdbcType=VARCHAR}, #{businessId,jdbcType=BIGINT}, 
+      #{worknodeId,jdbcType=BIGINT})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.pl.model.TWechatRecord" useGeneratedKeys="true" keyProperty="id">
+    insert into t_wechat_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="robotWechatid != null and robotWechatid != ''">
+        robot_wechatid,
+      </if>
+      <if test="userWechatid != null and userWechatid != ''">
+        user_wechatid,
+      </if>
+      <if test="businessId != null">
+        business_id,
+      </if>
+      <if test="workNodeId != null">
+        worknode_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="robotWechatid != null and robotWechatid != ''">
+        #{robotWechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="userWechatid != null and userWechatid != ''">
+        #{userWechatid,jdbcType=VARCHAR},
+      </if>
+      <if test="businessId != null">
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="workNodeId != null">
+        #{workNodeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.TWechatRecord">
+    update t_wechat_record
+    <set>
+      <if test="businessId != null">
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="worknodeId != null">
+        worknode_id = #{worknodeId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where robot_wechatid = #{robotWechatid,jdbcType=VARCHAR}
+      and user_wechatid = #{userWechatid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.TWechatRecord">
+    update t_wechat_record
+    set business_id = #{businessId,jdbcType=BIGINT},
+      worknode_id = #{worknodeId,jdbcType=BIGINT}
+    where robot_wechatid = #{robotWechatid,jdbcType=VARCHAR}
+      and user_wechatid = #{userWechatid,jdbcType=VARCHAR}
+  </update>
+
+  <!--hgl-->
+  <update id="updateWorkNodeIdByRecord" parameterType="com.pl.model.TWechatRecord">
+    UPDATE t_wechat_record
+    set worknode_id = #{nextId}
+    WHERE id = #{id}
+  </update>
+
+  <update id="updateByRecord" parameterType="com.pl.model.TWechatRecord">
+    UPDATE t_wechat_record
+    set worknode_id = #{paramter}
+    WHERE id = #{id}
+  </update>
+</mapper>

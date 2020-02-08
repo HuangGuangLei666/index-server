@@ -1,0 +1,12 @@
+{
+  "name": "普兰外呼任务后台",
+  "version": "0.0.0",
+  "description": "TM PROJECT",
+  "title": "TM INTERFACE",
+  "url" : "http://pulanbd.iok.la:8800",
+  "sampleUrl":"http://pulanbd.iok.la:8800",
+  "header.title":"header.title",
+  "header.filename":"header.filename",
+  "footer.title":"footer.title",
+  "footer.filename":"footer.filename"
+}

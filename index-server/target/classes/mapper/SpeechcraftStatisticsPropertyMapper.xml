@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.SpeechcraftStatisticsPropertyMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.SpeechcraftStatisticsProperty">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="business_id" property="businessId" jdbcType="BIGINT"/>
+        <result column="craft_id" property="craftId" jdbcType="VARCHAR"/>
+        <result column="craft_type" property="craftType" jdbcType="CHAR"/>
+        <result column="table_name" property="tableName" jdbcType="VARCHAR"/>
+        <result column="property_name" property="propertyName" jdbcType="VARCHAR"/>
+        <result column="property_key" property="propertyKey" jdbcType="VARCHAR"/>
+        <result column="default_value" property="defaultValue" jdbcType="VARCHAR"/>
+        <result column="correct_keyword" property="correctKeyword" jdbcType="VARCHAR"/>
+        <result column="correct_value" property="correctValue" jdbcType="VARCHAR"/>
+        <result column="wrong_keyword" property="wrongKeyword" jdbcType="VARCHAR"/>
+        <result column="wrong_value" property="wrongValue" jdbcType="VARCHAR"/>
+        <result column="other_keyword" property="otherKeyword" jdbcType="VARCHAR"/>
+        <result column="other_value" property="otherValue" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, company_id, business_id, craft_id, craft_type, table_name, property_name, property_key, 
+    default_value, correct_keyword, correct_value, wrong_keyword, wrong_value, other_keyword, 
+    other_value, sort, create_by, create_date, update_by, update_date, remark
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from speechcraft_statistics_property
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from speechcraft_statistics_property
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.SpeechcraftStatisticsProperty">
+    insert into speechcraft_statistics_property (id, company_id, business_id, 
+      craft_id, craft_type, table_name, 
+      property_name, property_key, default_value, 
+      correct_keyword, correct_value, wrong_keyword, 
+      wrong_value, other_keyword, other_value, 
+      sort, create_by, create_date, 
+      update_by, update_date, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{businessId,jdbcType=BIGINT}, 
+      #{craftId,jdbcType=VARCHAR}, #{craftType,jdbcType=CHAR}, #{tableName,jdbcType=VARCHAR}, 
+      #{propertyName,jdbcType=VARCHAR}, #{propertyKey,jdbcType=VARCHAR}, #{defaultValue,jdbcType=VARCHAR}, 
+      #{correctKeyword,jdbcType=VARCHAR}, #{correctValue,jdbcType=VARCHAR}, #{wrongKeyword,jdbcType=VARCHAR}, 
+      #{wrongValue,jdbcType=VARCHAR}, #{otherKeyword,jdbcType=VARCHAR}, #{otherValue,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.SpeechcraftStatisticsProperty">
+        insert into speechcraft_statistics_property
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="craftId != null">
+                craft_id,
+            </if>
+            <if test="craftType != null">
+                craft_type,
+            </if>
+            <if test="tableName != null">
+                table_name,
+            </if>
+            <if test="propertyName != null">
+                property_name,
+            </if>
+            <if test="propertyKey != null">
+                property_key,
+            </if>
+            <if test="defaultValue != null">
+                default_value,
+            </if>
+            <if test="correctKeyword != null">
+                correct_keyword,
+            </if>
+            <if test="correctValue != null">
+                correct_value,
+            </if>
+            <if test="wrongKeyword != null">
+                wrong_keyword,
+            </if>
+            <if test="wrongValue != null">
+                wrong_value,
+            </if>
+            <if test="otherKeyword != null">
+                other_keyword,
+            </if>
+            <if test="otherValue != null">
+                other_value,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="craftId != null">
+                #{craftId,jdbcType=VARCHAR},
+            </if>
+            <if test="craftType != null">
+                #{craftType,jdbcType=CHAR},
+            </if>
+            <if test="tableName != null">
+                #{tableName,jdbcType=VARCHAR},
+            </if>
+            <if test="propertyName != null">
+                #{propertyName,jdbcType=VARCHAR},
+            </if>
+            <if test="propertyKey != null">
+                #{propertyKey,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultValue != null">
+                #{defaultValue,jdbcType=VARCHAR},
+            </if>
+            <if test="correctKeyword != null">
+                #{correctKeyword,jdbcType=VARCHAR},
+            </if>
+            <if test="correctValue != null">
+                #{correctValue,jdbcType=VARCHAR},
+            </if>
+            <if test="wrongKeyword != null">
+                #{wrongKeyword,jdbcType=VARCHAR},
+            </if>
+            <if test="wrongValue != null">
+                #{wrongValue,jdbcType=VARCHAR},
+            </if>
+            <if test="otherKeyword != null">
+                #{otherKeyword,jdbcType=VARCHAR},
+            </if>
+            <if test="otherValue != null">
+                #{otherValue,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.SpeechcraftStatisticsProperty">
+        update speechcraft_statistics_property
+        <set>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="craftId != null">
+                craft_id = #{craftId,jdbcType=VARCHAR},
+            </if>
+            <if test="craftType != null">
+                craft_type = #{craftType,jdbcType=CHAR},
+            </if>
+            <if test="tableName != null">
+                table_name = #{tableName,jdbcType=VARCHAR},
+            </if>
+            <if test="propertyName != null">
+                property_name = #{propertyName,jdbcType=VARCHAR},
+            </if>
+            <if test="propertyKey != null">
+                property_key = #{propertyKey,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultValue != null">
+                default_value = #{defaultValue,jdbcType=VARCHAR},
+            </if>
+            <if test="correctKeyword != null">
+                correct_keyword = #{correctKeyword,jdbcType=VARCHAR},
+            </if>
+            <if test="correctValue != null">
+                correct_value = #{correctValue,jdbcType=VARCHAR},
+            </if>
+            <if test="wrongKeyword != null">
+                wrong_keyword = #{wrongKeyword,jdbcType=VARCHAR},
+            </if>
+            <if test="wrongValue != null">
+                wrong_value = #{wrongValue,jdbcType=VARCHAR},
+            </if>
+            <if test="otherKeyword != null">
+                other_keyword = #{otherKeyword,jdbcType=VARCHAR},
+            </if>
+            <if test="otherValue != null">
+                other_value = #{otherValue,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.SpeechcraftStatisticsProperty">
+    update speechcraft_statistics_property
+    set company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      craft_id = #{craftId,jdbcType=VARCHAR},
+      craft_type = #{craftType,jdbcType=CHAR},
+      table_name = #{tableName,jdbcType=VARCHAR},
+      property_name = #{propertyName,jdbcType=VARCHAR},
+      property_key = #{propertyKey,jdbcType=VARCHAR},
+      default_value = #{defaultValue,jdbcType=VARCHAR},
+      correct_keyword = #{correctKeyword,jdbcType=VARCHAR},
+      correct_value = #{correctValue,jdbcType=VARCHAR},
+      wrong_keyword = #{wrongKeyword,jdbcType=VARCHAR},
+      wrong_value = #{wrongValue,jdbcType=VARCHAR},
+      other_keyword = #{otherKeyword,jdbcType=VARCHAR},
+      other_value = #{otherValue,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <!--**************************** extend begin here start *******************************-->
+    <select id="selectByTableName" resultType="com.pl.model.SpeechcraftStatisticsProperty">
+    select id,company_id companyId, business_id businessId,craft_id craftId, craft_type craftType,
+    table_name tableName, property_name propertyName,property_key propertyKey,
+    default_value defaultValue,
+    correct_keyword correctKeyword, correct_value correctValue, wrong_keyword wrongKeyword,
+    wrong_value wrongValue, other_keyword otherKeyword, other_value otherValue
+    from speechcraft_statistics_property t
+    where t.table_name = #{tableName,jdbcType=VARCHAR}
+    order by sort,id
+  </select>
+
+</mapper>

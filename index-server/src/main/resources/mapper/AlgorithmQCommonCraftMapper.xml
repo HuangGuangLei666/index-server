@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.AlgorithmQCommonCraftMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.model.AlgorithmQCommonCraft" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="craft_id" property="craftId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="business_id" property="businessId" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="original_id" property="originalId" jdbcType="BIGINT" />
+    <result column="key_word" property="keyWord" jdbcType="VARCHAR" />
+    <result column="key_num" property="keyNum" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="jump" property="jump" jdbcType="BIGINT" />
+    <result column="action" property="action" jdbcType="INTEGER" />
+    <result column="msgtempl_id" property="msgtemplId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="rule_type" property="ruleType" jdbcType="INTEGER" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="foucs" property="foucs" jdbcType="VARCHAR" />
+    <result column="syn_date" property="synDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pl.model.AlgorithmQCommonCraft" extends="BaseResultMap" >
+    <result column="question" property="question" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, craft_id, name, business_id, company_id, original_id, key_word, key_num, type, 
+    jump, action, msgtempl_id, status, rule_type, flag, uid, create_date, modify_date, 
+    score, foucs, syn_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    question
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from algorithm.q_common_craft
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from algorithm.q_common_craft
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.AlgorithmQCommonCraft" >
+    insert into algorithm.q_common_craft (id, craft_id, name, 
+      business_id, company_id, original_id, 
+      key_word, key_num, type, 
+      jump, action, msgtempl_id, 
+      status, rule_type, flag, 
+      uid, create_date, modify_date, 
+      score, foucs, syn_date, 
+      question)
+    values (#{id,jdbcType=BIGINT}, #{craftId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{businessId,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{originalId,jdbcType=BIGINT}, 
+      #{keyWord,jdbcType=VARCHAR}, #{keyNum,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{jump,jdbcType=BIGINT}, #{action,jdbcType=INTEGER}, #{msgtemplId,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER}, #{ruleType,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, 
+      #{uid,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{score,jdbcType=INTEGER}, #{foucs,jdbcType=VARCHAR}, #{synDate,jdbcType=TIMESTAMP}, 
+      #{question,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pl.model.AlgorithmQCommonCraft" >
+    insert into algorithm.q_common_craft
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="craftId != null" >
+        craft_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="originalId != null" >
+        original_id,
+      </if>
+      <if test="keyWord != null" >
+        key_word,
+      </if>
+      <if test="keyNum != null" >
+        key_num,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="jump != null" >
+        jump,
+      </if>
+      <if test="action != null" >
+        action,
+      </if>
+      <if test="msgtemplId != null" >
+        msgtempl_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="ruleType != null" >
+        rule_type,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="foucs != null" >
+        foucs,
+      </if>
+      <if test="synDate != null" >
+        syn_date,
+      </if>
+      <if test="question != null" >
+        question,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="craftId != null" >
+        #{craftId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="originalId != null" >
+        #{originalId,jdbcType=BIGINT},
+      </if>
+      <if test="keyWord != null" >
+        #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="keyNum != null" >
+        #{keyNum,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="jump != null" >
+        #{jump,jdbcType=BIGINT},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=INTEGER},
+      </if>
+      <if test="msgtemplId != null" >
+        #{msgtemplId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ruleType != null" >
+        #{ruleType,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="foucs != null" >
+        #{foucs,jdbcType=VARCHAR},
+      </if>
+      <if test="synDate != null" >
+        #{synDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="question != null" >
+        #{question,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.AlgorithmQCommonCraft" >
+    update algorithm.q_common_craft
+    <set >
+      <if test="craftId != null" >
+        craft_id = #{craftId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="businessId != null" >
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="originalId != null" >
+        original_id = #{originalId,jdbcType=BIGINT},
+      </if>
+      <if test="keyWord != null" >
+        key_word = #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="keyNum != null" >
+        key_num = #{keyNum,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="jump != null" >
+        jump = #{jump,jdbcType=BIGINT},
+      </if>
+      <if test="action != null" >
+        action = #{action,jdbcType=INTEGER},
+      </if>
+      <if test="msgtemplId != null" >
+        msgtempl_id = #{msgtemplId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ruleType != null" >
+        rule_type = #{ruleType,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="foucs != null" >
+        foucs = #{foucs,jdbcType=VARCHAR},
+      </if>
+      <if test="synDate != null" >
+        syn_date = #{synDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="question != null" >
+        question = #{question,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pl.model.AlgorithmQCommonCraft" >
+    update algorithm.q_common_craft
+    set craft_id = #{craftId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      business_id = #{businessId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      original_id = #{originalId,jdbcType=BIGINT},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      key_num = #{keyNum,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      jump = #{jump,jdbcType=BIGINT},
+      action = #{action,jdbcType=INTEGER},
+      msgtempl_id = #{msgtemplId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      rule_type = #{ruleType,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      score = #{score,jdbcType=INTEGER},
+      foucs = #{foucs,jdbcType=VARCHAR},
+      syn_date = #{synDate,jdbcType=TIMESTAMP},
+      question = #{question,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.AlgorithmQCommonCraft" >
+    update algorithm.q_common_craft
+    set craft_id = #{craftId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      business_id = #{businessId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      original_id = #{originalId,jdbcType=BIGINT},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      key_num = #{keyNum,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      jump = #{jump,jdbcType=BIGINT},
+      action = #{action,jdbcType=INTEGER},
+      msgtempl_id = #{msgtemplId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      rule_type = #{ruleType,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      score = #{score,jdbcType=INTEGER},
+      foucs = #{foucs,jdbcType=VARCHAR},
+      syn_date = #{synDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!--**************************** extend begin here start *******************************-->
+  <select id="selectByCompanyIdAndBusinessIdAndOriginalId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List"/>
+    from algorithm.q_common_craft
+    where company_id = #{companyId}
+    and business_id = #{businessId}
+    and original_id = #{originalId}
+  </select>
+
+  <delete id="deleteByCompanyIdAndBusinessIdAndOriginalId">
+    delete from algorithm.q_common_craft
+    where company_id = #{companyId}
+    and business_id = #{businessId}
+    and original_id = #{originalId}
+  </delete>
+</mapper>

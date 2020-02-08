@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.KnowledgeQuestionMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.KnowledgeQuestion">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="knowledge_id" property="knowledgeId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="business_id" property="businessId" jdbcType="BIGINT"/>
+        <result column="workflow_id" property="workflowId" jdbcType="BIGINT"/>
+        <result column="key_num" property="keyNum" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="jump" property="jump" jdbcType="BIGINT"/>
+        <result column="action" property="action" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="uid" property="uid" jdbcType="VARCHAR"/>
+        <result column="score" property="score"/>
+        <result column="foucs" property="foucs"/>
+        <result column="msgtempl_id" property="msgtemplId"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.pl.model.KnowledgeQuestion" extends="BaseResultMap">
+        <result column="question" property="question" jdbcType="LONGVARCHAR"/>
+        <result column="key_word" property="keyWord" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <resultMap id="KnowledgeQuestionDetailResult" type="com.pl.indexserver.model.KnowledgeQuestionDto">
+        <result column="qid" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="interupt" property="interupt" jdbcType="VARCHAR"/>
+        <result column="business_id" property="businessId" jdbcType="BIGINT"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="workflow_id" property="workflowId" jdbcType="BIGINT"/>
+        <result column="workflow_name" property="workflowName" jdbcType="BIGINT"/>
+        <result column="question" property="question" jdbcType="LONGVARCHAR"/>
+        <result column="key_word" property="keyWord" jdbcType="LONGVARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="jump" property="jump"/>
+        <result column="action" property="action" jdbcType="INTEGER"/>
+        <result column="jump" property="jump" jdbcType="BIGINT"/>
+        <result column="msgtempl_id" property="msgtemplId" jdbcType="BIGINT"/>
+        <result column="knowledge_id" property="knowledgeId" jdbcType="BIGINT"/>
+        <result column="score" property="score"/>
+        <result column="foucs" property="foucs"/>
+        <collection property="answerList" ofType="com.pl.indexserver.model.KnowledgeAnswerDto">
+            <result column="aid" property="id" jdbcType="BIGINT"/>
+            <result column="answer" property="answer" jdbcType="VARCHAR"/>
+            <result column="record_file" property="recordFile" jdbcType="VARCHAR"/>
+            <result column="record_describe" property="recordDescribe" jdbcType="VARCHAR"/>
+            <result column="record_state" property="recordState"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, knowledge_id, name, company_id, business_id, workflow_id, key_word, key_num, type, jump, action,
+    status, uid, score,foucs,msgtempl_id, create_date, modify_date
+  </sql>
+    <sql id="Blob_Column_List">
+    question
+  </sql>
+    <sql id="Blo_Column_List">
+        id,knowledge_id,name,key_word,question
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from knowledge_question
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectQuestionByKnowledgeId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from knowledge_question
+        where knowledge_id = #{knowledgeId,jdbcType=VARCHAR}
+        limit 1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from knowledge_question
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.KnowledgeQuestion" useGeneratedKeys="true" keyProperty="id">
+    insert into knowledge_question (id, knowledge_id, name, 
+      company_id, business_id, workflow_id, key_word,
+      key_num, type, jump, 
+      action, status, uid, 
+      create_date, modify_date, question,score,foucs,msgtempl_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{knowledgeId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{companyId,jdbcType=BIGINT}, #{businessId,jdbcType=BIGINT}, #{workflowId,jdbcType=BIGINT},
+      #{keyWord,jdbcType=LONGVARCHAR},
+      #{keyNum,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{jump,jdbcType=BIGINT}, 
+      #{action,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, 
+      now(),now(), #{question,jdbcType=LONGVARCHAR},#{score},#{foucs},#{msgtemplId}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.KnowledgeQuestion" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into knowledge_question
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="knowledgeId != null">
+                knowledge_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="interupt != null">
+                interupt,
+            </if>
+
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="workflowId != null">
+                workflow_id,
+            </if>
+            <if test="keyWord != null">
+                key_word,
+            </if>
+            <if test="keyNum != null">
+                key_num,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="jump != null">
+                jump,
+            </if>
+            <if test="action != null">
+                action,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="true">
+                create_date,
+            </if>
+            <if test="true">
+                modify_date,
+            </if>
+            <if test="question != null">
+                question,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="foucs != null">
+                foucs,
+            </if>
+            <if test="msgtemplId != null">
+                msgtempl_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="knowledgeId != null">
+                #{knowledgeId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="interupt != null">
+                #{interupt,jdbcType=VARCHAR},
+            </if>
+
+            <if test="companyId != null">
+                #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="workflowId != null">
+                #{workflowId,jdbcType=BIGINT},
+            </if>
+            <if test="keyWord != null">
+                #{keyWord,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="keyNum != null">
+                #{keyNum,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="jump != null">
+                #{jump,jdbcType=BIGINT},
+            </if>
+            <if test="action != null">
+                #{action,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="true">
+                now(),
+            </if>
+            <if test="true">
+                now(),
+            </if>
+            <if test="question != null">
+                #{question,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="score != null">
+                #{score},
+            </if>
+            <if test="foucs != null">
+                #{foucs},
+            </if>
+            <if test="msgtemplId != null">
+                #{msgtemplId},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.KnowledgeQuestion">
+        update knowledge_question
+        <set>
+            <if test="knowledgeId != null">
+                knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="interupt != null">
+                interupt = #{interupt,jdbcType=VARCHAR},
+            </if>
+
+
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="workflowId != null">
+                workflow_id = #{workflowId,jdbcType=BIGINT},
+            </if>
+            <if test="keyWord != null   ">
+                key_word = #{keyWord,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="keyNum != null">
+                key_num = #{keyNum,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="jump != null">
+                jump = #{jump,jdbcType=BIGINT},
+            </if>
+            <if test="action != null">
+                action = #{action,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="true">
+                modify_date = now(),
+            </if>
+            <if test="question != null  ">
+                question = #{question,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="score != null">
+                score = #{score},
+            </if>
+            <if test="foucs != null">
+                foucs = #{foucs},
+            </if>
+            <if test="msgtemplId != null">
+                msgtempl_id = #{msgtemplId},
+            </if>
+            syn_status = 1,
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pl.model.KnowledgeQuestion">
+    update knowledge_question
+    set knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      workflow_id = #{workflowId,jdbcType=BIGINT},
+      key_word = #{keyWord,jdbcType=LONGVARCHAR},
+      key_num = #{keyNum,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      jump = #{jump,jdbcType=BIGINT},
+      action = #{action,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      modify_date = now(),
+      question = #{question,jdbcType=LONGVARCHAR},
+      score = #{score},
+      foucs = #{foucs},
+      msgtempl_id = #{msgtemplId},
+      syn_status = 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.KnowledgeQuestion">
+    update knowledge_question
+    set knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      workflow_id = #{workflowId,jdbcType=BIGINT},
+      key_word = #{keyWord,jdbcType=LONGVARCHAR},
+      key_num = #{keyNum,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      jump = #{jump,jdbcType=BIGINT},
+      action = #{action,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      score = #{score},
+      foucs = #{foucs},
+      msgtempl_id = #{msgtemplId},
+      modify_date = now(),
+      syn_status = 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectByCompanyIdAndBusinessId" parameterType="Map"
+            resultType="com.pl.indexserver.model.KnowledgeQuestionDto">
+        SELECT
+        id,`name`,type,
+        workflow_id workflowId,
+        (select name from dialog_workflow t1 where t1.id = workflow_id) workflowName,
+        (select name from dialog_workflow t1 where t1.id = jump and type = 2) jumpWorkflowName,
+        action,modify_date modifyDate,create_date createDate,key_num keyNum,score,foucs,msgtempl_id msgtemplId,flowNum
+        FROM knowledge_question q
+        LEFT JOIN
+        (
+        SELECT
+        (SUM(notRecording_num)) flowNum,knowledge_id
+        FROM
+        knowledge_answerext a
+        GROUP BY knowledge_id
+        )a
+        ON
+        q.knowledge_id=a.knowledge_id
+        WHERE company_id=#{companyId}
+        AND business_id=#{businessId}
+        <if test="null!=name and ''!=name">
+            AND `name` LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="null!= workflowId and ''!= workflowId">
+            AND workflow_id = #{workflowId}
+        </if>
+        ORDER BY q.create_date DESC, q.id desc
+    </select>
+
+    <select id="selectDetaikByPrimaryKey" parameterType="java.lang.Long" resultMap="KnowledgeQuestionDetailResult">
+        SELECT
+            q.id qid,q.`name`,q.interupt,q.business_id, q.workflow_id,
+            (select name from dialog_workflow t1 where t1.id = q.workflow_id) workflow_name,
+            q.question,q.key_word,q.type,q.action,q.msgtempl_id,q.knowledge_id,q.score,q.foucs,q.jump,
+            q.company_id,a.id aid,a.answer,a.record_file,a.record_describe,a.record_state
+        FROM knowledge_question q
+        LEFT JOIN knowledge_answerext a
+        ON q.knowledge_id = a.knowledge_id
+        WHERE q.id=#{id}
+  </select>
+
+    <delete id="deleteDetailByPrimaryKey" parameterType="java.lang.Long">
+      DELETE kq,ka FROM knowledge_question kq
+      LEFT JOIN knowledge_answerext ka
+      ON kq.knowledge_id = ka.knowledge_id
+      WHERE kq.id=#{id}
+    </delete>
+
+    <select id="selectKnowledgeQuestionByCompanyIdAndBusinessId" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from knowledge_question
+        where company_id = #{companyId} and business_id = #{businessId}
+        order by create_date asc, id asc
+    </select>
+
+    <select id="selectByCompanyIdAndKnowledgeId" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from knowledge_question
+        where company_id = #{companyId} and knowledge_id = #{knowledgeId}
+    </select>
+
+    <!--导出问答话术-->
+    <select id="qas" resultMap="KnowledgeQuestionDetailResult" parameterType="java.util.Map">
+        select name, question,key_word,t.knowledge_id,t1.answer from knowledge_question t
+        left join knowledge_answerext t1 on t.knowledge_id = t1.knowledge_id
+        where t.business_id = #{businessId};
+    </select>
+
+    <select id="selectQuestionList" resultMap="ResultMapWithBLOBs">
+        SELECT
+          <include refid="Blo_Column_List"/>
+        FROM
+          knowledge_question
+        WHERE
+        NAME NOT IN ( SELECT NAME FROM dialog_workflow WHERE company_id = 2122 AND business_id = 134680578 )
+        AND company_id = 2122
+        AND business_id = 134680578
+        AND action = 1
+    </select>
+</mapper>

@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.KnowledgeAnswerMapper">
+	<resultMap id="BaseResultMap" type="com.pl.model.KnowledgeAnswer">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="knowledge_id" property="knowledgeId" jdbcType="VARCHAR" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="business_id" property="businessId" jdbcType="BIGINT" />
+		<result column="record_file" property="recordFile" jdbcType="VARCHAR" />
+		<result column="file_size" property="fileSize" jdbcType="INTEGER" />
+		<result column="is_record" property="isRecord" jdbcType="INTEGER" />
+		<result column="label1" property="label1" jdbcType="VARCHAR" />
+		<result column="label2" property="label2" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="uid" property="uid" jdbcType="VARCHAR" />
+		<result column="score" property="score"/>
+		<result column="action" property="action"/>
+		<result column="msgtempl_id" property="msgtemplId"/>
+		<result column="record_describe" property="recordDescribe"/>
+		<result column="record_state" property="recordState"/>
+		<result column="notRecording_num" property="notRecordingNum"/>
+		<result column="fileSize_count" property="fileSizeCount"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.pl.model.KnowledgeAnswer"
+		extends="BaseResultMap">
+		<result column="answer" property="answer" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, knowledge_id, company_id, business_id, record_file, is_record,file_size,
+		label1, label2,
+		status, uid, score,msgtempl_id, `action`, create_date, modify_date,record_describe,
+		record_state,notRecording_num,fileSize_count
+	</sql>
+	<sql id="Blob_Column_List">
+		answer
+	</sql>
+	<sql id="Blo_Column_List">
+		id,knowledge_id,answer
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from knowledge_answerext
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from knowledge_answerext
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.pl.model.KnowledgeAnswer"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into knowledge_answerext (id, knowledge_id, company_id,
+		business_id, record_file, is_record,file_size,
+		label1, label2,
+		status, uid, create_date,
+		modify_date, answer, score,`action`,msgtempl_id,record_describe,record_state,
+		notRecording_num,fileSize_count)
+		values (#{id,jdbcType=BIGINT}, #{knowledgeId,jdbcType=VARCHAR},
+		#{companyId,jdbcType=BIGINT},
+		#{businessId,jdbcType=BIGINT}, #{recordFile,jdbcType=VARCHAR}, #{isRecord,jdbcType=INTEGER},#{fileSize},
+		#{label1,jdbcType=VARCHAR}, #{label2,jdbcType=VARCHAR},
+		#{status,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+		#{modifyDate,jdbcType=TIMESTAMP}, #{answer,jdbcType=LONGVARCHAR},#{score},#{action},#{msgtemplId},
+		#{recordDescribe},#{recordState},#{notRecordingNum},#{fileSizeCount})
+	</insert>
+	<insert id="insertSelective" parameterType="com.pl.model.KnowledgeAnswer" useGeneratedKeys="true" keyProperty="id">
+		insert into knowledge_answerext
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="knowledgeId != null">
+				knowledge_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="businessId != null">
+				business_id,
+			</if>
+			<if test="recordFile != null">
+				record_file,
+			</if>
+			<if test="fileSize != null">
+				file_size,
+			</if>
+			<if test="isRecord != null">
+				is_record,
+			</if>
+			<if test="label1 != null">
+				label1,
+			</if>
+			<if test="label2 != null">
+				label2,
+			</if>
+			<if test="score != null">
+				score,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="true">
+				create_date,
+			</if>
+			<if test="true">
+				modify_date,
+			</if>
+			<if test="answer != null">
+				answer,
+			</if>
+			<if test="msgtemplId != null">
+				msgtempl_id,
+			</if>
+			<if test="action != null">
+				`action`,
+			</if>
+			<if test="recordDescribe != null">
+				record_describe,
+			</if>
+			<if test="recordState != null">
+				record_state,
+			</if>
+			<if test="notRecordingNum != null">
+				notRecording_num,
+			</if>
+			<if test="fileSizeCount != null">
+				fileSize_count,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="knowledgeId != null">
+				#{knowledgeId,jdbcType=VARCHAR},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="businessId != null">
+				#{businessId,jdbcType=BIGINT},
+			</if>
+			<if test="recordFile != null">
+				#{recordFile,jdbcType=VARCHAR},
+			</if>
+			<if test="fileSize != null">
+				#{fileSize},
+			</if>
+			<if test="isRecord != null">
+				#{isRecord,jdbcType=INTEGER},
+			</if>
+			<if test="label1 != null">
+				#{label1,jdbcType=VARCHAR},
+			</if>
+			<if test="label2 != null">
+				#{label2,jdbcType=VARCHAR},
+			</if>
+			<if test="score != null">
+				#{score},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="uid != null">
+				#{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="true">
+				now(),
+			</if>
+			<if test="true">
+				now(),
+			</if>
+			<if test="answer != null">
+				#{answer,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="msgtemplId != null">
+				#{msgtemplId},
+			</if>
+			<if test="action != null">
+				#{action},
+			</if>
+			<if test="recordDescribe != null">
+				#{recordDescribe},
+			</if>
+			<if test="recordState != null">
+				#{recordState},
+			</if>
+			<if test="notRecordingNum != null">
+				#{notRecordingNum},
+			</if>
+			<if test="fileSizeCount != null">
+				#{fileSizeCount},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.pl.model.KnowledgeAnswer">
+		update knowledge_answerext
+		<set>
+			<if test="knowledgeId != null">
+				knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="businessId != null">
+				business_id = #{businessId,jdbcType=BIGINT},
+			</if>
+			<if test="recordFile != null">
+				record_file = #{recordFile,jdbcType=VARCHAR},
+			</if>
+			<if test="fileSize != null">
+				file_size = #{fileSize},
+			</if>
+			<if test="isRecord != null">
+				is_record = #{isRecord,jdbcType=INTEGER},
+			</if>
+			<if test="label1 != null">
+				label1 = #{label1,jdbcType=VARCHAR},
+			</if>
+			<if test="label2 != null">
+				label2 = #{label2,jdbcType=VARCHAR},
+			</if>
+			<if test="score != null">
+				score = #{score},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="uid != null">
+				uid = #{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="true">
+				modify_date = now(),
+			</if>
+			<if test="answer != null">
+				answer = #{answer,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="msgtemplId != null">
+				msgtempl_id = #{msgtemplId},
+			</if>
+			<if test="action != null">
+				`action` = #{action},
+			</if>
+			<if test="recordDescribe != null">
+				record_describe = #{recordDescribe},
+			</if>
+			<if test="recordState != null">
+				record_state = #{recordState},
+			</if>
+			<if test="notRecordingNum != null">
+				notRecording_num = #{notRecordingNum},
+			</if>
+			<if test="fileSizeCount != null">
+				fileSize_count = #{fileSizeCount},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pl.model.KnowledgeAnswer">
+		update knowledge_answerext
+		set knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+		company_id = #{companyId,jdbcType=BIGINT},
+		business_id = #{businessId,jdbcType=BIGINT},
+		record_file = #{recordFile,jdbcType=VARCHAR},
+		file_size = #{fileSize},
+		is_record = #{isRecord,jdbcType=INTEGER},
+		label1 = #{label1,jdbcType=VARCHAR},
+		label2 = #{label2,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		uid = #{uid,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+		answer = #{answer,jdbcType=LONGVARCHAR},
+		score = #{score},
+		msgtempl_id = #{msgtemplId},
+		record_describe = #{recordDescribe},
+		record_state = #{recordState},
+		`action` = #{action},
+		notRecording_num = #{notRecordingNum}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.pl.model.KnowledgeAnswer">
+		update knowledge_answerext
+		set knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+		company_id = #{companyId,jdbcType=BIGINT},
+		business_id = #{businessId,jdbcType=BIGINT},
+		record_file = #{recordFile,jdbcType=VARCHAR},
+		file_size = #{fileSize},
+		is_record = #{isRecord,jdbcType=INTEGER},
+		label1 = #{label1,jdbcType=VARCHAR},
+		label2 = #{label2,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		uid = #{uid,jdbcType=VARCHAR},
+		modify_date = now(),
+		score = #{score},
+		msgtempl_id = #{msgtemplId},
+		record_describe = #{recordDescribe},
+		record_state = #{recordState},
+		`action` = #{action},
+		notRecording_num = #{notRecordingNum}
+		fileSize_count = #{fileSizeCount}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectByKnowledgeId" parameterType="String"
+		resultType="com.pl.indexserver.model.KnowledgeAnswerDto">
+		SELECT
+		id,company_id companyId,business_id businessId,record_file recordName,is_record
+		isRecord,score,msgtempl_id msgtemplId,`action`,record_describe,record_state
+		FROM knowledge_answerext
+		WHERE knowledge_id=#{knowledgeId}
+	</select>
+	
+	<select id="selectRecordIsUse" parameterType="String"
+		resultType="int">
+		SELECT
+		COUNT(record_file)
+		FROM
+		knowledge_answerext
+		WHERE
+		company_id=#{companyId}
+		AND business_id=#{businessId}
+		AND
+		record_file=#{fileName}
+	</select>
+
+	<update id="updateByKnowledgeIdSelective" parameterType="com.pl.model.KnowledgeAnswer">
+		update knowledge_answerext
+		<set>
+			<if test="score != null">
+				score = #{score},
+			</if>
+			<if test="modifyDate != null">
+				modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="msgtemplId != null">
+				msgtempl_id = #{msgtemplId},
+			</if>
+			<if test="action != null">
+				`action` = #{action},
+			</if>
+			<if test="label1 != null">
+				`label1` = #{label1},
+			</if>
+		</set>
+		where knowledge_id = #{knowledgeId}
+	</update>
+
+
+	<select id="selectKnowledgeAnswerByKnowledgeId" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List"/>
+		,
+		<include refid="Blob_Column_List"/>
+		from knowledge_answerext
+		where knowledge_id = #{knowledgeId}
+	</select>
+
+
+	<select id="selectByCompanyIdBusId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from knowledge_answerext
+		where company_id=#{companyId}
+		and business_id=#{businessId}
+	</select>
+
+	<select id="selectAnswerByKnowledgeId" parameterType="string" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Blo_Column_List"/>
+		from knowledge_answerext
+		where knowledge_id=#{knowledgeId}
+	</select>
+
+	<select id="getAnswerByKnowledgeId" resultMap="ResultMapWithBLOBs" parameterType="string">
+		select
+		<include refid="Blob_Column_List"/>
+		from knowledge_answerext
+		where knowledge_id=#{knowledgeId}
+	</select>
+
+	<select id="selectByAnswerIdAndKnowledgeId" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from knowledge_answerext
+		where id=#{answerId}
+		AND knowledge_id=#{knowledgeId}
+	</select>
+</mapper>

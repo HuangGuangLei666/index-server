@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.TCallAgentMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.model.TCallAgent" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="channel_id" property="channelId" jdbcType="BIGINT" />
+    <result column="agent_num" property="agentNum" jdbcType="VARCHAR" />
+    <result column="out_number" property="outNumber" jdbcType="VARCHAR" />
+    <result column="number_type" property="numberType"  />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="is_used" property="isUsed" jdbcType="INTEGER" />
+    <result column="used_taskid" property="usedTaskid" jdbcType="BIGINT" />
+  </resultMap>
+
+  <resultMap id="ExtendResultMap" type="com.pl.model.TCallAgent" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="channel_id" property="channelId" jdbcType="BIGINT" />
+    <result column="agent_num" property="agentNum" jdbcType="VARCHAR" />
+    <result column="out_number" property="outNumber" jdbcType="VARCHAR" />
+    <result column="number_type" property="numberType" jdbcType="INTEGER"/>
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="is_used" property="isUsed" jdbcType="INTEGER" />
+    <result column="used_taskid" property="usedTaskid" jdbcType="BIGINT"/>
+    <result column="extra_info" property="extraInfo" jdbcType="VARCHAR"/>
+    <association property="tCallChannel" column="id" select="selectChannel"/>
+  </resultMap>
+
+  <resultMap id="ChannelResultMap" type="com.pl.model.TCallChannel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="agent_id" property="agentId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="sip_addr" property="sipAddr" jdbcType="VARCHAR" />
+    <result column="sip_port" property="sipPort" jdbcType="INTEGER" />
+    <result column="prefix" property="prefix" jdbcType="VARCHAR" />
+    <result column="index" property="index" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, company_id, channel_id, agent_num, out_number, number_type, status, is_used, 
+    used_taskid, extra_info
+  </sql>
+
+  <select id="selectChannel" parameterType="long" resultMap="ChannelResultMap">
+    select id, company_id, agent_id, name, account, password, sip_addr, sip_port, prefix, `index`
+    from t_call_channel where agent_id = #{id} limit 1;
+  </select>
+
+  <select id="selectByTaskIds" resultMap="ExtendResultMap" parameterType="java.util.List" >
+    select
+    <include refid="Base_Column_List" />
+    from t_call_agent
+    WHERE is_used=1 AND used_taskid  IN (
+    <foreach collection ="list" item ="item" index ="index" separator ="," close="">
+      #{item,jdbcType=BIGINT}
+    </foreach >
+    ) ;
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_call_agent
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryCallinList" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from t_call_agent
+    WHERE company_id = #{companyId}
+    and agent_kind = 'INROBOT'
+  </select>
+
+  <select id="queryCallInListByCallInId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT
+        a.*, b.*
+    FROM
+        `t_dialog_in` a,
+        t_call_agent b
+    WHERE
+        a.task_id = b.out_number
+    AND b.id = #{callInId}
+  </select>
+
+  <select id="selectCountOutnumber"  resultType="java.lang.Integer" >
+    SELECT
+        count(1) count
+    FROM
+        `t_call_agent` a
+    WHERE
+        a.agent_kind = 'INROBOT'
+    AND a.out_number = #{agentNumber}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_call_agent
+    where id = 'canNotDelete'
+     
+    
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.TCallAgent" >
+    insert into t_call_agent (company_id, channel_id,agent_kind,
+      agent_num, out_number, number_type, agent_type,number_area,expire_time,
+      status, is_used, used_taskid,extra_info
+      )
+    values ( #{companyId,jdbcType=BIGINT}, #{channelId,jdbcType=BIGINT}, 'INROBOT',
+      #{agentNum,jdbcType=VARCHAR}, #{outNumber,jdbcType=VARCHAR}, #{numberType},'2','广东省深圳市',
+      now(),
+      #{status,jdbcType=INTEGER}, #{isUsed,jdbcType=INTEGER}, #{usedTaskid,jdbcType=BIGINT},
+      #{extraInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pl.model.TCallAgent" >
+    insert into t_call_agent
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="channelId != null" >
+        channel_id,
+      </if>
+      <if test="agentNum != null" >
+        agent_num,
+      </if>
+      <if test="outNumber != null" >
+        out_number,
+      </if>
+      <if test="numberType != null" >
+        number_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isUsed != null" >
+        is_used,
+      </if>
+      <if test="usedTaskid != null" >
+        used_taskid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="channelId != null" >
+        #{channelId,jdbcType=BIGINT},
+      </if>
+      <if test="agentNum != null" >
+        #{agentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="outNumber != null" >
+        #{outNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="numberType != null" >
+        #{numberType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isUsed != null" >
+        #{isUsed,jdbcType=INTEGER},
+      </if>
+      <if test="usedTaskid != null" >
+        #{usedTaskid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+   <update id="batchUpdateCallAgentUsed" >
+   	<foreach collection="callAgentList" item="callAgent" index="index" open="" close="" separator=";">
+        update t_call_agent
+        set is_used= #{callAgent.isUsed}, used_taskid=#{callAgent.usedTaskid}
+        where id = #{callAgent.id}
+    </foreach>
+   </update>
+
+  <update id="updateCallAgentUsed" >
+      update t_call_agent
+      set is_used= #{isUsed}, used_taskid=#{usedTaskid}
+      where id = #{id}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.TCallAgent" >
+    update t_call_agent
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="channelId != null" >
+        channel_id = #{channelId,jdbcType=BIGINT},
+      </if>
+      <if test="agentNum != null" >
+        agent_num = #{agentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="outNumber != null" >
+        out_number = #{outNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="numberType != null" >
+        number_type = #{numberType},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isUsed != null" >
+        is_used = #{isUsed,jdbcType=INTEGER},
+      </if>
+      <if test="usedTaskid != null" >
+        used_taskid = #{usedTaskid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.TCallAgent" >
+    update t_call_agent
+    set company_id = #{companyId,jdbcType=BIGINT},
+      channel_id = #{channelId,jdbcType=BIGINT},
+      agent_num = #{agentNum,jdbcType=VARCHAR},
+      out_number = #{outNumber,jdbcType=VARCHAR},
+      number_type = #{numberType},
+      status = #{status,jdbcType=INTEGER},
+      is_used = #{isUsed,jdbcType=INTEGER},
+      used_taskid = #{usedTaskid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByCompanyAndUsedtaskId">
+    update t_call_agent
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="usedTaskid != null" >
+        used_taskid = #{usedTaskid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="getTCallAgentListByCompany_id" resultType="com.pl.model.TCallAgent" >
+    select
+    <include refid="Base_Column_List" />
+    from t_call_agent
+    where company_id = #{company_id,jdbcType=BIGINT}
+    and agent_kind = 'OUT'
+  </select>
+
+  <select id="getTCAllAgentListByupdate" resultType="com.pl.model.TCallAgent">
+    select
+    <include refid="Base_Column_List" />
+    from t_call_agent
+    where company_id = #{company_id,jdbcType=BIGINT}
+    <if test="autoAgentType ==1 or autoAgentType == 2">
+      and number_type = #{autoAgentType}
+    </if>
+    and is_used= 0 and agent_kind = 'OUT'
+    LIMIT 0 ,#{autoAgentNum}
+  </select>
+
+  <select id="selectByIdArray" resultType="com.pl.model.TCallAgent">
+    SELECT
+      <include refid="Base_Column_List" />
+    from t_call_agent
+    where id in
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+        #{id}
+    </foreach>
+  </select>
+
+  <select id="getUsableAgentByCompanyId" resultType="int">
+    select count(id) from t_call_agent
+    where company_id = #{company_id} and status = 0 and is_used = 0
+    and agent_kind = 'OUT'
+  </select>
+
+  <select id="countByTaskIdAndStatus" resultType="java.lang.Integer">
+    SELECT count(id)
+    from t_call_agent
+    where used_taskid = #{taskId} and status = #{status}
+    and agent_kind = 'OUT'
+  </select>
+
+  <select id="getCallInNumber" resultType="com.pl.model.TCallAgent" >
+    SELECT id,company_id,agent_kind,out_number,used_taskid
+    FROM t_call_agent
+    WHERE out_number = '999918926450343' and agent_kind = 'INROBOT'
+  </select>
+</mapper>

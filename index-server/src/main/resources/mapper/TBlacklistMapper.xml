@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.indexserver.mapper.BlacklistMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.indexserver.model.BlacklistDto" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ct_id" property="ctId" jdbcType="VARCHAR" />
+    <result column="ct_name" property="ctName" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="ct_phone" property="ctPhone" jdbcType="VARCHAR" />
+    <result column="ct_qq" property="ctQq" jdbcType="VARCHAR" />
+    <result column="ct_wechat" property="ctWechat" jdbcType="VARCHAR" />
+    <result column="ct_email" property="ctEmail" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,ct_id,ct_name,company_id,modify_date,ct_phone,ct_qq,ct_wechat,ct_email
+  </sql>
+
+  <select id="queryBlacklistListByCompanyId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+      a.id,a.ct_id,a.ct_name,a.company_id,a.modify_date,a.ct_phone,a.ct_qq,a.ct_wechat,a.ct_email
+    from
+      t_customer_blacklist a, tm_user b
+    where
+      a.company_id = b.company_id
+    AND
+      a.company_id = #{companyId,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryBlacklistPage" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+      a.id,a.ct_id,a.ct_name,a.company_id,a.modify_date,a.ct_phone,a.ct_qq,a.ct_wechat,a.ct_email
+    from
+      t_customer_blacklist a, tm_user b
+    <where>
+      a.company_id = b.company_id
+      AND
+      a.company_id = #{companyId,jdbcType=BIGINT}
+      <if test="ctPhone != null and ctPhone !=''">
+        and a.ct_phone like CONCAT('%',#{ctPhone},'%')
+      </if>
+      ORDER BY a.modify_date desc
+    </where>
+  </select>
+
+
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from t_customer_blacklist
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    a.id,a.ct_id,a.ct_name,a.company_id,a.modify_date,a.ct_phone,a.ct_qq,a.ct_wechat,a.ct_email
+    from t_customer_blacklist a
+    where
+    a.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <insert id="addBlacklist" parameterType="java.util.Map">
+    insert into t_customer_blacklist (
+    ct_id, ct_name, company_id, modify_date, ct_phone,
+    ct_qq, ct_wechat, ct_email)
+    values
+    <foreach collection="blacklistDtoList" index="index" item="item" separator="," >
+      ( #{item.ctId,jdbcType=BIGINT}, #{item.ctName,jdbcType=VARCHAR},#{item.companyId,jdbcType=BIGINT},
+       #{item.modifyDate,jdbcType=TIMESTAMP}, #{item.ctPhone,jdbcType=VARCHAR},#{item.ctQq,jdbcType=VARCHAR},
+       #{item.ctWechat,jdbcType=VARCHAR}, #{item.ctEmail,jdbcType=VARCHAR}
+      )
+    </foreach>
+    ON DUPLICATE KEY UPDATE ct_phone=VALUES(ct_phone),modify_date=now()
+  </insert>
+  <!--<insert id="addBlacklist" parameterType="java.util.Map">
+    insert into t_customer_blacklist (
+    ct_id,
+    ct_name,
+    company_id,
+    modify_date,
+    ct_phone
+    )
+    values
+    <foreach collection="blacklistDtoList" index="index" item="item" separator="," >
+      ( #{item.ctId,jdbcType=BIGINT}, #{item.ctName,jdbcType=VARCHAR},
+      #{item.companyId,jdbcType=BIGINT}, now(), #{item.ctPhone,jdbcType=VARCHAR}
+      )
+    </foreach>
+    ON DUPLICATE KEY UPDATE ct_phone=VALUES(ct_phone),modify_date=now()
+
+  </insert>-->
+
+  <select id="selectCompanyBlackPhoneList" resultType="java.lang.String">
+    select ct_phone
+    from t_customer_blacklist
+    where company_id = #{companyId,jdbcType=BIGINT}
+  </select>
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tm_customer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.pl.model.TmCustomer" >
+    insert into tm_customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ctid != null" >
+        ctid,
+      </if>
+      <if test="task_id != null" >
+        task_id,
+      </if>
+      <if test="ctname != null" >
+        ctname,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="ctAddress != null" >
+        ct_address,
+      </if>
+      <if test="ctSex != null" >
+        ct_sex,
+      </if>
+      <if test="ctPosition != null" >
+        ct_position,
+      </if>
+      <if test="ctPhone != null" >
+        ct_phone,
+      </if>
+      <if test="ctType != null" >
+        ct_type,
+      </if>
+      <if test="cmType != null" >
+        cm_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ctid != null" >
+        #{ctid,jdbcType=VARCHAR},
+      </if>
+      <if test="task_id != null" >
+        #{task_id,jdbcType=BIGINT},
+      </if>
+      <if test="ctname != null" >
+        #{ctname,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="ctAddress != null" >
+        #{ctAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ctSex != null" >
+        #{ctSex,jdbcType=VARCHAR},
+      </if>
+      <if test="ctPosition != null" >
+        #{ctPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="ctPhone != null" >
+        #{ctPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="ctType != null" >
+        #{ctType,jdbcType=VARCHAR},
+      </if>
+      <if test="cmType != null" >
+        #{cmType},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.TmCustomer" >
+    update tm_customer
+    <set >
+      <if test="ctid != null" >
+        ctid = #{ctid,jdbcType=VARCHAR},
+      </if>
+      <if test="task_id != null" >
+        task_id = #{task_id,jdbcType=BIGINT},
+      </if>
+      <if test="ctname != null" >
+        ctname = #{ctname,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="ctAddress != null" >
+        ct_address = #{ctAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ctSex != null" >
+        ct_sex = #{ctSex,jdbcType=VARCHAR},
+      </if>
+      <if test="ctPosition != null" >
+        ct_position = #{ctPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="ctPhone != null" >
+        ct_phone = #{ctPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="ctType != null" >
+        ct_type = #{ctType,jdbcType=VARCHAR},
+      </if>
+      <if test="cmType != null" >
+        cm_type = #{cmType},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.TmCustomer" >
+    update tm_customer
+    set ctid = #{ctid,jdbcType=VARCHAR},
+        task_id=#{task_id,jdbcType=BIGINT},
+      ctname = #{ctname,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      ct_address = #{ctAddress,jdbcType=VARCHAR},
+      ct_sex = #{ctSex,jdbcType=VARCHAR},
+      ct_position = #{ctPosition,jdbcType=VARCHAR},
+      ct_phone = #{ctPhone,jdbcType=VARCHAR},
+      car_numbers = #{car_numbers,jdbcType=VARCHAR},
+      ct_type = #{ctType,jdbcType=VARCHAR},
+      cm_type = #{cmType}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <insert id="addCustomer" parameterType="java.util.Set">
+    insert into tm_customer (  ctid, task_id,ctname,
+    company_id, ct_address, ct_sex,
+    ct_position, ct_phone,`car_numbers` , ct_type,cm_type
+    )
+    values
+    <foreach collection="set" index="index" item="item" separator="," >
+      ( #{item.ctid,jdbcType=VARCHAR},#{item.task_id,jdbcType=BIGINT},
+      #{item.ctname,jdbcType=VARCHAR},#{item.companyId,jdbcType=BIGINT},
+      #{item.ctAddress,jdbcType=VARCHAR}, #{item.ctSex,jdbcType=VARCHAR},
+      #{item.ctPosition,jdbcType=VARCHAR}, #{item.ctPhone,jdbcType=VARCHAR},
+      #{item.car_numbers,jdbcType=VARCHAR}, #{item.ctType,jdbcType=VARCHAR},#{cmType}
+      )
+    </foreach>
+  </insert>
+
+  <insert id="addCustonerBatch" parameterType="java.util.Set">
+    insert into tm_customer (  ctid, task_id,ctname,
+    company_id, ct_address, ct_sex,
+    ct_position, ct_phone,`car_numbers` , ct_type,cm_type)
+    values
+    <foreach collection="set" index="index" item="item" separator="," >
+      ( #{item.ctid,jdbcType=VARCHAR},#{item.task_id,jdbcType=BIGINT},
+      #{item.ctname,jdbcType=VARCHAR},#{item.companyId,jdbcType=BIGINT},
+      #{item.ctAddress,jdbcType=VARCHAR}, #{item.ctSex,jdbcType=VARCHAR},
+      #{item.ctPosition,jdbcType=VARCHAR}, #{item.ctPhone,jdbcType=VARCHAR},
+      #{item.car_numbers,jdbcType=VARCHAR}, #{item.ctType,jdbcType=VARCHAR},#{item.cmType}
+      )
+    </foreach>
+      ON DUPLICATE KEY UPDATE ctname=VALUES(ctname),car_numbers=VALUES(car_numbers);
+  </insert>
+
+  <delete id="deleteTmCustomerByCtType">
+    delete from tm_customer
+    where ct_type =#{ct_type}
+  </delete>
+
+  <select id="getTmCustomerList" resultType="com.pl.model.TmCustomer">
+    select
+    <include refid="Base_Column_List" />
+    from tm_customer
+    where task_id = #{task_id}
+  </select>
+
+  <select id="selectByTelephoneAndCompanyId" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tm_customer
+    where ct_phone = #{telephone}
+    AND company_id=#{companyId}
+    GROUP BY ct_phone,id, task_id,ctid, ctname, company_id, ct_address, ct_sex, ct_position, ct_type, car_numbers
+  </select>
+
+  <select id="selectByCompanyId" parameterType="java.lang.String" resultType="java.lang.String">
+    select
+    ct_phone
+    from tm_customer
+    where
+      company_id=#{companyId}
+  </select>-->
+</mapper>

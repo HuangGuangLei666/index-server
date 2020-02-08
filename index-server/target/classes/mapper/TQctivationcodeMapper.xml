@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TQctivationcodeMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.wx.TQctivationcode">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="used_user_id" jdbcType="INTEGER" property="usedUserId" />
+    <result column="code_meal_id" jdbcType="VARCHAR" property="codeMealId" />
+    <result column="agent_id" jdbcType="INTEGER" property="agentId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="code_type" jdbcType="VARCHAR" property="codeType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="used_time" jdbcType="TIMESTAMP" property="usedTime" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="trade_no" jdbcType="VARCHAR" property="tradeNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, used_user_id, code_meal_id, agent_id, status, code_type, create_time, used_time, 
+    expire_time,trade_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wx.t_qctivationcode
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx.t_qctivationcode
+    where code = #{activationCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectQctivationByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_qctivationcode
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByTradeNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx.t_qctivationcode
+    where trade_no = #{ordersSn,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByUserIdAndStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx.t_qctivationcode
+    where agent_id = #{userId}
+    and status = 2
+  </select>
+
+  <select id="selectByAgentIdAndStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_qctivationcode
+    where agent_id = #{id}
+    and status = 2
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx.t_qctivationcode
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.wx.TQctivationcode">
+    insert into wx.t_qctivationcode (id, code, used_user_id, 
+      code_meal_id, agent_id, status, 
+      code_type, create_time, used_time, 
+      expire_time)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{usedUserId,jdbcType=INTEGER}, 
+      #{codeMealId,jdbcType=VARCHAR}, #{agentId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{codeType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{usedTime,jdbcType=TIMESTAMP}, 
+      #{expireTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <insert id="addTQctivationcode" parameterType="com.pl.model.wx.TQctivationcode">
+    insert into wx.t_qctivationcode
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="usedUserId != null">
+        used_user_id,
+      </if>
+      <if test="codeMealId != null">
+        code_meal_id,
+      </if>
+      <if test="agentId != null">
+        agent_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="codeType != null">
+        code_type,
+      </if>
+
+        create_time,
+
+        expire_time,
+      <if test="tradeNo != null and tradeNo != ''">
+        trade_no,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="usedUserId != null">
+        #{usedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="codeMealId != null">
+        #{codeMealId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null">
+        #{agentId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="codeType != null">
+        #{codeType,jdbcType=VARCHAR},
+      </if>
+      now(),
+
+      DATE_ADD(now(),INTERVAL 365 day),
+      <if test="tradeNo != null">
+        #{tradeNo},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelective" parameterType="com.pl.model.wx.TQctivationcode">
+    insert into wx.t_qctivationcode
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="usedUserId != null">
+        used_user_id,
+      </if>
+      <if test="codeMealId != null">
+        code_meal_id,
+      </if>
+      <if test="agentId != null">
+        agent_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="codeType != null">
+        code_type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="usedTime != null">
+        used_time,
+      </if>
+      <if test="expireTime != null">
+        expire_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="usedUserId != null">
+        #{usedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="codeMealId != null">
+        #{codeMealId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null">
+        #{agentId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="codeType != null">
+        #{codeType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usedTime != null">
+        #{usedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TQctivationcode">
+    update wx.t_qctivationcode
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="usedUserId != null">
+        used_user_id = #{usedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="codeMealId != null">
+        code_meal_id = #{codeMealId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null">
+        agent_id = #{agentId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="codeType != null">
+        code_type = #{codeType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usedTime != null">
+        used_time = #{usedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TQctivationcode">
+    update wx.t_qctivationcode
+    set code = #{code,jdbcType=VARCHAR},
+      used_user_id = #{usedUserId,jdbcType=INTEGER},
+      code_meal_id = #{codeMealId,jdbcType=VARCHAR},
+      agent_id = #{agentId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      code_type = #{codeType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      used_time = #{usedTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="openMembershipByCode" parameterType="com.pl.model.wx.TQctivationcode">
+    update wx.t_qctivationcode
+    set used_user_id = #{userId,jdbcType=INTEGER},
+    status = 2,
+    used_time = now(),
+    expire_time = now()
+    where code = #{code}
+  </update>
+
+  <update id="updateMembershipByCode" parameterType="com.pl.model.wx.TQctivationcode">
+    update wx_back.t_qctivationcode
+    set used_user_id = #{userId,jdbcType=INTEGER},
+    status = 2,
+    used_time = now(),
+    expire_time = now()
+    where code = #{code}
+  </update>
+</mapper>

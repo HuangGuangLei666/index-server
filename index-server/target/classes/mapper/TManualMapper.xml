@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.TManualMapper">
+	<resultMap id="BaseResultMap" type="com.pl.model.TManual">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="task_id" property="taskId"/>
+		<result column="phone_num" property="phoneNum"/>
+		<result column="remark" property="remark"/>
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="stage" property="stage" />
+		<result column="uid" property="uid" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="extra_info" property="extraInfo"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, task_id, company_id, phone_num, uid, remark,
+		status, stage, create_time, extra_info
+	</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_manual
+		where id = #{id} AND company_id = #{companyId}
+	</delete>
+	<insert id="insertManual" parameterType="com.pl.model.TManual" useGeneratedKeys="true" keyProperty="id">
+		insert into t_manual
+		(id, task_id, company_id, phone_num, uid, remark,
+		stage, status, create_time, extra_info)
+		values
+		(#{id,jdbcType=INTEGER}, #{taskId,jdbcType=INTEGER},#{companyId,jdbcType=BIGINT},
+		#{phoneNum,jdbcType=VARCHAR},#{uid,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, #{stage,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, now(),
+		#{extra_info,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.pl.model.TManual" useGeneratedKeys="true" keyProperty="id">
+		insert into t_manual
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="taskId != null">
+				task_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="phoneNum != null">
+				phone_num,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="remark != null and remark != ''">
+				remark,
+			</if>
+			<if test="stage != null and stage !=''">
+				stage,
+			</if>
+			<if test="status != null">
+				`status`,
+			</if>
+			<if test="true">
+				create_time,
+			</if>
+			<if test="extraInfo != null">
+				extra_info,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="taskId != null">
+				#{taskId,jdbcType=INTEGER},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="phoneNum != null">
+				#{phoneNum,jdbcType=VARCHAR},
+			</if>
+			<if test="uid != null">
+				#{uid, jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark != ''">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="stage != null and stage !=''">
+				#{stage, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="true">
+				now(),
+			</if>
+			<if test="extraInfo != null">
+				#{extraInfo, jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.pl.model.TManual">
+		update t_manual
+		<set>
+			<if test="taskId != null">
+				task_id = #{taskId},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId},
+			</if>
+			<if test="phoneNum != null">
+				phone_num = #{phoneNum},
+			</if>
+			<if test="uid != null">
+				uid = #{uid},
+			</if>
+			<if test="remark != null and remark !=''">
+				remark = #{remark},
+			</if>
+			<if test="stage != null and stage !=''">
+				stage = #{stage},
+			</if>
+			<if test="status != null">
+				`status` = #{status},
+			</if>
+			<if test="extraInfo != null">
+				extra_info= #{extraInfo},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="getManualList" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_manual
+		<where>
+			company_id = #{companyId}
+			<if test="beginDate != null ">
+				and create_time &gt;= #{beginDate}
+			</if>
+			<if test="endDate != null">
+				and create_time &lt;= #{endDate}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+			<if test="phone != null and phone !=''">
+				and phone_num = #{phone}
+			</if>
+			AND uid = #{uid} order by create_time desc
+		</where>
+
+	</select>
+
+	<select id="getManualByPhone" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from t_manual
+		where task_id = #{taskId} and company_id = #{companyId} and phone_num = #{phone}
+	</select>
+
+	<select id="getManualByPrimaryKey" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from t_manual
+		where id = #{id}
+	</select>
+
+</mapper>

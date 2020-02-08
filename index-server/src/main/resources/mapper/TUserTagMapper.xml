@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TUserTagMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.wx.TUserTag">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="tag_id" jdbcType="INTEGER" property="tagId"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="TusertagBaseResultMap" type="com.pl.model.wx.TUserTagDto">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="tag_id" jdbcType="INTEGER" property="tagId"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="friend_name" jdbcType="VARCHAR" property="friendName"/>
+    </resultMap>
+
+    <resultMap id="TtagBaseResultMap" type="com.pl.model.wx.TTag">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, openid, phone, tag_id, tag_name, type, create_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_user_tag
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectuserTagList" resultMap="TtagBaseResultMap">
+        select id,name,create_time from wx.t_tag
+    </select>
+
+    <select id="selectByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_user_tag
+        where openid = #{openid}
+        and phone = #{telephone}
+    </select>
+
+    <select id="selectByOpenidAndTagname" parameterType="java.lang.String" resultMap="TusertagBaseResultMap">
+        select
+        a.id, a.openid, a.phone, a.tag_id, a.tag_name, a.type, a.create_time
+        from wx.t_user_tag a
+        <where>
+            <if test="openid != null and openid != ''">
+                openid = #{openid}
+            </if>
+            <if test="tagName != null and tagName != ''">
+                and tag_name = #{tagName}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx.t_user_tag
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <delete id="deleteByOpenidAndPhone" parameterType="java.lang.String">
+        delete from wx.t_user_tag
+        where openid = #{openid}
+        and phone = #{phone}
+    </delete>
+
+    <insert id="insert" parameterType="com.pl.model.wx.TUserTag">
+    insert into wx.t_user_tag (id, openid, 
+      phone, tag_id, tag_name, 
+      type, create_time)
+    values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{tagId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.wx.TUserTag">
+        insert into wx.t_user_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="openid != null">
+                openid,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="tagId != null">
+                tag_id,
+            </if>
+            <if test="tagName != null">
+                tag_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="openid != null">
+                #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="tagId != null">
+                #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertUserTag" parameterType="com.pl.model.wx.TUserTag">
+        insert into wx.t_user_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="openid != null">
+                openid,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="tagId != null">
+                tag_id,
+            </if>
+            <if test="tagName != null">
+                tag_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            create_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="openid != null">
+                #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="tagId != null">
+                #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            now(),
+        </trim>
+        ON DUPLICATE KEY UPDATE openid=VALUES(openid),phone=VALUES(phone),tag_id=VALUES(tag_id),tag_name=VALUES(tag_name),type=VALUES(type),create_time=now()
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TUserTag">
+        update wx.t_user_tag
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="openid != null">
+                openid = #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="tagId != null">
+                tag_id = #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="tagName != null">
+                tag_name = #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TUserTag">
+    update wx.t_user_tag
+    set user_id = #{userId,jdbcType=INTEGER},
+      openid = #{openid,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      tag_id = #{tagId,jdbcType=INTEGER},
+      tag_name = #{tagName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

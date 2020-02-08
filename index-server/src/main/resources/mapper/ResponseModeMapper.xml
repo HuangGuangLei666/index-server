@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.ResponseModeMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.model.ResponseMode" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="business_id" property="businessId" jdbcType="BIGINT" />
+    <result column="rule_type" property="ruleType" jdbcType="INTEGER" />
+    <result column="key_word" property="keyWord" jdbcType="VARCHAR" />
+    <result column="key_num" property="keyNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pl.model.ResponseMode" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, company_id, business_id, rule_type, key_word, key_num, status, flag, uid, 
+    create_date, modify_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from response_mode
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from response_mode
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id"  parameterType="com.pl.model.ResponseMode" >
+    insert into response_mode (id, name, company_id, 
+      business_id, rule_type, key_word, 
+      key_num, status, flag, 
+      uid, create_date, modify_date, 
+      content)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}, 
+      #{businessId,jdbcType=BIGINT}, #{ruleType,jdbcType=INTEGER}, #{keyWord,jdbcType=VARCHAR}, 
+      #{keyNum,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, 
+      #{uid,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.pl.model.ResponseMode" >
+    insert into response_mode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="ruleType != null" >
+        rule_type,
+      </if>
+      <if test="keyWord != null" >
+        key_word,
+      </if>
+      <if test="keyNum != null" >
+        key_num,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="ruleType != null" >
+        #{ruleType,jdbcType=INTEGER},
+      </if>
+      <if test="keyWord != null" >
+        #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="keyNum != null" >
+        #{keyNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.ResponseMode" >
+    update response_mode
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null" >
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="ruleType != null" >
+        rule_type = #{ruleType,jdbcType=INTEGER},
+      </if>
+      <if test="keyWord != null   " >
+        key_word = #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="keyNum != null" >
+        key_num = #{keyNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null   " >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      syn_status = 1,
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pl.model.ResponseMode" >
+    update response_mode
+    set name = #{name,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      rule_type = #{ruleType,jdbcType=INTEGER},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      key_num = #{keyNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR},
+      syn_status = 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.ResponseMode" >
+    update response_mode
+    set name = #{name,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      rule_type = #{ruleType,jdbcType=INTEGER},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      key_num = #{keyNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      syn_status = 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByCompanyId" resultType="com.pl.indexserver.model.ResponseModeDto" parameterType="java.lang.String">
+    SELECT id,`name`,rule_type ruleType,key_num keyNum,key_word keyWord,modify_date modifyDate,content,create_date createDate
+    FROM response_mode
+    WHERE company_id = #{companyId}
+  </select>
+
+
+  <select id="selectByCompanyIdAndBusinessId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from response_mode
+    where company_id = #{companyId}
+  </select>
+
+  <select id="selectByWorkFlow" resultMap="ResultMapWithBLOBs" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from response_mode
+    where id in
+      (select DISTINCT response_id
+      from workflow_link
+      where company_id = #{companyId}
+      and business_id = #{businessId})
+  </select>
+
+  <insert id="insertSysResponseMode">
+    INSERT INTO response_mode(`name`, company_id, business_id, rule_type, content, key_num, uid, create_date, modify_date)
+    SELECT `name`, #{companyId}, business_id, rule_type, '""', 0, 'system', now(), now()
+    FROM sys_response_mode WHERE rule_type in (1111, 2222, 3333)
+  </insert>
+
+  <select id="getSysResponseModeSize" resultType="int">
+    select count(*) from response_mode
+    where company_id = #{companyId} and rule_type in (1111, 2222, 3333)
+  </select>
+</mapper>

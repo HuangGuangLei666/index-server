@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.ReportFamilyPlanningMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.ReportFamilyPlanning">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="county_code" jdbcType="VARCHAR" property="countyCode" />
+    <result column="county_name" jdbcType="VARCHAR" property="countyName" />
+    <result column="dialog_id" jdbcType="BIGINT" property="dialogId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="age" jdbcType="VARCHAR" property="age" />
+    <result column="maintenance_fee" jdbcType="TINYINT" property="maintenanceFee" />
+    <result column="public_service" jdbcType="TINYINT" property="publicService" />
+    <result column="terminal_pregnancy" jdbcType="TINYINT" property="terminalPregnancy" />
+    <result column="reward_help" jdbcType="TINYINT" property="rewardHelp" />
+    <result column="two_child_policy" jdbcType="TINYINT" property="twoChildPolicy" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, county_code, county_name, dialog_id, phone, name, sex, age, maintenance_fee, 
+    public_service, terminal_pregnancy, reward_help, two_child_policy, status, create_by, 
+    create_date, update_by, update_date, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from report_family_planning
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from report_family_planning
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.ReportFamilyPlanning">
+    insert into report_family_planning (id, county_code, county_name, 
+      dialog_id, phone, name, 
+      sex, age, maintenance_fee, 
+      public_service, terminal_pregnancy, reward_help, 
+      two_child_policy, status, create_by, 
+      create_date, update_by, update_date, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{countyCode,jdbcType=VARCHAR}, #{countyName,jdbcType=VARCHAR}, 
+      #{dialogId,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR}, #{maintenanceFee,jdbcType=TINYINT}, 
+      #{publicService,jdbcType=TINYINT}, #{terminalPregnancy,jdbcType=TINYINT}, #{rewardHelp,jdbcType=TINYINT}, 
+      #{twoChildPolicy,jdbcType=TINYINT}, #{status,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pl.model.ReportFamilyPlanning">
+    insert into report_family_planning
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="countyCode != null">
+        county_code,
+      </if>
+      <if test="countyName != null">
+        county_name,
+      </if>
+      <if test="dialogId != null">
+        dialog_id,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="maintenanceFee != null">
+        maintenance_fee,
+      </if>
+      <if test="publicService != null">
+        public_service,
+      </if>
+      <if test="terminalPregnancy != null">
+        terminal_pregnancy,
+      </if>
+      <if test="rewardHelp != null">
+        reward_help,
+      </if>
+      <if test="twoChildPolicy != null">
+        two_child_policy,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="countyCode != null">
+        #{countyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="countyName != null">
+        #{countyName,jdbcType=VARCHAR},
+      </if>
+      <if test="dialogId != null">
+        #{dialogId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="maintenanceFee != null">
+        #{maintenanceFee,jdbcType=TINYINT},
+      </if>
+      <if test="publicService != null">
+        #{publicService,jdbcType=TINYINT},
+      </if>
+      <if test="terminalPregnancy != null">
+        #{terminalPregnancy,jdbcType=TINYINT},
+      </if>
+      <if test="rewardHelp != null">
+        #{rewardHelp,jdbcType=TINYINT},
+      </if>
+      <if test="twoChildPolicy != null">
+        #{twoChildPolicy,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.ReportFamilyPlanning">
+    update report_family_planning
+    <set>
+      <if test="countyCode != null">
+        county_code = #{countyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="countyName != null">
+        county_name = #{countyName,jdbcType=VARCHAR},
+      </if>
+      <if test="dialogId != null">
+        dialog_id = #{dialogId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="maintenanceFee != null">
+        maintenance_fee = #{maintenanceFee,jdbcType=TINYINT},
+      </if>
+      <if test="publicService != null">
+        public_service = #{publicService,jdbcType=TINYINT},
+      </if>
+      <if test="terminalPregnancy != null">
+        terminal_pregnancy = #{terminalPregnancy,jdbcType=TINYINT},
+      </if>
+      <if test="rewardHelp != null">
+        reward_help = #{rewardHelp,jdbcType=TINYINT},
+      </if>
+      <if test="twoChildPolicy != null">
+        two_child_policy = #{twoChildPolicy,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.ReportFamilyPlanning">
+    update report_family_planning
+    set county_code = #{countyCode,jdbcType=VARCHAR},
+      county_name = #{countyName,jdbcType=VARCHAR},
+      dialog_id = #{dialogId,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=VARCHAR},
+      maintenance_fee = #{maintenanceFee,jdbcType=TINYINT},
+      public_service = #{publicService,jdbcType=TINYINT},
+      terminal_pregnancy = #{terminalPregnancy,jdbcType=TINYINT},
+      reward_help = #{rewardHelp,jdbcType=TINYINT},
+      two_child_policy = #{twoChildPolicy,jdbcType=TINYINT},
+      status = #{status,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--**************************** extend begin here start *******************************-->
+  <select id="selectReportFamilyPlaningByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT r.id, r.county_code, r.county_name, r.phone, r.name, r.sex, r.age, r.maintenance_fee, r.public_service,
+    r.terminal_pregnancy, r.reward_help, r.two_child_policy, r.status
+    FROM report_family_planning r
+    LEFT JOIN  t_dialog${postfix} d
+    on d.id = r.dialog_id
+    <where>
+      d.task_id = #{id}
+      <if test="beginDate != null and beginDate != ''">
+        <![CDATA[ and d.begin_date>= #{beginDate,jdbcType=TIMESTAMP}]]>
+      </if>
+
+      <if test="endDate != null and endDate != ''">
+        <![CDATA[ and d.end_date  <=  #{endDate,jdbcType=TIMESTAMP}]]>
+      </if>
+
+      <if test="intentionLevel != null and intentionLevel != ''">
+        <if test="type == &quot;all&quot;">
+          AND (d.intention_level = #{intentionLevel,jdbcType=VARCHAR} or d.focus_level = #{intentionLevel,jdbcType=VARCHAR} or d.intent_level = #{intentionLevel,jdbcType=VARCHAR})
+        </if>
+        <if test="type == &quot;intention&quot;">
+          and d.intention_level = #{intentionLevel,jdbcType=VARCHAR}
+        </if>
+        <if test="type == &quot;focus&quot;">
+          and d.focus_level = #{intentionLevel,jdbcType=VARCHAR}
+        </if>
+        <if test="type == &quot;intent&quot;">
+          and d.intent_level = #{intentionLevel,jdbcType=VARCHAR}
+        </if>
+      </if>
+
+      <if test="status != null and status != '' ">
+        <choose>
+          <when test="status == 18">
+            and d.status  in (10,18,19,22,30)
+          </when>
+          <otherwise>
+            and d.status  = #{status,jdbcType=INTEGER}
+          </otherwise>
+        </choose>
+      </if>
+
+      <if test="isIntention != null and isIntention != '' ">
+        <if test="isIntention == 24">
+          and d.is_intention  = #{isIntention,jdbcType=INTEGER}
+        </if>
+        <if test="isIntention == 23">
+          <if test="type == &quot;all&quot;">
+            AND (d.intention_level not in ('A','B','C','D') and d.focus_level not in ('A','B','C','D') and d.intent_level not in ('A','B','C','D')) and d.status=2
+          </if>
+          <if test="type == &quot;intention&quot;">
+            AND d.intention_level = 'E' and d.status=2
+          </if>
+          <if test="type == &quot;focus&quot;">
+            AND d.focus_level = 'E' and d.status=2
+          </if>
+          <if test="type == &quot;intent&quot;">
+            AND d.intent_level = 'E' and d.status=2
+          </if>
+        </if>
+      </if>
+      <if test="allIsIntention != null and allIsIntention == 'true' ">
+        <if test="type == &quot;all&quot;">
+          AND (d.intention_level IN ('A','B','C') or d.focus_level in ('A','B','C') or d.intent_level in ('A','B','C'))
+        </if>
+        <if test="type == &quot;intention&quot;">
+          and d.intention_level in ('A','B','C')
+        </if>
+        <if test="type == &quot;focus&quot;">
+          and d.focus_level in ('A','B','C')
+        </if>
+        <if test="type == &quot;intent&quot;">
+          and d.intent_level in ('A','B','C')
+        </if>
+      </if>
+
+    </where>
+    order by
+    CASE d.STATUS
+    WHEN 0 then 3
+    END,`status` asc
+  </select>
+</mapper>

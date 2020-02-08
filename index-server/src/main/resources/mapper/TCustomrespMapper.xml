@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TCustomrespMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.wx.TCustomresp">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="knowledge_id" jdbcType="VARCHAR" property="knowledgeId" />
+    <result column="ans_content" jdbcType="VARCHAR" property="ansContent" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="filename" jdbcType="VARCHAR" property="fileName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, openid, knowledge_id, ans_content, create_time,filename
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wx.t_customresp
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByOpenidAndKnowId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx.t_customresp
+    where id = #{answerId}
+    and openid = #{openid}
+    and knowledge_id = #{knowledgeId}
+  </select>
+
+  <select id="selectByOpenidAndKnowledgeId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx.t_customresp
+    where openid = #{openid}
+    and knowledge_id = #{knowledgeId}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx.t_customresp
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.wx.TCustomresp">
+    insert into wx.t_customresp (id, openid, knowledge_id, 
+      ans_content, create_time)
+    values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{knowledgeId,jdbcType=VARCHAR}, 
+      #{ansContent,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pl.model.wx.TCustomresp">
+    insert into wx.t_customresp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id,
+      </if>
+      <if test="ansContent != null">
+        ans_content,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeId != null">
+        #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="ansContent != null">
+        #{ansContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="addCustomerresp" parameterType="com.pl.model.wx.TCustomresp">
+    insert into wx.t_customresp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id,
+      </if>
+      <if test="ansContent != null">
+        ans_content,
+      </if>
+        create_time,
+      <if test="fileName != null and fileName != ''">
+        filename,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeId != null">
+        #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="ansContent != null">
+        #{ansContent,jdbcType=VARCHAR},
+      </if>
+        now(),
+      <if test="fileName != null and fileName != ''">
+        #{fileName},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TCustomresp">
+    update wx.t_customresp
+    <set>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="ansContent != null">
+        ans_content = #{ansContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TCustomresp">
+    update wx.t_customresp
+    set openid = #{openid,jdbcType=VARCHAR},
+      knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+      ans_content = #{ansContent,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

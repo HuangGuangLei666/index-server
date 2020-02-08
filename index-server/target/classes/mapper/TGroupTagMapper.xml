@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TGroupTagMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.wx.TGroupTag">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+        <result column="phones" jdbcType="VARCHAR" property="phones"/>
+        <result column="tag_id" jdbcType="INTEGER" property="tagId"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="TgroupTagBaseResultMap" type="com.pl.model.wx.TGroupTagDto">
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+        <result column="tag_id" jdbcType="INTEGER" property="tagId"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="name" jdbcType="TIMESTAMP" property="groupName"/>
+        <result column="friend_name" jdbcType="TIMESTAMP" property="friendName"/>
+    </resultMap>
+    <resultMap id="FriendPhonesBaseResultMap" type="com.pl.model.wx.FriendPhonesDto">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="friend_name" jdbcType="INTEGER" property="friendName"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="phones" jdbcType="VARCHAR" property="phones"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+    </resultMap>
+    <resultMap id="TTagGroupBaseResultMap" type="com.pl.model.wx.TTagGroup">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, openid, phones, tag_id, tag_name, type, create_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_group_tag
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectTagNameByTagId" parameterType="java.lang.Integer" resultMap="TTagGroupBaseResultMap">
+        select
+        id,name,create_time
+        from wx.t_tag_group
+        where id = #{tagId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectGroupClassList" resultMap="TTagGroupBaseResultMap">
+        select id,name,create_time from wx.t_tag_group
+    </select>
+
+    <select id="selectByOpenidPhonesTagName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_group_tag
+        where openid = #{openid}
+        and phones = #{phone}
+        and tag_name = #{tagName}
+    </select>
+
+    <select id="selectByOpenidPhone" parameterType="java.lang.String" resultMap="TTagGroupBaseResultMap">
+        SELECT
+            a.id,a.name,a.create_time
+        FROM
+            wx.t_tag_group a
+            LEFT JOIN wx.t_group_tag b ON a.id = b.tag_id
+        WHERE
+            b.openid = #{openid}
+            AND b.phones = #{telephone}
+    </select>
+
+    <select id="selectByOpenidAndPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_group_tag
+        where openid = #{openid}
+        and phones = #{telephone}
+    </select>
+
+    <select id="selectByOpenidAndTagname" parameterType="java.lang.String" resultMap="TgroupTagBaseResultMap">
+        select
+        DISTINCT a.openid,a.tag_id,a.tag_name,a.type,b.NAME,c.friend_name
+        from
+        wx.t_group_tag a,
+        wx.t_tag_group b,
+        wx.t_book c
+        <where>
+            a.tag_id = b.id
+            <if test="openid != null and openid != ''">
+                AND openid = #{openid}
+            </if>
+            <if test="tagName != null and tagName != ''">
+                AND tag_name = #{tagName}
+            </if>
+            AND a.phones = c.phone
+            AND c.open_id = a.openid
+        </where>
+    </select>
+
+    <select id="selectPhoneList" parameterType="java.lang.String" resultMap="FriendPhonesBaseResultMap">
+        select
+        b.id,a.friend_name,a.phone,b.phones,a.open_id,b.tag_name
+        from
+        wx.t_book a,
+        wx.t_group_tag b
+        <where>
+            a.open_id = b.openid AND a.phone = b.phones
+            <if test="openid != null and openid != ''">
+                AND a.open_id = #{openid}
+            </if>
+            <if test="tagName != null and tagName != ''">
+                AND b.tag_name = #{tagName}
+            </if>
+            <if test="friendName != null and friendName != ''">
+                AND a.friend_name = #{friendName}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx.t_group_tag
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <delete id="deletePhonesDto" parameterType="java.lang.String">
+        delete from wx.t_group_tag
+        where openid = #{openid}
+        and phones = #{phones}
+        and tag_name = #{tagName}
+    </delete>
+
+    <delete id="deleteByOpenidAndPhone" parameterType="java.lang.String">
+        delete from wx.t_group_tag
+        where openid = #{openid}
+        and phones = #{phone}
+    </delete>
+
+    <insert id="insert" parameterType="com.pl.model.wx.TGroupTag">
+    insert into wx.t_group_tag (id, openid, phones, 
+      tag_id, tag_name, type, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{phones,jdbcType=VARCHAR}, 
+      #{tagId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.wx.TGroupTag">
+        insert into wx.t_group_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="openid != null">
+                openid,
+            </if>
+            <if test="phones != null">
+                phones,
+            </if>
+            <if test="tagId != null">
+                tag_id,
+            </if>
+            <if test="tagName != null">
+                tag_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="openid != null">
+                #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="phones != null">
+                #{phones,jdbcType=VARCHAR},
+            </if>
+            <if test="tagId != null">
+                #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertGroupTag" parameterType="com.pl.model.wx.TGroupTag">
+        insert into wx.t_group_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="openid != null">
+                openid,
+            </if>
+            <if test="phones != null">
+                phones,
+            </if>
+            <if test="tagId != null">
+                tag_id,
+            </if>
+            <if test="tagName != null">
+                tag_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            create_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="openid != null">
+                #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="phones != null">
+                #{phones,jdbcType=VARCHAR},
+            </if>
+            <if test="tagId != null">
+                #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            now(),
+        </trim>
+        ON DUPLICATE KEY UPDATE
+        openid=VALUES(openid),phones=VALUES(phones),tag_id=VALUES(tag_id),tag_name=VALUES(tag_name),type=VALUES(type),create_time=now()
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TGroupTag">
+        update wx.t_group_tag
+        <set>
+            <if test="openid != null">
+                openid = #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="phones != null">
+                phones = #{phones,jdbcType=VARCHAR},
+            </if>
+            <if test="tagId != null">
+                tag_id = #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="tagName != null">
+                tag_name = #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPhonesDto" parameterType="com.pl.model.wx.FriendPhonesDto" >
+        update wx.t_group_tag
+        <set>
+            <if test="friendName != null">
+                friend_name = #{friendName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="phones != null">
+                phones = #{phones,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByOpenidAndPhones" parameterType="com.pl.model.wx.FriendPhonesDto" >
+        update wx.t_group_tag
+        <set>
+            <if test="desPhone != null and desPhone != ''">
+                phones = #{desPhone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where openid = #{openid} and phones = #{phone} and tag_name = #{tagName}
+    </update>
+
+    <update id="updateById" parameterType="com.pl.model.wx.TGroupTag">
+        update wx.t_group_tag
+        <set>
+            <if test="phones != null">
+                phones = #{phones,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TGroupTag">
+    update wx.t_group_tag
+    set openid = #{openid,jdbcType=VARCHAR},
+      phones = #{phones,jdbcType=VARCHAR},
+      tag_id = #{tagId,jdbcType=INTEGER},
+      tag_name = #{tagName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

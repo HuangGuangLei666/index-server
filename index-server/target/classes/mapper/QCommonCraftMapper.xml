@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.QCommonCraftMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.QCommonCraft">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="craft_id" property="craftId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="business_id" property="businessId" jdbcType="BIGINT"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="key_word" property="keyWord" jdbcType="VARCHAR"/>
+        <result column="key_num" property="keyNum" jdbcType="INTEGER"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="jump" property="jump" jdbcType="BIGINT"/>
+        <result column="action" property="action" jdbcType="INTEGER"/>
+        <result column="msgtempl_id" property="msgtemplId" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="rule_type" property="ruleType" jdbcType="INTEGER"/>
+        <result column="flag" property="flag" jdbcType="INTEGER"/>
+        <result column="uid" property="uid" jdbcType="VARCHAR"/>
+        <result column="score" property="score"/>
+        <result column="foucs" property="foucs"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.pl.model.QCommonCraft" extends="BaseResultMap">
+        <result column="question" property="question" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <resultMap id="CommonCraftDetailResult" type="com.pl.indexserver.model.QCommonCraftDto">
+        <result column="qid" property="id"/>
+        <result column="qName" property="name"/>
+        <result column="interupt" property="interupt"/>
+        <result column="craftId" property="craftId"/>
+        <result column="question" property="question"/>
+        <result column="keyWord" property="keyWord"/>
+        <result column="action" property="action"/>
+        <result column="type" property="type"/>
+        <result column="jump" property="jump"/>
+        <result column="companyId" property="companyId"/>
+        <result column="businessId" property="businessId"/>
+        <result column="msgtempl_id" property="msgtemplId"/>
+        <result column="rule_type" property="ruleType"/>
+        <result column="score" property="score"/>
+        <result column="foucs" property="foucs"/>
+        <collection property="aCommonCraftDtos" ofType="com.pl.indexserver.model.ACommonCraftDto">
+            <result column="aid" property="id"/>
+            <result column="content" property="content"/>
+            <result column="record_file" property="recordFile"/>
+            <result column="record_describe" property="recordDescribe"/>
+            <result column="record_state" property="recordState"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, craft_id, name, business_id, company_id, key_word, key_num, type, jump, action, 
+    msgtempl_id, status, rule_type, flag, uid, score, foucs, create_date, modify_date
+  </sql>
+    <sql id="Blob_Column_List">
+    question
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from q_common_craft
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from q_common_craft
+    where id = #{id,jdbcType=BIGINT}
+    and flag != 1
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.QCommonCraft" useGeneratedKeys="true" keyProperty="id">
+    insert into q_common_craft (id, craft_id, name, 
+      business_id, company_id, key_word, 
+      key_num, type, jump, 
+      action, msgtempl_id, status, 
+      rule_type, flag, uid, 
+      create_date, modify_date, question ,score,foucs
+      )
+    values (#{id,jdbcType=BIGINT}, #{craftId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{businessId,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{keyWord,jdbcType=VARCHAR}, 
+      #{keyNum,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{jump,jdbcType=BIGINT}, 
+      #{action,jdbcType=INTEGER}, #{msgtemplId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{ruleType,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, 
+      now(),now(), #{question,jdbcType=LONGVARCHAR},#{score},#{foucs}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.QCommonCraft" useGeneratedKeys="true" keyProperty="id">
+        insert into q_common_craft
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="craftId != null">
+                craft_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="interupt != null">
+                interupt,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="keyWord != null">
+                key_word,
+            </if>
+            <if test="keyNum != null">
+                key_num,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="jump != null">
+                jump,
+            </if>
+            <if test="action != null">
+                action,
+            </if>
+            <if test="msgtemplId != null">
+                msgtempl_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="ruleType != null">
+                rule_type,
+            </if>
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="true">
+                create_date,
+            </if>
+            <if test="true">
+                modify_date,
+            </if>
+            <if test="question != null">
+                question,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="foucs != null">
+                foucs,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="craftId != null">
+                #{craftId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="interupt != null">
+                #{interupt,jdbcType=VARCHAR},
+            </if>
+            
+            
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="keyWord != null">
+                #{keyWord,jdbcType=VARCHAR},
+            </if>
+            <if test="keyNum != null">
+                #{keyNum,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="jump != null">
+                #{jump,jdbcType=BIGINT},
+            </if>
+            <if test="action != null">
+                #{action,jdbcType=INTEGER},
+            </if>
+            <if test="msgtemplId != null">
+                #{msgtemplId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="ruleType != null">
+                #{ruleType,jdbcType=INTEGER},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="true">
+                now(),
+            </if>
+            <if test="true">
+                now(),
+            </if>
+            <if test="question != null">
+                #{question,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="score != null">
+                #{score},
+            </if>
+            <if test="foucs != null">
+                #{foucs},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.QCommonCraft">
+        update q_common_craft
+        <set>
+            <if test="craftId != null">
+                craft_id = #{craftId,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="interupt != null">
+                interupt = #{interupt,jdbcType=VARCHAR},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="keyWord != null  ">
+                key_word = #{keyWord,jdbcType=VARCHAR},
+            </if>
+            <if test="keyNum != null">
+                key_num = #{keyNum,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="jump != null">
+                jump = #{jump,jdbcType=BIGINT},
+            </if>
+            <if test="action != null">
+                action = #{action,jdbcType=INTEGER},
+            </if>
+            <if test="msgtemplId != null">
+                msgtempl_id = #{msgtemplId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="ruleType != null">
+                rule_type = #{ruleType,jdbcType=INTEGER},
+            </if>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="true">
+                modify_date = now(),
+            </if>
+            <if test="question != null  ">
+                question = #{question,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="score != null">
+                score = #{score},
+            </if>
+            <if test="foucs != null">
+                foucs = #{foucs},
+            </if>
+            syn_status = 1,
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pl.model.QCommonCraft">
+    update q_common_craft
+    set craft_id = #{craftId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      business_id = #{businessId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      key_num = #{keyNum,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      jump = #{jump,jdbcType=BIGINT},
+      action = #{action,jdbcType=INTEGER},
+      msgtempl_id = #{msgtemplId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      rule_type = #{ruleType,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      modify_date = now(),
+      question = #{question,jdbcType=LONGVARCHAR},
+      score = #{score},
+      foucs = #{foucs},
+      syn_status = 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.QCommonCraft">
+    update q_common_craft
+    set craft_id = #{craftId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      business_id = #{businessId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      key_num = #{keyNum,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      jump = #{jump,jdbcType=BIGINT},
+      action = #{action,jdbcType=INTEGER},
+      msgtempl_id = #{msgtemplId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      rule_type = #{ruleType,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=VARCHAR},
+      modify_date = now(),
+      score = #{score},
+      foucs = #{foucs},
+      syn_status = 1
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectByCompanyIdAndBusinessId" resultType="com.pl.indexserver.model.QCommonCraftDto">
+    SELECT
+      id,`name`,rule_type ruleType,business_id businessId,company_id companyId,key_num keyNum,type,
+      (select name from dialog_workflow t1 where t1.id = jump and type = 2) workflowName,action,modify_date modifyDate,flag,create_date createDate,score,foucs,flowNum
+    FROM q_common_craft q
+    LEFT JOIN
+    (
+        SELECT
+            (SUM(notRecording_num)) flowNum,craft_id
+        FROM
+            a_common_craft
+        WHERE
+          company_id = #{companyId}
+        AND
+          business_id = #{businessId}
+        GROUP BY craft_id
+    )a
+    ON
+        q.craft_id=a.craft_id
+    WHERE company_id = #{companyId}
+    and business_id = #{businessId}
+    and status = 0
+    ORDER BY q.create_date  DESC
+  </select>
+
+    <select id="selectDetailByPrimaryKey" parameterType="Long" resultMap="CommonCraftDetailResult">
+    SELECT
+        qc.id qid,qc.`name` qName,qc.interupt,qc.craft_id craftId,qc.question,qc.company_id companyId ,qc.score,qc.foucs,
+        qc.key_word keyWord,qc.action,qc.type,qc.jump,qc.msgtempl_id,qc.business_id businessId,qc.rule_type,
+        ac.id aid,ac.content,ac.record_file,ac.record_describe,ac.record_state
+    FROM q_common_craft qc
+    LEFT JOIN a_common_craft ac
+    ON (qc.craft_id = ac.craft_id and qc.company_id = ac.company_id and qc.business_id = ac.business_id)
+    WHERE qc.id=#{id}
+  </select>
+
+    <select id="selectByCraftIdAndCompanyIdAndBusinessId" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from q_common_craft
+        where craft_id = #{craftId}
+        and company_id = #{companyId}
+        and business_id = #{businessId}
+        limit 1
+    </select>
+    
+    <delete id="deleteDetailByPrimaryKey" parameterType="Long">
+        DELETE	q,a
+        FROM q_common_craft q
+        LEFT JOIN a_common_craft a
+        ON q.craft_id=a.craft_id
+        WHERE q.id=#{id} AND q.flag !=1
+    </delete>
+
+    <select id="selectConfigByCompanyIdAndBusinessId" resultType="com.pl.indexserver.model.CraftConfigDto">
+      select case when multiUnidentified = 0 and onceUnidentified = 0 then 0
+                    when multiUnidentified = 0 and onceUnidentified = 1 then 1
+					when multiUnidentified = 1 and onceUnidentified = 0 then 2 end unidentifiedStatus,
+			  case when multiUnresponsive = 0 and onceUnresponsive = 0 then 0
+                    when multiUnresponsive = 0 and onceUnresponsive = 1 then 1
+					when multiUnresponsive = 1 and onceUnresponsive = 0 then 2 end unresponsiveStatus
+      from (
+      select IF(count(case when flag = 1 and status = 0 then flag end)>0, 1, 0) multiUnidentified,
+			  IF(count(case when flag = 2 and status = 0 then flag end)>0, 1, 0) onceUnidentified,
+			  IF(count(case when flag = 3 and status = 0  then flag end)>0, 1, 0) multiUnresponsive,
+			  IF(count(case when flag = 4 and status = 0 then flag end)>0, 1, 0) onceUnresponsive
+      from q_common_craft
+      where company_id = #{companyId}
+      and business_id = #{businessId}
+      ) t
+    </select>
+
+    <select id="selectCommonConfigByCompanyIdAndBusinessId" resultType="com.pl.indexserver.model.CommonCraftConfigDto">
+        select craft_id id, name, question, if((
+            select count(1) from q_common_craft
+            where craft_id = t.craft_id
+            and status = 0
+            and company_id = #{companyId}
+            and business_id = #{businessId}
+            )>0,1,0) enabledStatus
+        from sys_speech_craft t where t.flag = 5
+    </select>
+
+    <insert id="insertCommonConfig">
+        insert into q_common_craft (craft_id, name,
+        business_id, company_id, key_word,
+        key_num,question,type, jump,
+        action, msgtempl_id, status,
+        rule_type, flag, uid,
+        create_date, modify_date,score,foucs)
+        select craft_id,`name`,#{businessId}, #{companyId}, key_word,key_num,question,1 type, 0 jump,
+        3 action, msgtempl_id,0 status,#{ruleType}, flag, #{userId}, #{createDate}, null, 0, null
+        from sys_speech_craft t
+        where flag = #{flag}
+        and not exists (select id from q_common_craft t1 where t1.craft_id = t.craft_id and company_id = #{companyId} and business_id = #{businessId})
+        <if test="craftId != null and craftId != ''">
+            and craft_id = #{craftId}
+        </if>
+    </insert>
+
+    <update id="updateCommonConfig">
+       update q_common_craft set status = #{status},syn_status = 1
+       where flag = #{flag} and business_id = #{businessId} and company_id = #{companyId}
+        <if test="craftId != null and craftId != ''">
+            and craft_id = #{craftId}
+        </if>
+    </update>
+
+    <select id="selectByCompanyIdAndCraftId" resultMap="ResultMapWithBLOBs" >
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from q_common_craft
+        where company_id = #{companyId} and craft_id = #{craftId} and business_id = #{businessId}
+    </select>
+
+    <select id="selectByParams" resultMap="ResultMapWithBLOBs" >
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from q_common_craft
+        where company_id = #{companyId}
+        and business_id = #{businessId}
+    </select>
+
+    <!--导出通用话术-->
+    <select id="qcommon" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+        select
+        t.id,
+        t.craft_id,
+        t.NAME,
+        t.business_id,
+        t.company_id,
+        t.key_word,
+        t.key_num,
+        t.type,
+        t.jump,
+        t.action,
+        t.msgtempl_id,
+        t.STATUS,
+        t.rule_type,
+        t.flag,
+        t.uid,
+        t.score,
+        t.foucs,
+        t.create_date,
+        t.modify_date,
+        t.question,
+        t1.content
+        from q_common_craft t
+        left join
+          a_common_craft t1 on t.craft_id = t1.craft_id
+        and t.business_id = t1.business_id
+        and t.company_id = t1.company_id
+        where t.business_id = #{businessId};
+    </select>
+</mapper>

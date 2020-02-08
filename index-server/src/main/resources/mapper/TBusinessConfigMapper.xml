@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.TBusinessConfigMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.TBusinessConfig">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="config_type" property="configType" jdbcType="CHAR"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="business_id" property="businessId" jdbcType="BIGINT"/>
+        <result column="intent_a" property="intentA" jdbcType="VARCHAR"/>
+        <result column="intent_b" property="intentB" jdbcType="VARCHAR"/>
+        <result column="intent_c" property="intentC" jdbcType="VARCHAR"/>
+        <result column="intent_d" property="intentD" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="SysBusinessTempMap" type="com.pl.model.SysBusinessTemplate">
+        <result column="business_type" property="businessType" jdbcType="VARCHAR"/>
+        <result column="business_type_name" property="businessTypeName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, config_type, company_id, business_id, intent_a, intent_b, intent_c, intent_d,
+        status, create_by, create_date, update_by, update_date, remark
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_business_config
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_business_config
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.pl.model.TBusinessConfig">
+        insert into t_business_config (id, config_type, company_id,
+        business_id, intent_a, intent_b,
+        intent_c, intent_d, status,
+        create_by, create_date, update_by,
+        update_date, remark)
+        values (#{id,jdbcType=INTEGER}, #{configType,jdbcType=CHAR}, #{companyId,jdbcType=BIGINT},
+        #{businessId,jdbcType=BIGINT}, #{intentA,jdbcType=VARCHAR}, #{intentB,jdbcType=VARCHAR},
+        #{intentC,jdbcType=VARCHAR}, #{intentD,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+        #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+        #{updateDate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.TBusinessConfig">
+        insert into t_business_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="configType != null">
+                config_type,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="intentA != null">
+                intent_a,
+            </if>
+            <if test="intentB != null">
+                intent_b,
+            </if>
+            <if test="intentC != null">
+                intent_c,
+            </if>
+            <if test="intentD != null">
+                intent_d,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="configType != null">
+                #{configType,jdbcType=CHAR},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="intentA != null">
+                #{intentA,jdbcType=VARCHAR},
+            </if>
+            <if test="intentB != null">
+                #{intentB,jdbcType=VARCHAR},
+            </if>
+            <if test="intentC != null">
+                #{intentC,jdbcType=VARCHAR},
+            </if>
+            <if test="intentD != null">
+                #{intentD,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.TBusinessConfig">
+        update t_business_config
+        <set>
+            <if test="configType != null">
+                config_type = #{configType,jdbcType=CHAR},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="intentA != null">
+                intent_a = #{intentA,jdbcType=VARCHAR},
+            </if>
+            <if test="intentB != null">
+                intent_b = #{intentB,jdbcType=VARCHAR},
+            </if>
+            <if test="intentC != null">
+                intent_c = #{intentC,jdbcType=VARCHAR},
+            </if>
+            <if test="intentD != null">
+                intent_d = #{intentD,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            update_date = now(),
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.TBusinessConfig">
+      UPDATE t_business_config
+      SET config_type = #{configType,jdbcType=CHAR},
+        company_id = #{companyId,jdbcType=BIGINT},
+        business_id = #{businessId,jdbcType=BIGINT},
+        intent_a = #{intentA,jdbcType=VARCHAR},
+        intent_b = #{intentB,jdbcType=VARCHAR},
+        intent_c = #{intentC,jdbcType=VARCHAR},
+        intent_d = #{intentD,jdbcType=VARCHAR},
+        STATUS = #{status,jdbcType=CHAR},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+        update_by = #{updateBy,jdbcType=VARCHAR},
+        update_date = now(),
+        remark = #{remark,jdbcType=VARCHAR}
+    WHERE
+	  id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <!--**************************** extend begin here start *******************************-->
+    <select id="selectByCompanyIdBusinessId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_business_config
+        where company_id = #{companyId,jdbcType=BIGINT}
+        and business_id = #{businessId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByBusinessIdAndConfigType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_business_config
+        where business_id = #{businessId,jdbcType=BIGINT}
+        and config_type =  #{configType,jdbcType=CHAR}
+    </select>
+
+    <select id="getSysBuinessTemplates" resultMap="SysBusinessTempMap">
+        select business_type,business_type_name from sys_business_template
+        where property_type = 1
+    </select>
+</mapper>

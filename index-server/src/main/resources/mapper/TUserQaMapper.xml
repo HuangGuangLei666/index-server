@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TUserQaMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.wx.TUserQa">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="knowledge_id" jdbcType="VARCHAR" property="knowledgeId" />
+    <result column="answer_id" jdbcType="BIGINT" property="answerId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, openid, knowledge_id, answer_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wx.t_user_qa
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAnswerId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx.t_user_qa
+    where knowledge_id = #{knowledgeId}
+    and openid = #{openid}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx.t_user_qa
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.wx.TUserQa">
+    insert into wx.t_user_qa (id, openid, knowledge_id, 
+      answer_id)
+    values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{knowledgeId,jdbcType=VARCHAR}, 
+      #{answerId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pl.model.wx.TUserQa">
+    insert into wx.t_user_qa
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id,
+      </if>
+      <if test="answerId != null">
+        answer_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeId != null">
+        #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerId != null">
+        #{answerId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="addCustomerresp" parameterType="com.pl.model.wx.TUserQa">
+    insert into wx.t_user_qa
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id,
+      </if>
+      <if test="answerId != null">
+        answer_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeId != null">
+        #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerId != null">
+        #{answerId,jdbcType=BIGINT},
+      </if>
+    </trim>
+    ON DUPLICATE KEY UPDATE openid=VALUES(openid),knowledge_id=VALUES(knowledge_id),answer_id=VALUES(answer_id)
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TUserQa">
+    update wx.t_user_qa
+    <set>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeId != null">
+        knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+      </if>
+      <if test="answerId != null">
+        answer_id = #{answerId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TUserQa">
+    update wx.t_user_qa
+    set openid = #{openid,jdbcType=VARCHAR},
+      knowledge_id = #{knowledgeId,jdbcType=VARCHAR},
+      answer_id = #{answerId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

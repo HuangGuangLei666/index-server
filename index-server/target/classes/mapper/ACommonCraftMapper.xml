@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.ACommonCraftMapper">
+	<resultMap id="BaseResultMap" type="com.pl.model.ACommonCraft">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="craft_id" property="craftId" jdbcType="VARCHAR" />
+		<result column="business_id" property="businessId" jdbcType="BIGINT" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="record_file" property="recordFile" jdbcType="VARCHAR" />
+		<result column="file_size" property="fileSize" jdbcType="INTEGER" />
+		<result column="is_record" property="isRecord" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="uid" property="uid" jdbcType="VARCHAR" />
+		<result column="score" property="score"/>
+		<result column="record_state" property="recordState"/>
+		<result column="record_describe" property="recordDescribe"/>
+		<result column="notRecording_num" property="notRecordingNum"/>
+		<result column="fileSize_count" property="fileSizeCount"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, craft_id, business_id, company_id, content,
+		record_file, is_record,file_size,
+		status, uid,score,record_state,record_describe,notRecording_num,
+		create_date, modify_date,fileSize_count
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from a_common_craft
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		a_common_craft
+		where id = #{id} AND company_id = #{companyId}
+	</delete>
+	<insert id="insert" parameterType="com.pl.model.ACommonCraft"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into a_common_craft
+		(id, craft_id, business_id,
+		company_id, content, record_file,file_size,
+		is_record, status, uid,
+		create_date, modify_date,score,record_state,record_describe,
+		notRecording_num,fileSize_count)
+		values
+		(#{id,jdbcType=BIGINT}, #{craftId,jdbcType=VARCHAR},
+		#{businessId,jdbcType=BIGINT},
+		#{companyId,jdbcType=BIGINT},
+		#{content,jdbcType=VARCHAR}, #{recordFile,jdbcType=VARCHAR},#{file_size}
+		#{isRecord,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+		#{uid,jdbcType=VARCHAR},
+		now(),
+		now(),#{score},#{recordState},#{recordDescribe}
+		,#{notRecordingNum},#{fileSizeCount})
+	</insert>
+	<insert id="insertSelective" parameterType="com.pl.model.ACommonCraft"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into a_common_craft
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="craftId != null">
+				craft_id,
+			</if>
+			<if test="businessId != null">
+				business_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="recordFile != null">
+				record_file,
+			</if>
+			<if test="fileSize != null">
+				file_size,
+			</if>
+			<if test="isRecord != null">
+				is_record,
+			</if>
+			<if test="status != null">
+				`status`,
+			</if>
+			<if test="uid != null">
+				uid,
+			</if>
+			<if test="true">
+				create_date,
+			</if>
+			<if test="true">
+				modify_date,
+			</if>
+			<if test="score != null">
+				score,
+			</if>
+			<if test="recordState != null">
+				record_state,
+			</if>
+			<if test="recordDescribe != null">
+				record_describe,
+			</if>
+			<if test="notRecordingNum != null">
+				notRecording_num,
+			</if>
+			<if test="fileSizeCount != null">
+				fileSize_count,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="craftId != null">
+				#{craftId,jdbcType=VARCHAR},
+			</if>
+			<if test="businessId != null">
+				#{businessId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="recordFile != null">
+				#{recordFile,jdbcType=VARCHAR},
+			</if>
+			<if test=" fileSize!= null">
+				#{fileSize},
+			</if>
+			<if test="isRecord != null">
+				#{isRecord,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="uid != null">
+				#{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="true">
+				now(),
+			</if>
+			<if test="true">
+				now(),
+			</if>
+			<if test="score != null">
+				#{score},
+			</if>
+			<if test="recordState != null">
+				#{recordState},
+			</if>
+			<if test="recordDescribe != null">
+				#{recordDescribe},
+			</if>
+			<if test="notRecordingNum != null">
+				#{notRecordingNum},
+			</if>
+			<if test="fileSizeCount != null">
+				#{fileSizeCount},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.pl.model.ACommonCraft">
+		update a_common_craft
+		<set>
+			<if test="craftId != null">
+				craft_id = #{craftId,jdbcType=VARCHAR},
+			</if>
+			<if test="businessId != null">
+				business_id = #{businessId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="recordFile != null">
+				record_file = #{recordFile,jdbcType=VARCHAR},
+			</if>
+			<if test="fileSize != null">
+				file_size = #{fileSize},
+			</if>
+			<if test="isRecord != null">
+				is_record = #{isRecord,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="uid != null">
+				uid = #{uid,jdbcType=VARCHAR},
+			</if>
+			<if test="true">
+				modify_date = now(),
+			</if>
+			<if test="score != null">
+				score = #{score},
+			</if>
+			<if test="recordState != null">
+				record_state = #{recordState},
+			</if>
+			<if test="recordDescribe != null">
+				record_describe = #{recordDescribe},
+			</if>
+			<if test="notRecordingNum != null">
+				notRecording_num = #{notRecordingNum},
+			</if>
+			<if test="fileSizeCount != null">
+				fileSize_count = #{fileSizeCount},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.pl.model.ACommonCraft">
+		update
+		a_common_craft
+		set craft_id = #{craftId,jdbcType=VARCHAR},
+		business_id =
+		#{businessId,jdbcType=BIGINT},
+		company_id =
+		#{companyId,jdbcType=BIGINT},
+		content = #{content,jdbcType=VARCHAR},
+		record_file = #{recordFile,jdbcType=VARCHAR},
+		file_size = #{fileSize},
+		is_record =
+		#{isRecord,jdbcType=INTEGER},
+		status = #{status,jdbcType=INTEGER},
+		uid =
+		#{uid,jdbcType=VARCHAR},
+		modify_date =
+		now(),
+		score = #{score},
+		record_state = #{recordState},
+		record_describe = #{recordDescribe},
+		notRecording_num = #{notRecordingNum},
+		fileSize_count = #{fileSizeCount}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectRecordIsUse" parameterType="String"
+		resultType="int">
+		SELECT
+		COUNT(record_file)
+		FROM
+		a_common_craft
+		WHERE
+		company_id=#{companyId}
+		AND
+		record_file=#{fileName}
+	</select>
+
+	<update id="updateByCraft" parameterType="com.pl.model.ACommonCraft">
+		
+			 
+				update a_common_craft set  score = #{score},modify_date=now()
+				where craft_id = #{craftId } and business_id = #{businessId,jdbcType=BIGINT} 
+		and company_id = #{companyId,jdbcType=BIGINT}
+			 
+	 
+		
+	</update>
+
+	<select id="selectByCompanyIdAndBusinessId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from a_common_craft
+		where company_id = #{companyId}
+		AND business_id = #{businessId}
+	</select>
+
+	<select id="getContentBycfidAndBsidAndCpid" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+			a_common_craft
+		WHERE
+			craft_id = #{craftId}
+			AND business_id = #{businessId}
+			AND company_id = #{companyId};
+	</select>
+
+	<!--集合-->
+	<select id="selectByCraftIdAndCompanyIdAndBusinessId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM a_common_craft
+		WHERE craft_id = #{craftId}
+		AND company_id = #{companyId}
+		AND business_id = #{businessId};
+	</select>
+
+	<!--单个对象-->
+	<select id="selectContentByCraftIdAndCompanyIdAndBusinessId" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM a_common_craft
+		WHERE craft_id = #{craftId}
+		AND company_id = #{companyId}
+		AND business_id = #{businessId};
+	</select>
+
+</mapper>

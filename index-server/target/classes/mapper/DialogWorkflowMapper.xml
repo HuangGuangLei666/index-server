@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.DialogWorkflowMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.model.DialogWorkflow" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="business_id" property="businessId" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="state_rule" property="stateRule" jdbcType="INTEGER" />
+    <result column="enable_interupt" property="enableInterupt" jdbcType="INTEGER" />
+    <result column="trigger_mode" property="triggerMode" jdbcType="INTEGER" />
+    <result column="trigger_order" property="triggerOrder" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pl.model.DialogWorkflow" extends="BaseResultMap" >
+    <result column="paramter" property="paramter" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, company_id, business_id, parent_id, name, state_rule, enable_interupt,trigger_mode, trigger_order, level, sort, status, modify_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    paramter
+  </sql>
+  <sql id="Base_Column" >
+    id, company_id, business_id, name,parent_id, state_rule, enable_interupt,trigger_mode, trigger_order, sort, status, modify_date,paramter
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dialog_workflow
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dialog_workflow
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.DialogWorkflow" >
+    insert into dialog_workflow (id, company_id, business_id, parent_id,
+      name, state_rule, enable_interupt,
+      trigger_mode, trigger_order, level, sort,
+      status, modify_date, paramter
+      )
+    values (#{id,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{businessId,jdbcType=BIGINT},
+      #{parentId,jdbcType=BIGINT},
+      #{name,jdbcType=VARCHAR}, #{stateRule,jdbcType=INTEGER}, #{enableInterupt,jdbcType=INTEGER},
+      #{triggerMode,jdbcType=INTEGER}, #{triggerOrder,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER},
+      #{sort,jdbcType=INTEGER},#{status,jdbcType=INTEGER}, #{modifyDate,jdbcType=TIMESTAMP}, #{paramter,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.pl.model.DialogWorkflow" >
+    insert into dialog_workflow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="stateRule != null" >
+        state_rule,
+      </if>
+      <if test="enableInterupt != null" >
+        enable_interupt,
+      </if>
+      <if test="triggerMode != null" >
+        trigger_mode,
+      </if>
+      <if test="triggerOrder != null" >
+        trigger_order,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="paramter != null" >
+        paramter,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="stateRule != null" >
+        #{stateRule,jdbcType=INTEGER},
+      </if>
+      <if test="enableInterupt != null" >
+        #{enableInterupt,jdbcType=INTEGER},
+      </if>
+      <if test="triggerMode != null" >
+        #{triggerMode,jdbcType=INTEGER},
+      </if>
+      <if test="triggerOrder != null" >
+        #{triggerOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paramter != null" >
+        #{paramter,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.DialogWorkflow" >
+    update dialog_workflow
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null" >
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="stateRule != null" >
+        state_rule = #{stateRule,jdbcType=INTEGER},
+      </if>
+      <if test="enableInterupt != null" >
+        enable_interupt = #{enableInterupt,jdbcType=INTEGER},
+      </if>
+      <if test="triggerMode != null" >
+        trigger_mode = #{triggerMode,jdbcType=INTEGER},
+      </if>
+      <if test="triggerOrder != null" >
+        trigger_order = #{triggerOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paramter != null" >
+        paramter = #{paramter,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pl.model.DialogWorkflow" >
+    update dialog_workflow
+    set company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      state_rule = #{stateRule,jdbcType=INTEGER},
+      enable_interupt = #{enableInterupt,jdbcType=INTEGER},
+      trigger_mode = #{triggerMode,jdbcType=INTEGER},
+      trigger_order = #{triggerOrder,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      paramter = #{paramter,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.DialogWorkflow" >
+    update dialog_workflow
+    set company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      state_rule = #{stateRule,jdbcType=INTEGER},
+      enable_interupt = #{enableInterupt,jdbcType=INTEGER},
+      trigger_mode = #{triggerMode,jdbcType=INTEGER},
+      trigger_order = #{triggerOrder,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--查询UI界面Parameter-->
+  <select id="getDialogWorkflowByBusiness_id" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dialog_workflow
+    where
+    company_id = #{company_id,jdbcType=BIGINT}
+    AND
+    business_id = #{business_id,jdbcType=BIGINT}
+  </select>
+  <!--查询UI界面Parameter-->
+  <select id="getDialogWorkflowByFlowId" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dialog_workflow
+    where
+    id = #{flowId,jdbcType=BIGINT}
+    and company_id = #{companyId,jdbcType=BIGINT}
+  </select>
+  <!--查询dialogWorkFlowList-->
+  <select id="getDialogWorkFlowList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from dialog_workflow
+    <where>
+      company_id = #{companyId,jdbcType=BIGINT}
+      <if test="businessId != null and businessId != '0'.toString()">
+        and business_id = #{businessId,jdbcType=BIGINT}
+      </if>
+    </where>
+    order by sort, id
+  </select>
+
+  <select id="getDialogWorkFlowDetilList" resultMap="BaseResultMap">
+    select <include refid="Base_Column"/>
+    from dialog_workflow
+    <where>
+      company_id = #{companyId,jdbcType=BIGINT}
+      <if test="businessId != null and businessId != '0'.toString()">
+        and business_id = #{businessId,jdbcType=BIGINT}
+      </if>
+    </where>
+  </select>
+
+  <select id="getPrimaryDiaLogWorkFlow" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from dialog_workflow
+    where business_id = #{businessId} and parent_id=0 order by sort asc,id asc limit 1
+  </select>
+
+  <select id="selectDialogWorkflowMaxSort" resultType="java.lang.Integer">
+    select IFNULL(max(sort),0) from dialog_workflow where parent_id = #{parentId}
+  </select>
+
+  <select id="selectDialogWorkFlowCountByParentId" resultType="java.lang.Integer">
+    select count(*) from dialog_workflow where business_id = #{businessId} and parent_id = #{parentId}
+  </select>
+
+  <delete id="deleteByFlowIdAndBusinessId" parameterType="java.lang.Long" >
+    delete from dialog_workflow
+    where business_id = #{businessId} and  id = #{flowId,jdbcType=BIGINT}
+  </delete>
+
+  <select id="getFirstWorkNode" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from dialog_workflow
+    where business_id = #{businessId} and parent_id = 0 order by sort asc,id asc limit 1
+  </select>
+
+</mapper>

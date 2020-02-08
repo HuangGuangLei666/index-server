@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TPhonetypeMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.wx.TPhonetype">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+  <resultMap id="InterceptPhoneBaseResultMap" type="com.pl.model.wx.InterceptSta">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="callerphone" jdbcType="VARCHAR" property="callerphone" />
+    <result column="calleephone" jdbcType="VARCHAR" property="calleephone" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, openid, phone, type, create_time
+  </sql>
+  <sql id="InterceptBase_Column_List">
+    id, callerphone, calleephone, create_time, type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wx.t_phonetype
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByOpenidAndPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx.t_phonetype
+    where openid = #{openid}
+    and phone = #{callerPhone}
+  </select>
+
+  <select id="selectByOpenidAndType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx.t_phonetype
+    where openid = #{openid}
+    and type = #{type}
+  </select>
+
+  <select id="selectIntercepCount" resultMap="InterceptPhoneBaseResultMap">
+    select
+    <include refid="InterceptBase_Column_List" />
+    from wx.t_intercept_statistics
+    where calleephone = #{phonenumber}
+    and create_time LIKE CONCAT( '%', #{format}, '%' )
+    and type = 2
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx.t_phonetype
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.wx.TPhonetype">
+    insert into wx.t_phonetype (id, openid, phone, 
+      type, create_time)
+    values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+
+  <insert id="insertInterceptPhone" parameterType="com.pl.model.wx.InterceptSta">
+    insert into wx.t_intercept_statistics (callerphone, calleephone,create_time, type)
+    values (#{callerphone}, #{calleephone}, #{createTime}, #{type})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.pl.model.wx.TPhonetype">
+    insert into wx.t_phonetype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="addPhoneType" parameterType="com.pl.model.wx.TPhonetype">
+    insert into wx.t_phonetype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+        create_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+        now(),
+    </trim>
+    ON DUPLICATE KEY UPDATE openid=VALUES(openid),phone=VALUES(phone),type=VALUES(type),create_time=VALUES(create_time)
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TPhonetype">
+    update wx.t_phonetype
+    <set>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TPhonetype">
+    update wx.t_phonetype
+    set openid = #{openid,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

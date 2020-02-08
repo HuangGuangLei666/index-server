@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TVoiceMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.wx.TVoice">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="business_id" jdbcType="INTEGER" property="businessId"/>
+        <result column="voice_name" jdbcType="VARCHAR" property="voiceName"/>
+        <result column="vp_id" jdbcType="INTEGER" property="vpId"/>
+        <result column="vp_name" jdbcType="VARCHAR" property="vpName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="voice_path" jdbcType="VARCHAR" property="voicePath"/>
+        <result column="voice_image" jdbcType="VARCHAR" property="voiceImage"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+    </resultMap>
+
+    <resultMap id="VoicesBaseResultMap" type="com.pl.model.wx.Voices">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="imageurl" jdbcType="VARCHAR" property="imageUrl"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, business_id, voice_name, vp_id, vp_name, create_time, voice_path, voice_image, 
+    type
+  </sql>
+    <sql id="VoicesBase_Column_List">
+        id, name, imageurl
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_voice
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByBusinessIdAndVoiceId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_voice
+        <where>
+            business_id = #{businessId,jdbcType=INTEGER}
+
+            and id = #{voiceId,jdbcType=INTEGER}
+
+        </where>
+    </select>
+
+    <select id="selectByBusinessId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_voice
+        where business_id = #{businessId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByBusinessIdAndUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        a.*,b.*
+        FROM
+        wx.t_voice a
+        LEFT JOIN wx.t_user_voice b ON a.id = b.voice_id
+        <where>
+            a.business_id = #{businessId}
+            <if test="userId != null">
+                AND b.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        b.*
+        FROM
+        wx.t_user_voice a
+        LEFT JOIN wx.t_voice b ON a.voice_id = b.id
+        WHERE
+        a.user_id = #{userId}
+    </select>
+
+    <select id="selectVoiceList" resultMap="VoicesBaseResultMap">
+        SELECT
+        <include refid="VoicesBase_Column_List"/>
+        FROM wx.t_voices
+    </select>
+
+    <select id="selectByVoiceId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_voice
+        where id = #{voiceId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx.t_voice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.wx.TVoice">
+    insert into wx.t_voice (id, business_id, voice_name, 
+      vp_id, vp_name, create_time, 
+      voice_path, voice_image, type
+      )
+    values (#{id,jdbcType=INTEGER}, #{businessId,jdbcType=INTEGER}, #{voiceName,jdbcType=VARCHAR}, 
+      #{vpId,jdbcType=INTEGER}, #{vpName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{voicePath,jdbcType=VARCHAR}, #{voiceImage,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.wx.TVoice">
+        insert into wx.t_voice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="voiceName != null">
+                voice_name,
+            </if>
+            <if test="vpId != null">
+                vp_id,
+            </if>
+            <if test="vpName != null">
+                vp_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="voicePath != null">
+                voice_path,
+            </if>
+            <if test="voiceImage != null">
+                voice_image,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=INTEGER},
+            </if>
+            <if test="voiceName != null">
+                #{voiceName,jdbcType=VARCHAR},
+            </if>
+            <if test="vpId != null">
+                #{vpId,jdbcType=INTEGER},
+            </if>
+            <if test="vpName != null">
+                #{vpName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="voicePath != null">
+                #{voicePath,jdbcType=VARCHAR},
+            </if>
+            <if test="voiceImage != null">
+                #{voiceImage,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TVoice">
+        update wx.t_voice
+        <set>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=INTEGER},
+            </if>
+            <if test="voiceName != null">
+                voice_name = #{voiceName,jdbcType=VARCHAR},
+            </if>
+            <if test="vpId != null">
+                vp_id = #{vpId,jdbcType=INTEGER},
+            </if>
+            <if test="vpName != null">
+                vp_name = #{vpName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="voicePath != null">
+                voice_path = #{voicePath,jdbcType=VARCHAR},
+            </if>
+            <if test="voiceImage != null">
+                voice_image = #{voiceImage,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TVoice">
+    update wx.t_voice
+    set business_id = #{businessId,jdbcType=INTEGER},
+      voice_name = #{voiceName,jdbcType=VARCHAR},
+      vp_id = #{vpId,jdbcType=INTEGER},
+      vp_name = #{vpName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      voice_path = #{voicePath,jdbcType=VARCHAR},
+      voice_image = #{voiceImage,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <update id="updateBusinessByVoiceId" parameterType="com.pl.model.wx.TVoice">
+        update wx.t_voice
+        <set>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=INTEGER}
+            </if>
+        </set>
+        <where>
+            <if test="voiceId != null">
+                id = #{voiceId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </update>
+</mapper>

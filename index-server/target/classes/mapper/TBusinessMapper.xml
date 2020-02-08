@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.TBusinessMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.model.TBusiness" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="template_name" property="templateName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="enable_interupt" property="enableInterupt" jdbcType="INTEGER" />
+    <result column="controll_addr" property="controllAddr" jdbcType="VARCHAR" />
+    <result column="algorithm_addr" property="algorithmAddr" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, company_id, `name`, template_name, template_type, create_date, modify_date, enable_interupt, controll_addr,
+    algorithm_addr, remark, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_business
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByKeyList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select
+    <include refid="Base_Column_List" />
+    from t_business
+    WHERE id IN (
+    <foreach collection ="list" item ="item" index ="index" separator ="," close="">
+      #{item,jdbcType=BIGINT}
+    </foreach >
+    ) ;
+  </select>
+
+  <select id="getBusinessName" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from t_business
+    where id = #{businessId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_business
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.TBusiness" >
+    insert into t_business (id, company_id, `name`,
+      template_name, template_type, create_date, modify_date,
+      enable_interupt, controll_addr, algorithm_addr, remark, status)
+    values (#{id,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{templateName,jdbcType=VARCHAR}, #{templateType,jdbcType=VARCHAR}, now(), now(),
+      #{enableInterupt,jdbcType=INTEGER}, #{controllAddr,jdbcType=VARCHAR}, #{algorithmAddr,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true" parameterType="com.pl.model.TBusiness" >
+    insert into t_business
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="name != null" >
+       `name`,
+      </if>
+      <if test="templateName != null" >
+        template_name,
+      </if>
+      <if test="templateType != null" >
+        template_type,
+      </if>
+      <if test="true" >
+        create_date,
+      </if>
+      <if test="true" >
+        modify_date,
+      </if>
+      <if test="enableInterupt != null" >
+        enable_interupt,
+      </if>
+      <if test="controllAddr != null" >
+        controll_addr,
+      </if>
+      <if test="algorithmAddr != null" >
+        algorithm_addr,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="templateName != null" >
+        #{templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="templateType != null" >
+        #{templateType,jdbcType=VARCHAR},
+      </if>
+      <if test="true" >
+        now(),
+      </if>
+      <if test="true" >
+        now(),
+      </if>
+      <if test="enableInterupt != null" >
+        #{enableInterupt,jdbcType=INTEGER},
+      </if>
+      <if test="controllAddr != null" >
+        #{controllAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="algorithmAddr != null" >
+        #{algorithmAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.TBusiness" >
+    update t_business
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="templateName != null" >
+        template_name = #{templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="templateType != null" >
+        template_type = #{templateType,jdbcType=VARCHAR},
+      </if>
+      <if test="true" >
+        modify_date = now(),
+      </if>
+      <if test="enableInterupt != null" >
+        enable_interupt = #{enableInterupt,jdbcType=INTEGER},
+      </if>
+      <if test="controllAddr != null" >
+        controll_addr = #{controllAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="algorithmAddr != null" >
+        algorithm_addr = #{algorithmAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.TBusiness" >
+    update t_business
+    set company_id = #{companyId,jdbcType=BIGINT},
+      `name` = #{name,jdbcType=VARCHAR},
+      template_name = #{templateName,jdbcType=VARCHAR},
+      modify_date = now(),
+      enable_interupt = #{enableInterupt,jdbcType=INTEGER},
+      controll_addr = #{controllAddr,jdbcType=VARCHAR},
+      algorithm_addr = #{algorithmAddr,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getTBusinessListByCompany_id"  resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from t_business
+    where company_id = #{company_id}
+    and status = 0
+  </select>
+
+  <select id="getTBusinessDescribeListByCompanyId" resultType="com.pl.indexserver.model.TBusinessModelDto" parameterType="java.lang.String">
+    SELECT
+      tb.id,tb.name name,tb.`status`,tb.remark,tb.modify_date modifyDate,tb.create_date createDate,COUNT(s.company_id) speechcraftNum,
+      (SELECT COUNT(id) FROM speechcraft WHERE business_id = tb.id AND is_record=1) recordNum
+    FROM t_business tb
+    LEFT JOIN speechcraft s
+    ON tb.id=s.business_id
+    WHERE tb.company_id=#{companyId}
+    and tb.status = 0
+    GROUP BY tb.id ,tb.name,tb.`status`,tb.remark,tb.modify_date,tb.create_date
+    ORDER BY tb.create_date DESC
+  </select>
+
+  <select id="countSmsProbably" resultType="java.lang.Integer">
+    SELECT
+    ((SELECT COUNT(id) from knowledge_question where business_id=#{bussinessId} and msgtempl_id!=0)
+    + (SELECT COUNT(id) from q_common_craft where business_id=#{bussinessId} and msgtempl_id!=0)
+    + (SELECT COUNT(id) from speechcraft where business_id=#{bussinessId} and msgtempl_id!=0)) num
+  </select>
+</mapper>

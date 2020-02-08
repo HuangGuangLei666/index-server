@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.CallTaskStatMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.CallTaskStat">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="task_id" property="taskId" jdbcType="BIGINT"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="business_id" property="businessId" jdbcType="BIGINT"/>
+        <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP"/>
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="item2" property="item2" jdbcType="INTEGER"/>
+        <result column="item13" property="item13" jdbcType="INTEGER"/>
+        <result column="item15" property="item15" jdbcType="INTEGER"/>
+        <result column="item17" property="item17" jdbcType="INTEGER"/>
+        <result column="item20" property="item20" jdbcType="INTEGER"/>
+        <result column="item21" property="item21" jdbcType="INTEGER"/>
+        <result column="item23" property="item23" jdbcType="INTEGER"/>
+        <result column="item24" property="item24" jdbcType="INTEGER"/>
+        <result column="item25" property="item25" jdbcType="INTEGER"/>
+        <result column="item26" property="item26" jdbcType="INTEGER"/>
+        <result column="item27" property="item27" jdbcType="INTEGER"/>
+        <result column="item28" property="item28" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapStatistice" type="com.pl.model.Statistice">
+        <id column="id" property="taskId" jdbcType="BIGINT"/>
+        <result column="name" property="taskName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapStatisticeForIntention" type="com.pl.model.Statistice">
+        <id column="id" property="diglogId" jdbcType="BIGINT"/>
+        <result column="ct_name" property="ctName" jdbcType="VARCHAR"/>
+        <result column="ct_phone" property="ctPhone" jdbcType="VARCHAR"/>
+        <result column="is_intention" property="isIntention" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="begin_date" property="beginDate" jdbcType="TIMESTAMP"/>
+        <result column="duration" property="duration" jdbcType="INTEGER"/>
+        <result column="out_number" property="outNumber" jdbcType="VARCHAR"/>
+        <result column="intention_level" property="intentionLevel" jdbcType="VARCHAR"/>
+        <result column="task_id" property="taskId" jdbcType="BIGINT"/>
+        <result column="taskname" property="taskName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, task_id, company_id, business_id, begin_time, end_time, item2, item13, item15, 
+    item17, item20, item21, item23, item24, item25, item26, item27, item28
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from call_task_stat
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from call_task_stat
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.CallTaskStat">
+    insert into call_task_stat (id, task_id, company_id, 
+      business_id, begin_time, end_time, 
+      item2, item13, item15, 
+      item17, item20, item21, 
+      item23, item24, item25, 
+      item26, item27, item28
+      )
+    values (#{id,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, 
+      #{businessId,jdbcType=BIGINT}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{item2,jdbcType=INTEGER}, #{item13,jdbcType=INTEGER}, #{item15,jdbcType=INTEGER}, 
+      #{item17,jdbcType=INTEGER}, #{item20,jdbcType=INTEGER}, #{item21,jdbcType=INTEGER}, 
+      #{item23,jdbcType=INTEGER}, #{item24,jdbcType=INTEGER}, #{item25,jdbcType=INTEGER}, 
+      #{item26,jdbcType=INTEGER}, #{item27,jdbcType=INTEGER}, #{item28,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.CallTaskStat">
+        insert into call_task_stat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="taskId != null">
+                task_id,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="beginTime != null">
+                begin_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="item2 != null">
+                item2,
+            </if>
+            <if test="item13 != null">
+                item13,
+            </if>
+            <if test="item15 != null">
+                item15,
+            </if>
+            <if test="item17 != null">
+                item17,
+            </if>
+            <if test="item20 != null">
+                item20,
+            </if>
+            <if test="item21 != null">
+                item21,
+            </if>
+            <if test="item23 != null">
+                item23,
+            </if>
+            <if test="item24 != null">
+                item24,
+            </if>
+            <if test="item25 != null">
+                item25,
+            </if>
+            <if test="item26 != null">
+                item26,
+            </if>
+            <if test="item27 != null">
+                item27,
+            </if>
+            <if test="item28 != null">
+                item28,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="taskId != null">
+                #{taskId,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="beginTime != null">
+                #{beginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="item2 != null">
+                #{item2,jdbcType=INTEGER},
+            </if>
+            <if test="item13 != null">
+                #{item13,jdbcType=INTEGER},
+            </if>
+            <if test="item15 != null">
+                #{item15,jdbcType=INTEGER},
+            </if>
+            <if test="item17 != null">
+                #{item17,jdbcType=INTEGER},
+            </if>
+            <if test="item20 != null">
+                #{item20,jdbcType=INTEGER},
+            </if>
+            <if test="item21 != null">
+                #{item21,jdbcType=INTEGER},
+            </if>
+            <if test="item23 != null">
+                #{item23,jdbcType=INTEGER},
+            </if>
+            <if test="item24 != null">
+                #{item24,jdbcType=INTEGER},
+            </if>
+            <if test="item25 != null">
+                #{item25,jdbcType=INTEGER},
+            </if>
+            <if test="item26 != null">
+                #{item26,jdbcType=INTEGER},
+            </if>
+            <if test="item27 != null">
+                #{item27,jdbcType=INTEGER},
+            </if>
+            <if test="item28 != null">
+                #{item28,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.CallTaskStat">
+        update call_task_stat
+        <set>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="beginTime != null">
+                begin_time = #{beginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="item2 != null">
+                item2 = #{item2,jdbcType=INTEGER},
+            </if>
+            <if test="item13 != null">
+                item13 = #{item13,jdbcType=INTEGER},
+            </if>
+            <if test="item15 != null">
+                item15 = #{item15,jdbcType=INTEGER},
+            </if>
+            <if test="item17 != null">
+                item17 = #{item17,jdbcType=INTEGER},
+            </if>
+            <if test="item20 != null">
+                item20 = #{item20,jdbcType=INTEGER},
+            </if>
+            <if test="item21 != null">
+                item21 = #{item21,jdbcType=INTEGER},
+            </if>
+            <if test="item23 != null">
+                item23 = #{item23,jdbcType=INTEGER},
+            </if>
+            <if test="item24 != null">
+                item24 = #{item24,jdbcType=INTEGER},
+            </if>
+            <if test="item25 != null">
+                item25 = #{item25,jdbcType=INTEGER},
+            </if>
+            <if test="item26 != null">
+                item26 = #{item26,jdbcType=INTEGER},
+            </if>
+            <if test="item27 != null">
+                item27 = #{item27,jdbcType=INTEGER},
+            </if>
+            <if test="item28 != null">
+                item28 = #{item28,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.CallTaskStat">
+    update call_task_stat
+    set task_id = #{taskId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      item2 = #{item2,jdbcType=INTEGER},
+      item13 = #{item13,jdbcType=INTEGER},
+      item15 = #{item15,jdbcType=INTEGER},
+      item17 = #{item17,jdbcType=INTEGER},
+      item20 = #{item20,jdbcType=INTEGER},
+      item21 = #{item21,jdbcType=INTEGER},
+      item23 = #{item23,jdbcType=INTEGER},
+      item24 = #{item24,jdbcType=INTEGER},
+      item25 = #{item25,jdbcType=INTEGER},
+      item26 = #{item26,jdbcType=INTEGER},
+      item27 = #{item27,jdbcType=INTEGER},
+      item28 = #{item28,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="queryBasicStat" parameterType="java.util.Map" resultType="com.pl.indexserver.model.CallTaskStatDto">
+        SELECT
+        ifnull(SUM(item2),0) item2Num,ifnull(SUM(item13),0) item13Num,ifnull(SUM(item15),0) item15Num,ifnull(SUM(item17),0) item17Num,
+        ifnull(SUM(item20),0) item20Num,ifnull(SUM(item23),0) item23Num,ifnull(SUM(item25),0) item25Num,ifnull(SUM(item18),0) item18Num,
+        ifnull(SUM(item26),0) item26Num,ifnull(SUM(item27),0) item27Num,ifnull(SUM(item28),0) item28Num,ifnull(SUM(item29),0) item29Num
+        ,ifnull(SUM(item30),0) item30Num,ifnull(SUM(item31),0) item31Num,ifnull(SUM(item32),0) item32Num,ifnull(SUM(item33),0) item33Num
+        ,ifnull(SUM(item34),0) item34Num,ifnull(SUM(item35),0) item35Num,ifnull(SUM(item36),0) item36Num,ifnull(SUM(item37),0) item37Num
+        ,ifnull(SUM(item38),0) item38Num,ifnull(SUM(item39),0) item39Num,ifnull(SUM(item40),0) item40Num,ifnull(SUM(item41),0) item41Num
+        ,ifnull(SUM(item42),0) item42Num,ifnull(SUM(item43),0) item43Num,ifnull(SUM(item44),0) item44Num,ifnull(SUM(item45),0) item45Num
+        ,ifnull(SUM(item46),0) item46Num,ifnull(SUM(success_num),0) successNum
+        FROM call_task_stat
+        WHERE company_id=#{companyId}
+        <if test="beginTime != null and beginTime != ''">
+            <![CDATA[ AND begin_time>= #{beginTime,jdbcType=TIMESTAMP}]]>
+        </if>
+        <if test="endTime != null and endTime != ''">
+            <![CDATA[ AND end_time<= #{endTime,jdbcType=TIMESTAMP}]]>
+        </if>
+    </select>
+
+
+    <select id="queryAll" resultMap="BaseResultMapStatistice" parameterType="Long">
+        SELECT
+        id , task_name as name
+        FROM
+        call_task
+          <if test="null!=companyId">
+              WHERE company_id=#{companyId}
+          </if>
+    </select>
+
+
+    <select id="queryTaskStat" parameterType="java.util.Map" resultType="com.pl.indexserver.model.CallTaskStatDto">
+        SELECT
+        ct.task_name taskName,cts.task_id taskId,SUM(cts.item2) item2Num,
+        <if test="type=='all'">
+            SUM(cts.item41) item20Num
+        </if>
+        <if test="type=='intention'">
+            SUM(cts.item20) item20Num
+        </if>
+        <if test="type=='focus'">
+            SUM(cts.item37) item20Num
+        </if>
+        <if test="type=='intent'">
+            SUM(cts.item39) item20Num
+        </if>
+        FROM call_task_stat cts
+        LEFT JOIN call_task ct
+        ON ct.id=cts.task_id
+        WHERE cts.company_id=#{companyId}
+        and is_temp != 1
+        <if test="beginTime != null and beginTime != ''">
+            <![CDATA[ AND cts.begin_time>= #{beginTime,jdbcType=TIMESTAMP}]]>
+        </if>
+        <if test="endTime != null and endTime != ''">
+            <![CDATA[ AND cts.end_time<= #{endTime,jdbcType=TIMESTAMP}]]>
+        </if>
+        GROUP BY cts.task_id,ct.task_name
+    </select>
+
+    <select id="selectMapStatisticeForIntention" resultMap="BaseResultMapStatisticeForIntention"
+            parameterType="java.util.Map">
+
+        SELECT
+        d.id AS id,
+        t.ctname AS ct_name,
+        t.ct_phone,
+        d.is_intention,
+        d.status,
+        d.begin_date,TIMESTAMPDIFF(SECOND ,d.begin_date,d.end_date) AS duration,
+        tc.out_number,
+        d.intention_level,
+        d.task_id,
+        ct.task_name as taskname,
+        d.create_date
+        FROM
+        t_dialog d
+        LEFT JOIN tm_customer t ON d.telephone = t.ct_phone
+        LEFT JOIN t_call_agent tc ON d.agent_id = tc.id
+        LEFT JOIN call_task ct ON d.task_id=ct.id
+        <where>
+            t.company_id=#{companyId}
+            <if test="taskId != null and taskId != ''">
+                <![CDATA[ AND d.task_id = #{taskId} AND t.task_id = #{taskId}]]>
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                <![CDATA[ AND d.begin_date>= #{beginDate,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="endDate != null and endDate != ''">
+                <![CDATA[ AND d.end_date<= #{endDate,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="intention != null and intention != ''">
+                <![CDATA[ AND d.intention_level= #{intention,jdbcType=VARCHAR}]]>
+            </if>
+        </where>
+
+    </select>
+
+    <select id="queryStatistics" resultType="com.pl.indexserver.model.CallTaskStatDto" parameterType="java.util.Map">
+        SELECT
+          SUM(item2) item2Num,SUM(item25) item25Num,SUM(item26) item26Num,SUM(item27) item27Num,begin_time beginTime
+        FROM call_task_stat
+        WHERE company_id = #{companyId}
+        AND business_id = #{businessId}
+        GROUP BY begin_time
+        ORDER BY begin_time
+    </select>
+
+</mapper>

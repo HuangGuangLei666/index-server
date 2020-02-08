@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.TCustmIntentionMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.TCustmIntention">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="task_id" property="taskId" jdbcType="BIGINT"/>
+        <result column="task_name" property="taskName" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="agent_id" property="agentId" jdbcType="BIGINT"/>
+        <result column="out_number" property="outNumber" jdbcType="VARCHAR"/>
+        <result column="custm_name" property="custmName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="begin_date" property="beginDate" jdbcType="TIMESTAMP"/>
+        <result column="end_date" property="endDate" jdbcType="TIMESTAMP"/>
+        <result column="total_seconds" property="totalSeconds" jdbcType="INTEGER"/>
+        <result column="is_intention" property="isIntention" jdbcType="INTEGER"/>
+        <result column="intention_level" property="intentionLevel" jdbcType="VARCHAR"/>
+        <result column="focus_level" property="focusLevel" jdbcType="VARCHAR"/>
+        <result column="intent_level" property="intentLevel" jdbcType="VARCHAR"/>
+        <result column="foucs" property="foucs" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, company_id, task_id, task_name, telephone, agent_id, out_number, custm_name,
+    status, begin_date, end_date, total_seconds, is_intention, intention_level, focus_level, intent_level, foucs
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_custm_intention
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectByQuery" resultMap="BaseResultMap" parameterType="com.pl.indexserver.query.TCustmIntentionQuery">
+        select
+        <include refid="Base_Column_List"/>
+        from t_custm_intention
+        <where>
+            company_id=#{companyId}
+            <if test="null!=telephone and ''!=telephone">
+                and telephone like CONCAT('%',#{telephone},'%')
+            </if>
+            <if test="'all'!=intention">
+              <if test="null!=intention and ''!=intention">
+                  <if test="type == 'all'">
+                      and (
+                          (IF(IFNULL(intention_level,'E')='','E',IFNULL(intention_level,'E')) = #{intention}
+                          and IF(IFNULL(focus_level,'E')='','E',IFNULL(focus_level,'E')) >= #{intention}
+                          and IF(IFNULL(intent_level,'E') ='','E',IFNULL(intent_level,'E'))>=#{intention})
+                          or
+                          (IF(IFNULL(intention_level,'E')='','E',IFNULL(intention_level,'E')) >= #{intention}
+                          and IF(IFNULL(focus_level,'E')='','E',IFNULL(focus_level,'E')) = #{intention}
+                          and IF(IFNULL(intent_level,'E')='','E',IFNULL(intent_level,'E')) >=#{intention})
+                          or
+                          (IF(IFNULL(intention_level,'E')='','E',IFNULL(intention_level,'E')) >= #{intention}
+                          and IF(IFNULL(focus_level,'E')>='','E',IFNULL(focus_level,'E')) >= #{intention}
+                          and IF(IFNULL(intent_level,'E')='','E',IFNULL(intent_level,'E')) = #{intention})
+                      )
+                  </if>
+                  <if test="type == 'intention'">
+                      and intention_level = #{intention}
+                  </if>
+                  <if test="type == 'focus'">
+                      and focus_level = #{intention}
+                  </if>
+                  <if test="type == 'intent'">
+                      and intent_level = #{intention}
+                  </if>
+              </if>
+              <if test="null==intention">
+                  <if test="type == 'all'">
+                      and (if(ifnull(intention_level,'E')='','E',ifnull(intention_level,'E')) <![CDATA[<]]> 'D'
+                          or if(ifnull(focus_level,'E')='','E',ifnull(focus_level,'E')) <![CDATA[<]]> 'D'
+                          or if(ifnull(intent_level,'E')='','E',ifnull(intent_level,'E')) <![CDATA[<]]> 'D')
+                  </if>
+                  <if test="type == 'intention'">
+                      and (if(ifnull(intention_level,'E')='','E',ifnull(intention_level,'E')) <![CDATA[<]]> 'D')
+                  </if>
+                  <if test="type == 'focus'">
+                      and (if(ifnull(focus_level,'E')='','E',ifnull(focus_level,'E')) <![CDATA[<]]> 'D')
+                  </if>
+                  <if test="type == 'intent'">
+                      and (if(ifnull(intent_level,'E')='','E',ifnull(intent_level,'E')) <![CDATA[<]]> 'D')
+                  </if>
+              </if>
+            </if>
+            <if test="null!=beginDate and ''!=beginDate">
+                and begin_date &gt;= #{beginDate}
+            </if>
+            <if test="null!=endDate and ''!=endDate">
+                and end_date &lt;= #{endDate}
+            </if>
+            <if test="orderByBeginDateDesc">
+                ORDER BY id DESC
+            </if>
+            <if test="isLimit">
+                LIMIT #{begin},#{pageNum}
+            </if>
+        </where>
+    </select>
+    <select id="countByQuery" resultType="Long" parameterType="com.pl.indexserver.query.TCustmIntentionQuery">
+        select
+        count(id)
+        from t_custm_intention
+        <where>
+            company_id=#{companyId}
+            <if test="null!=taskId">
+                and task_id = #{taskId}
+            </if>
+            <if test="null!=telephone and ''!=telephone">
+                and telephone like CONCAT('%',#{telephone},'%')
+            </if>
+            <if test="'all'!=intention">
+                <if test="null!=intention and ''!=intention">
+                    <if test="type == 'all'">
+                        and (
+                        (IF(IFNULL(intention_level,'E')='','E',IFNULL(intention_level,'E')) = #{intention}
+                        and IF(IFNULL(focus_level,'E')='','E',IFNULL(focus_level,'E')) >= #{intention}
+                        and IF(IFNULL(intent_level,'E') ='','E',IFNULL(intent_level,'E'))>=#{intention})
+                        or
+                        (IF(IFNULL(intention_level,'E')='','E',IFNULL(intention_level,'E')) >= #{intention}
+                        and IF(IFNULL(focus_level,'E')='','E',IFNULL(focus_level,'E')) = #{intention}
+                        and IF(IFNULL(intent_level,'E')='','E',IFNULL(intent_level,'E')) >=#{intention})
+                        or
+                        (IF(IFNULL(intention_level,'E')='','E',IFNULL(intention_level,'E')) >= #{intention}
+                        and IF(IFNULL(focus_level,'E')>='','E',IFNULL(focus_level,'E')) >= #{intention}
+                        and IF(IFNULL(intent_level,'E')='','E',IFNULL(intent_level,'E')) = #{intention})
+                        )
+                    </if>
+                    <if test="type == 'intention'">
+                        and intention_level = #{intention}
+                    </if>
+                    <if test="type == 'focus'">
+                        and focus_level = #{intention}
+                    </if>
+                    <if test="type == 'intent'">
+                        and intent_level = #{intention}
+                    </if>
+                </if>
+                <if test="null==intention">
+                    <if test="type == 'all'">
+                        and (if(ifnull(intention_level,'E')='','E',ifnull(intention_level,'E')) <![CDATA[<]]> 'D'
+                        or if(ifnull(focus_level,'E')='','E',ifnull(focus_level,'E')) <![CDATA[<]]> 'D'
+                        or if(ifnull(intent_level,'E')='','E',ifnull(intent_level,'E')) <![CDATA[<]]> 'D')
+                    </if>
+                    <if test="type == 'intention'">
+                        and (if(ifnull(intention_level,'E')='','E',ifnull(intention_level,'E')) <![CDATA[<]]> 'D')
+                    </if>
+                    <if test="type == 'focus'">
+                        and (if(ifnull(focus_level,'E')='','E',ifnull(focus_level,'E')) <![CDATA[<]]> 'D')
+                    </if>
+                    <if test="type == 'intent'">
+                        and (if(ifnull(intent_level,'E')='','E',ifnull(intent_level,'E')) <![CDATA[<]]> 'D')
+                    </if>
+                </if>
+            </if>
+            <if test="null!=beginDate and ''!=beginDate">
+                and begin_date >= #{beginDate}
+            </if>
+            <if test="null!=endDate and ''!=endDate">
+                and end_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_custm_intention
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.TCustmIntention">
+    insert into t_custm_intention (id, company_id, task_id, 
+      task_name, telephone, agent_id,
+      out_number, custm_name, status,
+      begin_date, end_date, total_seconds,
+      is_intention, intention_level, foucs
+      )
+    values (#{id,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT},
+      #{taskName,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{agentId,jdbcType=BIGINT},
+      #{outNumber,jdbcType=VARCHAR}, #{custmName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{beginDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{totalSeconds,jdbcType=INTEGER},
+      #{isIntention,jdbcType=INTEGER}, #{intentionLevel,jdbcType=VARCHAR}, #{foucs,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.TCustmIntention">
+        insert into t_custm_intention
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="taskId != null">
+                task_id,
+            </if>
+            <if test="taskName != null">
+                task_name,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="agentId != null">
+                agent_id,
+            </if>
+            <if test="outNumber != null">
+                out_number,
+            </if>
+            <if test="custmName != null">
+                custm_name,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="beginDate != null">
+                begin_date,
+            </if>
+            <if test="endDate != null">
+                end_date,
+            </if>
+            <if test="totalSeconds != null">
+                total_seconds,
+            </if>
+            <if test="isIntention != null">
+                is_intention,
+            </if>
+            <if test="intentionLevel != null">
+                intention_level,
+            </if>
+            <if test="foucs != null">
+                foucs,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="taskId != null">
+                #{taskId,jdbcType=BIGINT},
+            </if>
+            <if test="taskName != null">
+                #{taskName,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="agentId != null">
+                #{agentId,jdbcType=BIGINT},
+            </if>
+            <if test="outNumber != null">
+                #{outNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="custmName != null">
+                #{custmName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="beginDate != null">
+                #{beginDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                #{endDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="totalSeconds != null">
+                #{totalSeconds,jdbcType=INTEGER},
+            </if>
+            <if test="isIntention != null">
+                #{isIntention,jdbcType=INTEGER},
+            </if>
+            <if test="intentionLevel != null">
+                #{intentionLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="foucs != null">
+                #{foucs,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.TCustmIntention">
+        update t_custm_intention
+        <set>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=BIGINT},
+            </if>
+            <if test="taskName != null">
+                task_name = #{taskName,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="agentId != null">
+                agent_id = #{agentId,jdbcType=BIGINT},
+            </if>
+            <if test="outNumber != null">
+                out_number = #{outNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="custmName != null">
+                custm_name = #{custmName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="beginDate != null">
+                begin_date = #{beginDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                end_date = #{endDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="totalSeconds != null">
+                total_seconds = #{totalSeconds,jdbcType=INTEGER},
+            </if>
+            <if test="isIntention != null">
+                is_intention = #{isIntention,jdbcType=INTEGER},
+            </if>
+            <if test="intentionLevel != null">
+                intention_level = #{intentionLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="foucs != null">
+                foucs = #{foucs,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.TCustmIntention">
+    update t_custm_intention
+    set company_id = #{companyId,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=BIGINT},
+      task_name = #{taskName,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      agent_id = #{agentId,jdbcType=BIGINT},
+      out_number = #{outNumber,jdbcType=VARCHAR},
+      custm_name = #{custmName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      begin_date = #{beginDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      total_seconds = #{totalSeconds,jdbcType=INTEGER},
+      is_intention = #{isIntention,jdbcType=INTEGER},
+      intention_level = #{intentionLevel,jdbcType=VARCHAR},
+      foucs = #{foucs,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    
+    <select id="countByTaskIdAndContent" resultType="Integer" parameterType="com.pl.indexserver.query.TCustmIntentionQuery">
+      SELECT
+        COUNT(tci.id)
+      FROM t_custm_intention tci
+      LEFT JOIN t_unknown_record tur ON tci.dialog_id = tur.dialog_id
+      LEFT JOIN call_task ct ON tci.task_id = ct.id
+      WHERE tci.task_id IN
+      (
+      SELECT id
+      FROM call_task
+      WHERE business_id=#{businessId}
+      )
+      AND tur.content=#{content}
+    </select>
+
+    <select id="selectByTaskIdAndContent" resultType="com.pl.indexserver.model.TCustmIntentionDto" parameterType="com.pl.indexserver.query.TCustmIntentionQuery">
+      SELECT
+        tci.id,tci.custm_name custmName,tci.telephone,tci.out_number outNumber,tci.task_id taskId,
+        tci.begin_date beginDate,tci.total_seconds totalSeconds,tci.task_name taskName,
+        ( CASE tci.intention_level WHEN 'E' THEN '无意向' ELSE tci.intention_level END )intentionLevel
+      FROM t_custm_intention tci
+      LEFT JOIN t_unknown_record tur ON tci.dialog_id = tur.dialog_id
+      LEFT JOIN call_task ct ON tci.task_id = ct.id
+      WHERE tci.task_id IN
+        (
+        SELECT id
+        FROM call_task
+        WHERE business_id=#{businessId}
+        )
+      AND tur.content=#{content}
+      <if test="isLimit">
+          LIMIT #{begin},#{pageNum}
+      </if>
+    </select>
+</mapper>

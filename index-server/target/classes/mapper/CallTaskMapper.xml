@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.CallTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.pl.model.CallTask" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="task_name" property="taskName" jdbcType="VARCHAR" />
+    <result column="ct_type" property="ctType" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="business_id" property="businessId" jdbcType="BIGINT" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="task_state" property="taskState" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="begin_date" property="beginDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="total_number" property="totalNumber" jdbcType="INTEGER" />
+    <result column="time_quantum" property="timeQuantum" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="is_temp" property="isTemp" jdbcType="INTEGER" />
+    <result column="task_cate" property="taskCate" jdbcType="VARCHAR" />
+    <result column="agent_type" property="agentType" jdbcType="INTEGER" />
+    <result column="auto_agent_type" property="autoAgentType" jdbcType="INTEGER" />
+    <result column="auto_agent_num" property="autoAgentNum" jdbcType="INTEGER" />
+    <result column="self_agent_ids" property="selfAgentIds" jdbcType="VARCHAR" />
+    <result column="additional_info" property="additionalInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, task_name, ct_type, company_id, business_id, uid, task_state, status, begin_date,
+    end_date, total_number, time_quantum, create_date, modify_date, is_temp, agent_type,
+    auto_agent_type, auto_agent_num, self_agent_ids,additional_info,task_cate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from call_task
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAllAvailable" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from call_task
+    where status = 1 OR status = 2
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from call_task
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.CallTask" useGeneratedKeys="true" keyProperty="id">
+    insert into call_task (id, task_name, ct_type,
+      company_id, business_id, uid,
+      task_state, status, begin_date, 
+      end_date, total_number, time_quantum, 
+      create_date, modify_date , is_temp, task_cate,
+      agent_type,
+      auto_agent_type, auto_agent_num, self_agent_ids,additional_info
+      )
+    values (#{id,jdbcType=BIGINT}, #{taskName,jdbcType=VARCHAR}, #{ctType,jdbcType=VARCHAR},
+      #{companyId,jdbcType=BIGINT}, #{businessId,jdbcType=BIGINT}, #{uid,jdbcType=VARCHAR},
+      #{taskState,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{beginDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{totalNumber,jdbcType=INTEGER}, #{timeQuantum,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, #{isTemp,jdbcType=INTEGER},
+      #{taskCate,jdbcType=VARCHAR}, #{agentType,jdbcType=INTEGER}, #{autoAgentType,jdbcType=INTEGER},
+      #{autoAgentNum,jdbcType=INTEGER}, #{selfAgentIds,jdbcType=VARCHAR},#{additionalInfo}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pl.model.CallTask" >
+    insert into call_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="taskName != null" >
+        task_name,
+      </if>
+      <if test="ctType != null" >
+        ct_type,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="taskState != null" >
+        task_state,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="beginDate != null" >
+        begin_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="totalNumber != null" >
+        total_number,
+      </if>
+      <if test="timeQuantum != null" >
+        time_quantum,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="additionalInfo != null" >
+        additional_info,
+      </if>
+      <if test="taskCate != null" >
+        task_cate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="taskName != null" >
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="ctType != null" >
+        #{ctType,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="taskState != null" >
+        #{taskState,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="beginDate != null" >
+        #{beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalNumber != null" >
+        #{totalNumber,jdbcType=INTEGER},
+      </if>
+      <if test="timeQuantum != null" >
+        #{timeQuantum,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="additionalInfo != null" >
+        #{additionalInfo},
+      </if>
+      <if test="taskCate != null" >
+        #{taskCate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.CallTask" >
+    update call_task
+    <set >
+      <if test="taskName != null" >
+        task_name = #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="ctType != null" >
+        ct_type = #{ctType,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null" >
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="taskState != null" >
+        task_state = #{taskState,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="beginDate != null" >
+        begin_date = #{beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalNumber != null" >
+        total_number = #{totalNumber,jdbcType=INTEGER},
+      </if>
+      <if test="timeQuantum != null" >
+        time_quantum = #{timeQuantum,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="agentType != null" >
+        agent_type = #{agentType,jdbcType=INTEGER},
+      </if>
+      <if test="autoAgentType != null" >
+        auto_agent_type = #{autoAgentType,jdbcType=INTEGER},
+      </if>
+      <if test="autoAgentNum != null" >
+        auto_agent_num = #{autoAgentNum,jdbcType=INTEGER},
+      </if>
+      <if test="selfAgentIds != null" >
+        self_agent_ids = #{selfAgentIds,jdbcType=VARCHAR},
+      </if>
+      <if test="additionalInfo != null" >
+        additional_info = #{additionalInfo},
+      </if>
+      <if test="taskCate != null" >
+        task_cate = #{taskCate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="updateOrInsertByPrimaryKeySelective" parameterType="com.pl.model.CallTask" useGeneratedKeys="true" keyProperty="id">
+    insert into call_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="taskName != null" >
+        task_name,
+      </if>
+      <if test="ctType != null" >
+        ct_type,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="taskState != null" >
+        task_state,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="beginDate != null" >
+        begin_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="totalNumber != null" >
+        total_number,
+      </if>
+      <if test="timeQuantum != null" >
+        time_quantum,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="agentType != null" >
+        agent_type,
+      </if>
+      <if test="autoAgentType != null" >
+        auto_agent_type,
+      </if>
+      <if test="autoAgentNum != null" >
+        auto_agent_num,
+      </if>
+      <if test="selfAgentIds != null" >
+        self_agent_ids,
+      </if>
+      <if test="additionalInfo != null" >
+        additional_info,
+      </if>
+      <if test="taskCate != null" >
+        task_cate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    <if test="id != null" >
+      #{id,jdbcType=BIGINT},
+    </if>
+    <if test="taskName != null" >
+      #{taskName,jdbcType=VARCHAR},
+    </if>
+    <if test="ctType != null" >
+      #{ctType,jdbcType=VARCHAR},
+    </if>
+    <if test="companyId != null" >
+      #{companyId,jdbcType=BIGINT},
+    </if>
+    <if test="businessId != null" >
+      #{businessId,jdbcType=BIGINT},
+    </if>
+    <if test="uid != null" >
+      #{uid,jdbcType=VARCHAR},
+    </if>
+    <if test="taskState != null" >
+      #{taskState,jdbcType=VARCHAR},
+    </if>
+    <if test="status != null" >
+      #{status,jdbcType=INTEGER},
+    </if>
+    <if test="beginDate != null" >
+      #{beginDate,jdbcType=TIMESTAMP},
+    </if>
+    <if test="endDate != null" >
+      #{endDate,jdbcType=TIMESTAMP},
+    </if>
+    <if test="totalNumber != null" >
+      #{totalNumber,jdbcType=INTEGER},
+    </if>
+    <if test="timeQuantum != null" >
+      #{timeQuantum,jdbcType=VARCHAR},
+    </if>
+    <if test="createDate != null" >
+      #{createDate,jdbcType=TIMESTAMP},
+    </if>
+    <if test="modifyDate != null" >
+      #{modifyDate,jdbcType=TIMESTAMP},
+    </if>
+    <if test="agentType != null" >
+      #{agentType,jdbcType=INTEGER},
+    </if>
+    <if test="autoAgentType != null" >
+      #{autoAgentType,jdbcType=INTEGER},
+    </if>
+    <if test="autoAgentNum != null" >
+      #{autoAgentNum,jdbcType=INTEGER},
+    </if>
+    <if test="selfAgentIds != null" >
+      #{selfAgentIds,jdbcType=VARCHAR},
+    </if>
+    <if test="additionalInfo != null" >
+      #{additionalInfo},
+    </if>
+    <if test="taskCate != null" >
+        task_cate = #{taskCate,jdbcType=VARCHAR},
+    </if>
+    </trim>
+    ON DUPLICATE KEY UPDATE task_name=VALUES(task_name),business_id=VALUES(business_id),task_state=VALUES(task_state),status=VALUES(status),
+      begin_date=VALUES(begin_date),end_date=VALUES(end_date),
+    total_number=VALUES(total_number),time_quantum=VALUES(time_quantum),modify_date=VALUES(modify_date),
+    agent_type=VALUES(agent_type),auto_agent_type=VALUES(auto_agent_type),auto_agent_num=VALUES(auto_agent_num),
+    self_agent_ids=VALUES(self_agent_ids),additional_info=VALUES(additional_info)
+  </insert>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pl.model.CallTask" >
+    update call_task
+    set task_name = #{taskName,jdbcType=VARCHAR},
+      ct_type = #{ctType,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      uid = #{uid,jdbcType=VARCHAR},
+      task_state = #{taskState,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      begin_date = #{beginDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      total_number = #{totalNumber,jdbcType=INTEGER},
+      time_quantum = #{timeQuantum,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      additional_info = #{additionalInfo},
+      task_cate = #{taskCate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.CallTask" >
+    update call_task
+    set task_name = #{taskName,jdbcType=VARCHAR},
+      ct_type = #{ctType,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      uid = #{uid,jdbcType=VARCHAR},
+      task_state = #{taskState,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      begin_date = #{beginDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      total_number = #{totalNumber,jdbcType=INTEGER},
+      time_quantum = #{timeQuantum,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      additional_info = #{additionalInfo},
+      task_cate = #{taskCate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getCallTaskListByCompany_id" resultType="com.pl.model.CallTask">
+    select
+    <include refid="Base_Column_List" />
+    from call_task
+    where company_id = #{company_id,jdbcType=BIGINT}
+    AND task_name = #{taskName}
+    and status != 5
+    and status != 0
+  </select>
+
+  <select id="getCallTaskListByCompany_idOutTaskid" resultType="com.pl.model.CallTask">
+    select
+    <include refid="Base_Column_List" />
+    from call_task
+    where company_id = #{company_id,jdbcType=BIGINT}
+    AND task_name = #{taskName}
+    and status != 5
+    and status != 0
+    <if test="taskId != null">
+        and id != #{taskId}
+    </if>
+  </select>
+
+  <select id="getCallTaskListByMap" resultType="com.pl.model.CallTask">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM call_task
+    WHERE uid = #{uid}
+    AND company_id = #{company_id}
+    AND is_temp != 1
+    AND status !=5
+    AND status !=0
+      <if test="task_state != null">
+        AND `status` = #{task_state}
+      </if>
+      <if test="taskName != null">
+        AND LOCATE(#{taskName},task_name) &gt;0
+      </if>
+    ORDER BY CASE `status`
+    WHEN 2 THEN 1
+    WHEN 4 THEN 2
+    WHEN 1 THEN 3
+    WHEN 3 THEN 4
+    END,
+    create_date  DESC
+  </select>
+
+  <select id="getCallTaskByid"  resultType="com.pl.model.CallTask">
+    select
+    <include refid="Base_Column_List" />
+    FROM call_task
+    WHERE company_id = #{company_id}
+    AND id = #{id}
+  </select>
+
+  <update id="updateTask_state">
+    update call_task
+    SET
+      <if test="pause == -1">  task_state = '暂停', status = 2, </if>
+
+      <if test="pause == 1">  task_state = '启动', status = 1, </if>
+      <if test="begindate != null">  begin_date=#{begindate,jdbcType=TIMESTAMP}, </if>
+      <if test="enddate != null">  end_date=#{enddate,jdbcType=TIMESTAMP}, </if>
+      <if test="timeQuantum != null and timeQuantum != ''">  time_quantum = #{timeQuantum,jdbcType=VARCHAR}, </if>
+      <if test="totalNumber != null">  total_number = #{totalNumber,jdbcType=INTEGER}, </if>
+      <if test="additionalInfo != null">  additional_info = #{additionalInfo}, </if>
+      modify_date = #{modify_date,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateEnd">
+    update call_task
+    set task_state = '结束',
+    status = 3,
+    modify_date = #{modify_date}
+    where id = #{id}
+  </update>
+
+  <update id="updateAgentStatus">
+    update t_call_agent
+    set
+      is_used = 0,
+      used_taskid = 0
+    where used_taskid = #{id,jdbcType=BIGINT}
+
+  </update>
+
+  <select id="selectNotDialing" resultType="java.lang.Integer">
+    select count(*) FROM t_dialog
+    WHERE company_id = #{company_id}
+    AND task_id = #{taskid}
+    AND STATUS =1
+  </select>
+
+  <select id="getCar_Numbers" resultType="java.lang.String">
+    select car_numbers from tm_customer
+    where task_id = #{task_id}
+    and ct_phone =#{ct_phone}
+    LIMIT 0,1
+  </select>
+
+  <select id="getIndexCallData" resultType="java.util.Map">
+    select count(id) as sumTask, COALESCE(SUM(total_number),0) as sumCall from call_task
+    <where>
+      company_id = #{companyId} and uid = #{uid} and status = 3
+      <if test="endTime != null">
+        and DATE(modify_date) = DATE_FORMAT(#{endTime},'%Y-%m-%d')
+      </if>
+    </where>
+  </select>
+
+  <select id="getCallTaskSum" resultType="com.pl.indexserver.model.CallTaskIndexDto">
+    select modify_date as endTime,COALESCE(SUM(total_number),0) as sumRecords
+    from call_task
+    <where>
+      company_id = #{companyId} and status = 3
+      <if test="starTime != null">
+        and DATE(modify_date) &lt;= DATE_FORMAT(#{starTime},'%Y-%m-%d')
+      </if>
+      <if test="endTime != null">
+        and DATE(modify_date) &gt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+      </if>
+    </where>
+    group by DATE(modify_date)
+    order by DATE(modify_date) desc
+  </select>
+
+  <select id="getCallTaskBystatus" resultType="com.pl.model.CallTask">
+    SELECT
+      <include refid="Base_Column_List" />
+    from call_task
+    where uid=#{userId} and status=#{status}
+  </select>
+
+  <select id="getCallTaskByCompanyId" resultType="com.pl.model.CallTask">
+    SELECT
+    <include refid="Base_Column_List" />
+    from call_task
+    where company_id = #{companyId}
+  </select>
+
+  <select id="getCallTaskByCompanyIdAndUsername" resultType="com.pl.model.CallTask">
+    SELECT
+        b.id, b.task_name, b.ct_type, b.company_id, b.business_id, b.uid, b.task_state,
+        b.status, b.begin_date,b.end_date, b.total_number, b.time_quantum, b.create_date,
+        b.modify_date, b.is_temp, b.agent_type,b.auto_agent_type, b.auto_agent_num,
+        b.self_agent_ids,b.additional_info,b.task_cate
+    FROM
+        call_task b
+        LEFT JOIN tm_user a ON a.company_id = b.company_id
+    WHERE
+        a.username = #{userName}
+  </select>
+</mapper>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TMechanismMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.wx.TMechanism">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="pic_facade" jdbcType="VARCHAR" property="picFacade" />
+    <result column="pic_back" jdbcType="VARCHAR" property="picBack" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="adopt_time" jdbcType="TIMESTAMP" property="adoptTime" />
+    <result column="org_num" jdbcType="VARCHAR" property="orgNum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, openid, pic_facade, pic_back, status, code, create_time, adopt_time,org_num
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wx.t_mechanism
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByOrgNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx.t_mechanism
+    where code = #{code,jdbcType=VARCHAR}
+    or org_num = #{orgNum,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx.t_mechanism
+    where openid = #{openId,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wx.t_mechanism
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pl.model.wx.TMechanism">
+    insert into wx.t_mechanism (id, name, openid, 
+      pic_facade, pic_back, status, 
+      code, create_time, adopt_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR}, 
+      #{picFacade,jdbcType=VARCHAR}, #{picBack,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{code,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{adoptTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.pl.model.wx.TMechanism">
+    insert into wx.t_mechanism (name, openid,
+    pic_facade, pic_back, status,
+    code, create_time, adopt_time,org_num
+    )
+    values (#{name,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR},
+    #{picFacade,jdbcType=VARCHAR}, #{picBack,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+    #{code,jdbcType=VARCHAR}, now(), now(),#{orgNum}
+    )
+  </insert>
+
+  <insert id="insertOrgApply" parameterType="com.pl.model.wx.TMechanism">
+    insert into wx.t_mechanism
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null and name != ''">
+        name,
+      </if>
+      <if test="openid != null and openid != ''">
+        openid,
+      </if>
+      <if test="picFacade != null and picFacade != ''">
+        pic_facade,
+      </if>
+      <if test="picBack != null and picBack != ''">
+        pic_back,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="code != null and code != ''">
+        code,
+      </if>
+        create_time,
+        adopt_time,
+      <if test="orgNum != null and orgNum != ''">
+        org_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null and name != ''">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null and openid != ''">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="picFacade != null and picFacade != ''">
+        #{picFacade,jdbcType=VARCHAR},
+      </if>
+      <if test="picBack != null and picBack != ''">
+        #{picBack,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="code != null and code != ''">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      now(),
+      now(),
+      <if test="orgNum != null and orgNum != ''">
+        #{orgNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TMechanism">
+    update wx.t_mechanism
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="picFacade != null">
+        pic_facade = #{picFacade,jdbcType=VARCHAR},
+      </if>
+      <if test="picBack != null">
+        pic_back = #{picBack,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adoptTime != null">
+        adopt_time = #{adoptTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TMechanism">
+    update wx.t_mechanism
+    set name = #{name,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      pic_facade = #{picFacade,jdbcType=VARCHAR},
+      pic_back = #{picBack,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      adopt_time = #{adoptTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

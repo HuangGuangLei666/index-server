@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.SpeechcraftMapper">
+	<resultMap id="BaseResultMap" type="com.pl.model.Speechcraft">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="craft_id" property="craftId" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="business_id" property="businessId" jdbcType="BIGINT" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="record_file" property="recordFile" jdbcType="VARCHAR" />
+		<result column="file_size" property="fileSize" jdbcType="INTEGER" />
+		<result column="is_record" property="isRecord" jdbcType="INTEGER" />
+		<result column="msgtempl_id" property="msgtemplId" jdbcType="BIGINT" />
+		<result column="score" property="score"/>
+		<result column="foucs" property="foucs"/>
+		<result column="record_describe" property="recordDescribe"/>
+		<result column="record_state" property="recordState"/>
+		<result column="notRecording_num" property="notRecordingNum"/>
+		<result column="fileSize_count" property="fileSizeCount"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="BaseResultMapForSpeechcraftTalkModel" type="com.pl.model.SpeechcraftTalkModel">
+		<id column="id" property="speechcraId" jdbcType="BIGINT" />
+		<result column="talktitle" property="talkTitle" jdbcType="VARCHAR" />
+		<result column="processnodename" property="processNodeName" jdbcType="VARCHAR" />
+		<result column="createdate" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="modifydate" property="modifyDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, craft_id, name, business_id, company_id, content,
+		record_file,file_size,
+		is_record, msgtempl_id,score,foucs,record_describe,record_state,notRecording_num,
+		create_date, modify_date,fileSize_count
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from speechcraft
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		speechcraft
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.pl.model.Speechcraft"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into speechcraft (id,
+		craft_id, name,
+		business_id, company_id, content,
+		record_file,file_size,
+		is_record, msgtempl_id,score,foucs,record_describe,record_state,notRecording_num,
+		create_date, modify_date,fileSize_count)
+		values
+		(#{id,jdbcType=BIGINT}, #{craftId,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{businessId,jdbcType=BIGINT},
+		#{companyId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR},
+		#{recordFile,jdbcType=VARCHAR},#{fileSize}, #{isRecord,jdbcType=INTEGER},
+		#{msgtemplId,jdbcType=BIGINT},#{score},#{foucs},#{recordDescribe},#{recordState},#{notRecordingNum}
+		now(),now(),#{fileSizeCount})
+	</insert>
+	<insert id="insertSelective" parameterType="com.pl.model.Speechcraft"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into speechcraft
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="craftId != null">
+				craft_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="businessId != null">
+				business_id,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="recordFile != null">
+				record_file,
+			</if>
+			<if test="fileSize != null">
+				file_size,
+			</if>
+			<if test="isRecord != null">
+				is_record,
+			</if>
+			<if test="msgtemplId != null">
+				msgtempl_id,
+			</if>
+			<if test="true">
+				create_date,
+			</if>
+			<if test="true">
+				modify_date,
+			</if>
+			<if test="score != null">
+				score,
+			</if>
+			<if test="foucs != null">
+				foucs,
+			</if>
+			<if test="recordDescribe != null">
+				record_describe,
+			</if>
+			<if test="recordState != null">
+				record_state,
+			</if>
+			<if test="notRecordingNum != null">
+				notRecording_num,
+			</if>
+			<if test="fileSizeCount != null">
+				fileSize_count,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="craftId != null">
+				#{craftId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="businessId != null">
+				#{businessId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="recordFile != null">
+				#{recordFile,jdbcType=VARCHAR},
+			</if>
+			<if test="fileSize != null">
+				#{fileSize},
+			</if>
+			<if test="isRecord != null">
+				#{isRecord,jdbcType=INTEGER},
+			</if>
+			<if test="msgtemplId != null">
+				#{msgtemplId,jdbcType=BIGINT},
+			</if>
+			<if test="true">
+				now(),
+			</if>
+			<if test="true">
+				now(),
+			</if>
+			<if test="score != null">
+				#{score},
+			</if>
+			<if test="foucs != null">
+				#{foucs},
+			</if>
+			<if test="recordDescribe != null">
+				#{recordDescribe},
+			</if>
+			<if test="recordState != null">
+				#{recordState},
+			</if>
+			<if test="notRecordingNum != null">
+				#{notRecordingNum},
+			</if>
+			<if test="fileSizeCount != null">
+				#{fileSizeCount},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.pl.model.Speechcraft">
+		update speechcraft
+		<set>
+			<if test="craftId != null">
+				craft_id = #{craftId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="businessId != null">
+				business_id = #{businessId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="recordFile != null">
+				record_file = #{recordFile,jdbcType=VARCHAR},
+			</if>
+			<if test="fileSize != null">
+				file_size = #{fileSize},
+			</if>
+			<if test="isRecord != null">
+				is_record = #{isRecord,jdbcType=INTEGER},
+			</if>
+			<if test="msgtemplId != null">
+				msgtempl_id = #{msgtemplId,jdbcType=BIGINT},
+			</if>
+			<if test="true">
+				modify_date = now(),
+			</if>
+			<if test="score != null">
+				score = #{score},
+			</if>
+			<if test="foucs != null">
+				foucs = #{foucs},
+			</if>
+			<if test="recordDescribe != null">
+				record_describe = #{recordDescribe},
+			</if>
+			<if test="recordState != null">
+				record_state = #{recordState},
+			</if>
+			<if test="notRecordingNum != null">
+				notRecording_num = #{notRecordingNum},
+			</if>
+			<if test="fileSizeCount != null">
+				fileSize_count = #{fileSizeCount},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.pl.model.Speechcraft">
+		update speechcraft
+		set craft_id = #{craftId,jdbcType=VARCHAR},
+		name =
+		#{name,jdbcType=VARCHAR},
+		business_id = #{businessId,jdbcType=BIGINT},
+		company_id = #{companyId,jdbcType=BIGINT},
+		content =
+		#{content,jdbcType=VARCHAR},
+		record_file =
+		#{recordFile,jdbcType=VARCHAR},
+		file_size = #{fileSize},
+		is_record =
+		#{isRecord,jdbcType=INTEGER},
+		msgtempl_id =
+		#{msgtemplId,jdbcType=BIGINT},
+		modify_date =now(),
+		score = #{score},
+		foucs = #{foucs},
+		record_describe = #{recordDescribe},
+		record_state = #{recordState},
+		notRecording_num = #{notRecordingNum},
+		fileSize_count = #{fileSizeCount}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectSpecialtyTalkCount" resultType="java.lang.Integer"
+		parameterType="java.lang.Long">
+		SELECT SUM(count)
+		FROM
+		(
+			SELECT COUNT(id) count
+			FROM speechcraft
+			WHERE	business_id=#{id}
+			UNION
+			SELECT COUNT(id) count
+			FROM knowledge_answerext
+			WHERE	business_id=#{id}
+		) temp
+	</select>
+
+	<select id="selectSpecialtyTalkCountByIsRecord" resultType="java.lang.Integer">
+		SELECT SUM(count)
+		FROM
+		(
+			SELECT COUNT(id) count
+			FROM speechcraft
+			WHERE	business_id=#{id}
+			AND is_record = 1
+			UNION
+			SELECT COUNT(id) count
+			FROM knowledge_answerext
+			WHERE	business_id=#{id}
+			AND is_record = 1
+		) temp
+	</select>
+
+
+	<select id="selectTDialogCountByIStatus" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT COUNT(id)
+		FROM t_custm_intention
+		WHERE task_id IN (${callTaskIds})
+	</select>
+
+	<select id="selectTDialogCountByIsIntention" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT
+			COUNT( id )
+		FROM
+			t_custm_intention
+		WHERE
+			intention_level IN ('A','B','C')
+		AND task_id IN (${callTaskIds})
+	</select>
+
+
+	<select id="selectSpeechcraftAllForName" resultType="com.pl.indexserver.model.SpecialtyTalkDto"
+		parameterType="java.util.Map">
+		SELECT
+		sp.craft_id craftId,any_value(sp.name) `name`,any_value(wn.name) flowName,
+		any_value(sp.record_state),any_value(sp.modify_date) as modifydate,any_value(sp.create_date) as createdate,
+		(COUNT(sp.id)-SUM(sp.is_record)) as flowNum
+		FROM speechcraft sp
+		LEFT JOIN (select craft_id,group_concat(name) name from workflow_node group by craft_id) wn
+		ON sp.craft_id = wn.craft_id
+		WHERE
+		sp.business_id = #{businessId}
+		<if test="name != null and name != '' ">
+			AND (sp.name LIKE CONCAT('%',#{name},'%')
+			OR wn.name LIKE
+			CONCAT('%',#{name},'%'))
+		</if>
+		GROUP BY sp.craft_id
+		ORDER BY any_value(sp.id) desc
+	</select>
+
+	<!--查询speechcraft详情 -->
+	<select id="selectByCraftId" parameterType="java.lang.String"
+			resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from speechcraft
+		where craft_id=#{craftId}
+	</select>
+
+	<!--查询speechcraft -->
+	<select id="getSpeechcraftByCraftId" parameterType="java.lang.String"
+			resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from speechcraft
+		where craft_id=#{craftId}
+	</select>
+
+	<delete id="deleteByCraftId" parameterType="java.lang.String">
+		DELETE
+		FROM speechcraft
+		WHERE craft_id=#{craftId}
+	</delete>
+
+	<select id="selectRecordIsUse" parameterType="java.lang.String" resultType="int">
+		SELECT
+		COUNT(record_file)
+		FROM speechcraft
+		WHERE
+		company_id=#{companyId}
+		AND business_id=#{businessId}
+		AND record_file=#{fileName}
+	</select>
+	<update id="updateByCraftIdSelective" parameterType="com.pl.model.Speechcraft">
+		update speechcraft
+		<set>
+			<if test="craftId != null">
+				craft_id = #{craftId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				`name` = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="businessId != null">
+				business_id = #{businessId,jdbcType=BIGINT},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="msgtemplId != null">
+				msgtempl_id = #{msgtemplId,jdbcType=BIGINT},
+			</if>
+			<if test="score != null">
+				score = #{score},
+			</if>
+			<if test="foucs != null">
+				foucs = #{foucs},
+			</if>
+		</set>
+		where craft_id = #{craftId}
+	</update>
+
+
+	<select id="selectByCompanyIdAndBusinessId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from speechcraft
+		where company_id = #{companyId} and business_id = #{businessId}
+		order by create_date asc, id asc
+	</select>
+
+	<select id="selectByCompanyIdAndCraftId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from speechcraft
+		where company_id = #{companyId} and craft_id = #{craftId}
+		limit 0,1
+	</select>
+
+	<!--查询speechcraft详情-->
+	<select id="selectOfCheckBusiness" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from speechcraft
+		where craft_id=#{craftId} and business_id =#{businessId}
+		order by id
+	</select>
+
+	<!--导出节点话术-->
+	<select id="node" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select name,content from speechcraft where business_id = #{businessId};
+	</select>
+</mapper>

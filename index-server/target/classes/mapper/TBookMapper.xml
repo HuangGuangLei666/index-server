@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.TBookMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.wx.TBook">
+        <id column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="open_id" jdbcType="VARCHAR" property="openId"/>
+        <result column="friend_name" jdbcType="VARCHAR" property="friendName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    phone, open_id, friend_name
+  </sql>
+    <select id="selectFriendByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_book
+        where phone = #{phone,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPhoneAndOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx.t_book
+        where phone = #{value,jdbcType=VARCHAR}
+        and open_id = #{openId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectFriendByGroupTagId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        a.phone, a.open_id, a.friend_name
+        from
+        wx.t_book a
+	    LEFT JOIN wx.t_group_tag b ON a.open_id = b.openid AND a.phone = b.phones
+        where b.id = #{id}
+    </select>
+
+    <select id="selectByOpenidPhoneFriendName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        wx.t_book
+        where open_id = #{openid}
+        and phone = #{phone}
+        and friend_name = #{desName}
+    </select>
+
+    <select id="selectByOpenidFriendName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        wx.t_book
+        where open_id = #{openid}
+        and friend_name = #{desName}
+    </select>
+
+    <select id="qryFriendDetail" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        wx.t_book
+        <where>
+            open_id = #{openId}
+            <if test="phone != null and phone !=''">
+                AND phone = #{phone}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectFriendByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        wx.t_book
+        <where>
+            open_id = #{openid}
+        </where>
+    </select>
+
+    <select id="qryFriendByOpenidAndPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        wx.t_book
+        <where>
+            open_id = #{openId}
+            AND phone = #{phone}
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_book
+    where phone = #{phone,jdbcType=VARCHAR}
+  </delete>
+
+    <delete id="delFriendByOpenIdAndPhone" parameterType="java.lang.String">
+    delete from wx.t_book
+    where open_id = #{openId}
+    AND phone = #{phone}
+  </delete>
+
+    <delete id="delByOpenIdAndFriendName" parameterType="java.lang.String">
+        delete from wx.t_book
+        where open_id = #{openid}
+        AND friend_name = #{friendName}
+    </delete>
+
+    <delete id="deletePhonesDto" parameterType="java.lang.String">
+        delete from wx.t_book
+        where open_id = #{openid}
+        AND phone = #{phone}
+        AND friend_name = #{friendName}
+    </delete>
+
+    <delete id="deletePhonesDto1" parameterType="java.lang.String">
+        delete from wx.t_book
+        where open_id = #{openid}
+        AND friend_name = #{friendName}
+    </delete>
+
+    <delete id="delByOpenIdFriendNamePh" parameterType="java.lang.String">
+        delete from wx.t_book
+        where open_id = #{openid}
+        AND friend_name = #{name}
+        AND phone = #{ph}
+    </delete>
+
+    <insert id="insert" parameterType="com.pl.model.wx.TBook">
+        insert into wx.t_book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="friendName != null">
+                friend_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="friendName != null">
+                #{friendName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        ON DUPLICATE KEY UPDATE phone=VALUES(phone),open_id=VALUES(open_id),friend_name=VALUES(friend_name)
+    </insert>
+
+    <insert id="insertNotFriendName" parameterType="com.pl.model.wx.TBook">
+        insert into wx.t_book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="friendName != null">
+                friend_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="friendName != null">
+                #{friendName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        ON DUPLICATE KEY UPDATE phone=VALUES(phone),open_id=VALUES(open_id)
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.pl.model.wx.TBook">
+        insert into t_book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="openId != null">
+                open_id,
+            </if>
+            <if test="friendName != null">
+                friend_name,
+            </if>
+            <if test="bussnessId != null">
+                bussness_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="openId != null">
+                #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="friendName != null">
+                #{friendName,jdbcType=VARCHAR},
+            </if>
+            <if test="bussnessId != null">
+                #{bussnessId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TBook">
+        update t_book
+        <set>
+            <if test="openId != null">
+                open_id = #{openId,jdbcType=VARCHAR},
+            </if>
+            <if test="friendName != null">
+                friend_name = #{friendName,jdbcType=VARCHAR},
+            </if>
+            <if test="bussnessId != null">
+                bussness_id = #{bussnessId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where phone = #{phone,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByOpenidAndPhone" parameterType="com.pl.model.wx.TBook">
+        update wx.t_book
+        <set>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="friendName != null">
+                friend_name = #{friendName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where open_id = #{openid} and phone = #{phones}
+    </update>
+
+    <update id="updateByfriendNameAndPhone" parameterType="com.pl.model.wx.TBook">
+        update wx.t_book
+        <set>
+            <if test="desName != null">
+                friend_name = #{desName,jdbcType=VARCHAR},
+            </if>
+            <if test="desPhone != null">
+                phone = #{desPhone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where open_id = #{openid} and friend_name = #{friendName} and phone = #{phone}
+    </update>
+
+    <update id="updateFriendBookByPhone" parameterType="com.pl.model.wx.TBook">
+        UPDATE wx.t_book
+         
+               set friend_name = #{friendName} 
+          
+        WHERE
+         open_id = #{openId} and phone = #{phone}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.wx.TBook">
+    update t_book
+    set open_id = #{openId,jdbcType=VARCHAR},
+      friend_name = #{friendName,jdbcType=VARCHAR},
+      bussness_id = #{bussnessId,jdbcType=BIGINT}
+    where phone = #{phone,jdbcType=VARCHAR}
+  </update>
+</mapper>

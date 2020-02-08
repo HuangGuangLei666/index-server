@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.AlgorithmResponseModeMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.AlgorithmResponseMode">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="business_id" property="businessId" jdbcType="BIGINT"/>
+        <result column="original_id" property="originalId" jdbcType="BIGINT"/>
+        <result column="rule_type" property="ruleType" jdbcType="INTEGER"/>
+        <result column="key_word" property="keyWord" jdbcType="VARCHAR"/>
+        <result column="key_num" property="keyNum" jdbcType="INTEGER"/>
+        <result column="match_value" property="matchValue" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="flag" property="flag" jdbcType="INTEGER"/>
+        <result column="intent_flag" property="intentFlag" jdbcType="CHAR"/>
+        <result column="uid" property="uid" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="syn_date" property="synDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.pl.model.AlgorithmResponseMode" extends="BaseResultMap">
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, company_id, business_id, original_id, rule_type, key_word, key_num, match_value,
+    status, flag, intent_flag, uid, create_date, modify_date, syn_date
+  </sql>
+    <sql id="Blob_Column_List">
+    content
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from algorithm.response_mode
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from algorithm.response_mode
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.pl.model.AlgorithmResponseMode">
+    insert into algorithm.response_mode (id, name, company_id,
+      business_id, original_id, rule_type,
+      key_word, key_num, match_value,
+      status, flag, intent_flag,
+      uid, create_date, modify_date,
+      syn_date, content)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT},
+      #{businessId,jdbcType=BIGINT}, #{originalId,jdbcType=BIGINT}, #{ruleType,jdbcType=INTEGER},
+      #{keyWord,jdbcType=VARCHAR}, #{keyNum,jdbcType=INTEGER}, #{matchValue,jdbcType=INTEGER},
+      #{status,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, #{intentFlag,jdbcType=CHAR},
+      #{uid,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP},
+      #{synDate,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pl.model.AlgorithmResponseMode">
+        insert into algorithm.response_mode
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="originalId != null">
+                original_id,
+            </if>
+            <if test="ruleType != null">
+                rule_type,
+            </if>
+            <if test="keyWord != null">
+                key_word,
+            </if>
+            <if test="keyNum != null">
+                key_num,
+            </if>
+            <if test="matchValue != null">
+                match_value,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="intentFlag != null">
+                intent_flag,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="modifyDate != null">
+                modify_date,
+            </if>
+            <if test="synDate != null">
+                syn_date,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="originalId != null">
+                #{originalId,jdbcType=BIGINT},
+            </if>
+            <if test="ruleType != null">
+                #{ruleType,jdbcType=INTEGER},
+            </if>
+            <if test="keyWord != null">
+                #{keyWord,jdbcType=VARCHAR},
+            </if>
+            <if test="keyNum != null">
+                #{keyNum,jdbcType=INTEGER},
+            </if>
+            <if test="matchValue != null">
+                #{matchValue,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="intentFlag != null">
+                #{intentFlag,jdbcType=CHAR},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyDate != null">
+                #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="synDate != null">
+                #{synDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.AlgorithmResponseMode">
+        update algorithm.response_mode
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="originalId != null">
+                original_id = #{originalId,jdbcType=BIGINT},
+            </if>
+            <if test="ruleType != null">
+                rule_type = #{ruleType,jdbcType=INTEGER},
+            </if>
+            <if test="keyWord != null">
+                key_word = #{keyWord,jdbcType=VARCHAR},
+            </if>
+            <if test="keyNum != null">
+                key_num = #{keyNum,jdbcType=INTEGER},
+            </if>
+            <if test="matchValue != null">
+                match_value = #{matchValue,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="intentFlag != null">
+                intent_flag = #{intentFlag,jdbcType=CHAR},
+            </if>
+            <if test="uid != null">
+                uid = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="synDate != null">
+                syn_date = #{synDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pl.model.AlgorithmResponseMode">
+    update algorithm.response_mode
+    set name = #{name,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      original_id = #{originalId,jdbcType=BIGINT},
+      rule_type = #{ruleType,jdbcType=INTEGER},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      key_num = #{keyNum,jdbcType=INTEGER},
+      match_value = #{matchValue,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      intent_flag = #{intentFlag,jdbcType=CHAR},
+      uid = #{uid,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      syn_date = #{synDate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.pl.model.AlgorithmResponseMode">
+    update algorithm.response_mode
+    set name = #{name,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      original_id = #{originalId,jdbcType=BIGINT},
+      rule_type = #{ruleType,jdbcType=INTEGER},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      key_num = #{keyNum,jdbcType=INTEGER},
+      match_value = #{matchValue,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      intent_flag = #{intentFlag,jdbcType=CHAR},
+      uid = #{uid,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      syn_date = #{synDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <!--**************************** extend begin here start *******************************-->
+    <select id="selectByCompanyIdAndBusinessIdAndOriginalId" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from algorithm.response_mode
+        where company_id = #{companyId}
+        and business_id = #{businessId}
+        and original_id = #{originalId}
+    </select>
+
+    <delete id="deleteByCompanyIdAndBusinessIdAndOriginalId">
+        delete from algorithm.response_mode
+        where company_id = #{companyId}
+        and business_id = #{businessId}
+        and original_id = #{originalId}
+    </delete>
+</mapper>

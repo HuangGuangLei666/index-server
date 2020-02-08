@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.xbms.MechanismMapper">
+  <resultMap id="BaseResultMap" type="com.pl.model.xbms.Mechanism">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="pic_facade" jdbcType="VARCHAR" property="picFacade" />
+    <result column="pic_back" jdbcType="VARCHAR" property="picBack" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="adopt_time" jdbcType="TIMESTAMP" property="adoptTime" />
+    <result column="org_num" jdbcType="VARCHAR" property="orgNum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, user_id, pic_facade, pic_back, status, code, create_time, adopt_time,org_num
+  </sql>
+
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_mechanism
+    where user_id = #{userId}
+  </select>
+</mapper>

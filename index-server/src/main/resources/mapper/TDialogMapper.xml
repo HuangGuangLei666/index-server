@@ -1,0 +1,975 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.TDialogMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.TDialog">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="company_id" property="companyId" jdbcType="BIGINT"/>
+        <result column="task_id" property="taskId" jdbcType="BIGINT"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="begin_date" property="beginDate" jdbcType="TIMESTAMP"/>
+        <result column="end_date" property="endDate" jdbcType="TIMESTAMP"/>
+        <result column="priority" jdbcType="INTEGER" property="priority" />
+        <result column="file_path" property="file_path" jdbcType="VARCHAR"/>
+        <result column="agent_id" property="agentId" jdbcType="BIGINT"/>
+        <result column="is_intention" property="isIntention" jdbcType="INTEGER"/>
+        <result column="intention_level" property="intentionLevel" jdbcType="VARCHAR"/>
+        <result column="focus_level" property="focusLevel" jdbcType="VARCHAR"/>
+        <result column="intent_level" property="intentLevel" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="tts_info" property="ttsInfo" jdbcType="VARCHAR"/>
+        <result column="total_seconds" property="total_seconds" jdbcType="INTEGER"/>
+        <result column="file_size" property="fileSize" jdbcType="INTEGER"/>
+        <result column="errormsg" property="errormsg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapTDialogCount" type="com.pl.model.TDialogCount">
+        <result column="count" property="count" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapTDialogModelDto" type="com.pl.model.TDialogSelect">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="ct_name" property="ctName" jdbcType="VARCHAR"/>
+        <result column="telephone" property="ctPhone" jdbcType="VARCHAR"/>
+        <result column="is_intention" property="isIntention" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="begin_date" property="beginDate" jdbcType="TIMESTAMP"/>
+        <result column="duration" property="duration" jdbcType="INTEGER"/>
+        <result column="out_number" property="outNumber" jdbcType="VARCHAR"/>
+        <result column="intention_level" property="intentionLevel" jdbcType="VARCHAR"/>
+        <result column="ct_address" property="ctAddress" jdbcType="VARCHAR"/>
+        <result column="tts_info" property="ttsInfo" jdbcType="VARCHAR"/>
+        <result column="file_size" property="fileSize" jdbcType="INTEGER"/>
+        <result column="errormsg" property="errormsg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapTCallAgentSelect" type="com.pl.model.TCallAgentSelect" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="agentnum" property="agentNum" jdbcType="VARCHAR" />
+        <result column="dialogstatus" property="dialogStatus" jdbcType="INTEGER" />
+        <result column="agentsatus" property="agentStatus" jdbcType="INTEGER" />
+        <result column="ctname" property="ctName" jdbcType="VARCHAR" />
+        <result column="begin_date" property="beginDate" jdbcType="TIMESTAMP"/>
+        <result column="end_date" property="endDate" jdbcType="TIMESTAMP"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="agent_id" property="agentId" jdbcType="BIGINT" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapTUserinfo" type="com.pl.model.wx.TUserinfo" >
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="subscribe" jdbcType="VARCHAR" property="subscribe" />
+        <result column="openid" jdbcType="VARCHAR" property="openid" />
+        <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+        <result column="language" jdbcType="VARCHAR" property="language" />
+        <result column="city" jdbcType="VARCHAR" property="city" />
+        <result column="sex" jdbcType="VARCHAR" property="sex" />
+        <result column="province" jdbcType="VARCHAR" property="province" />
+        <result column="country" jdbcType="VARCHAR" property="country" />
+        <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl" />
+        <result column="subscribe_time" jdbcType="TIMESTAMP" property="subscribeTime" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="groupid" jdbcType="INTEGER" property="groupid" />
+        <result column="tagid_list" jdbcType="VARCHAR" property="tagidList" />
+        <result column="subscribe_scene" jdbcType="VARCHAR" property="subscribeScene" />
+        <result column="qr_scene" jdbcType="VARCHAR" property="qrScene" />
+        <result column="qr_scene_str" jdbcType="VARCHAR" property="qrSceneStr" />
+        <result column="phonenumber" jdbcType="VARCHAR" property="phonenumber" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="status" jdbcType="TIMESTAMP" property="status" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, company_id, task_id, telephone, status, begin_date, end_date,total_seconds,file_path, agent_id,
+      is_intention, intention_level, focus_level, intent_level, create_date, tts_info, total_seconds, file_size, errormsg,priority
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_dialog${postfix}
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectDialogInByPrimaryKey" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_dialog_in
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectDialogByTaskId" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_dialog_in
+        where task_id = #{phonenumber}
+        and company_id = 2122
+        order by id desc
+    </select>
+
+    <select id="selectDialogPageByTaskId" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from t_dialog_in
+        where task_id = #{phonenumber} order by id desc
+    </select>
+
+    <select id="selectByTaskIdOfToday" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            t_dialog_in
+        WHERE
+            task_id = #{phonenumber}
+            AND company_id = 2122
+            AND begin_date LIKE CONCAT( '%', #{format}, '%' )
+    </select>
+
+    <select id="selectAnswerListByUserId" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+            a.*
+        FROM
+            yousayidoprop.t_dialog_in a
+            LEFT JOIN wx.t_userinfo b ON a.task_id = b.phonenumber
+        WHERE
+            b.id = #{userId}
+    </select>
+
+    <select id="selectByTaskId" resultType="com.pl.model.TDialog" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_dialog${postfix}
+        WHERE status = 0 AND task_id  = #{taskId,jdbcType=BIGINT}
+    </select>
+
+    <update id="updateStatusByPhone" parameterType="java.util.Map">
+        update t_dialog${postfix}
+            set status = #{status,jdbcType=INTEGER},agent_id = #{agentId,jdbcType=BIGINT}
+        where task_id = #{taskId,jdbcType=BIGINT} and telephone = #{phone,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateStatusByAgent" parameterType="java.util.Map">
+        update t_dialog${postfix}
+        set status = #{status,jdbcType=INTEGER}
+        where task_id = #{taskId,jdbcType=BIGINT} and agent_id = #{agentId,jdbcType=BIGINT} and status=1
+    </update>
+
+    <update id="updateDialogPriority">
+        update t_dialog${postfix}
+        set priority = 999999
+        where id = #{id}
+    </update>
+
+    <update id="updateDialogIsReadStatus">
+        update t_dialog_in
+        set intent_level = 'isRead'
+        where id = #{dialogId}
+    </update>
+
+    <select id="getTDialogListByMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT  <include refid="Base_Column_List"/>
+    FROM t_dialog${postfix}
+    WHERE company_id = #{company_id}
+    AND task_id  = #{task_id}
+  </select>
+  
+  
+  <select id="getTDialogListToStat" resultMap="BaseResultMap" parameterType="java.util.Map">
+      SELECT  id,company_id,task_id,telephone,status,begin_date,end_date,total_seconds,agent_id,is_intention,intent_level,focus_level,tts_info,duration_time,errormsg , dd.detail_records file_path
+      FROM t_dialog${postfix} d ,t_dialog_detail${postfix} dd
+      WHERE  d.id = dd.dialog_id
+      and  d.task_id = #{task_id}
+      and id > (select IFNULL(max(dialog_id),0 ) from report_speechcraft_statistics where task_id =#{task_id} )
+  </select>
+  
+  
+
+  <insert id="addDialog" parameterType="java.util.Map">
+      insert into t_dialog${postfix} ( company_id, task_id,
+      telephone, status, begin_date,
+      end_date, file_path, agent_id,
+      is_intention, intention_level, tts_info, create_date)
+      values
+       <foreach collection="dialogList" index="index" item="item" separator="," >
+            ( #{item.companyId,jdbcType=BIGINT}, #{item.taskId,jdbcType=BIGINT},
+            #{item.telephone,jdbcType=VARCHAR}, #{item.status,jdbcType=INTEGER}, #{item.beginDate,jdbcType=TIMESTAMP},
+            #{item.endDate,jdbcType=TIMESTAMP}, #{item.file_path,jdbcType=VARCHAR}, #{item.agentId,jdbcType=BIGINT},
+            #{item.isIntention,jdbcType=INTEGER}, #{item.intentionLevel,jdbcType=VARCHAR}, #{item.ttsInfo,jdbcType=VARCHAR},
+           #{item.createDate,jdbcType=TIMESTAMP}
+            )
+       </foreach>
+
+  </insert>
+
+  <select id="selectAllTDialogIntentionById" resultMap="BaseResultMapTDialogCount">
+    SELECT DISTINCT t.is_intention AS status, COUNT( t.task_id ) AS count
+    FROM t_dialog${postfix} t
+    WHERE
+    t.task_id = #{task_id} and t.company_id = #{company_id}
+    AND t.status=2 and is_intention=24
+    GROUP BY t.is_intention
+  </select>
+
+  <select id="selectAllTDialogStatusById" resultMap="BaseResultMapTDialogCount">
+    SELECT DISTINCT
+	COUNT( task_id ) AS count,status
+    FROM t_dialog${postfix}
+    WHERE
+      task_id = #{task_id} AND company_id =#{company_id}
+    GROUP BY STATUS
+  </select>
+
+  <select id="selectAllTDialogTDialogModelDto" resultMap="BaseResultMapTDialogModelDto" parameterType="java.util.Map">
+    SELECT d.id as id , t.ctname AS ct_name,d.telephone,
+    d.is_intention,d.status,d.begin_date,d.total_seconds as duration,
+    tc.out_number,d.intention_level, d.focus_level,
+    d.intent_level,t.ct_address, d.tts_info, d.file_size,d.errormsg
+    FROM t_dialog${postfix} d
+    LEFT JOIN tm_customer t ON d.telephone = t.ct_phone and d.company_id=t.company_id
+    LEFT JOIN t_call_agent tc ON d.agent_id = tc.id
+      <if test="tableName != null and tableName != ''">
+          <if test='tableName == "report_family_planning"'>
+              LEFT JOIN report_family_planning r1 ON d.id = r1.dialog_id
+          </if>
+          <if test='tableName == "report_jiangxi_family_planning"'>
+              LEFT JOIN report_jiangxi_family_planning r1 ON d.id = r1.dialog_id
+          </if>
+          <if test='tableName == "report_speechcraft_statistics"'>
+              LEFT JOIN report_speechcraft_statistics r1 ON d.id = r1.dialog_id
+          </if>
+      </if>
+    <where>
+        d.task_id = #{id}
+        <if test="telephone!=null and telephone!=''">
+            and d.telephone like CONCAT('%',#{telephone},'%')
+        </if>
+        <if test="beginDate != null and beginDate != ''" >
+            and d.begin_date &gt;= #{beginDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and d.end_date  &lt;=  #{endDate,jdbcType=TIMESTAMP}
+        </if>
+
+        <if test="intentionLevel != null and intentionLevel != ''">
+            <if test='type == "all"'>
+                AND (d.intention_level = #{intentionLevel,jdbcType=VARCHAR} or d.focus_level = #{intentionLevel,jdbcType=VARCHAR} or d.intent_level = #{intentionLevel,jdbcType=VARCHAR})
+            </if>
+            <if test='type == "intention"'>
+                and d.intention_level = #{intentionLevel,jdbcType=VARCHAR}
+            </if>
+            <if test='type == "focus"'>
+                and d.focus_level = #{intentionLevel,jdbcType=VARCHAR}
+            </if>
+            <if test='type == "intent"'>
+                and d.intent_level = #{intentionLevel,jdbcType=VARCHAR}
+            </if>
+        </if>
+
+        <if test="ctAddress != null and ctAddress != '' ">
+            and t.ct_address = #{ctAddress,jdbcType=VARCHAR}
+        </if>
+        <if test="ctPosition != null and ctPosition != '' ">
+            and t.ct_position =#{ctPosition,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null and status != '' ">
+            <choose>
+                <when test="status == 18">
+                    and d.status  in (10,18,19,22,30)
+                </when>
+                <otherwise>
+                    and d.status  = #{status,jdbcType=INTEGER}
+                </otherwise>
+            </choose>
+        </if>
+
+        <if test="isIntention != null and isIntention != '' ">
+            <if test="isIntention == 24">
+                and d.is_intention  = #{isIntention,jdbcType=INTEGER}
+            </if>
+            <if test="isIntention == 23">
+                <if test='type == "all"'>
+                    AND (d.intention_level not in ('A','B','C','D') and d.focus_level not in ('A','B','C','D') and d.intent_level not in ('A','B','C','D')) and d.status=2
+                </if>
+                <if test='type == "intention"'>
+                    AND d.intention_level = 'E' and d.status=2
+                </if>
+                <if test='type == "focus"'>
+                    AND d.focus_level = 'E' and d.status=2
+                </if>
+                <if test='type == "intent"'>
+                    AND d.intent_level = 'E' and d.status=2
+                </if>
+            </if>
+        </if>
+        <if test="allIsIntention != null and allIsIntention == 'true' ">
+            <if test='type == "all"'>
+                AND (d.intention_level IN ('A','B','C','D') or d.focus_level in ('A','B','C','D') or d.intent_level in ('A','B','C','D'))
+            </if>
+            <if test='type == "intention"'>
+                and d.intention_level in ('A','B','C','D')
+            </if>
+            <if test='type == "focus"'>
+                and d.focus_level in ('A','B','C','D')
+            </if>
+            <if test='type == "intent"'>
+                and d.intent_level in ('A','B','C','D')
+            </if>
+        </if>
+        <if test="tableName != null and tableName != ''">
+            <if test='tableName == "report_family_planning"'>
+                AND r1.status = 'SUCCESS'
+            </if>
+            <if test='tableName == "report_jiangxi_family_planning"'>
+                AND r1.status = 'SUCCESS'
+            </if>
+            <if test='tableName == "report_speechcraft_statistics"'>
+                AND r1.status = 'VISIT_SUCCESS'
+            </if>
+        </if>
+    </where>
+    order by
+      CASE d.STATUS
+      WHEN 0 then 3
+      END,`status` asc,d.begin_date asc
+  </select>
+
+    <select id="selectAllTDialogInTDialogModelDto" resultMap="BaseResultMapTDialogModelDto" parameterType="java.util.Map">
+        SELECT d.id as id , t.ctname AS ct_name,d.telephone,d.is_intention,d.status,d.begin_date, d.total_seconds as duration,tc.out_number,d.intention_level,
+        d.focus_level,d.intent_level,t.ct_address,d.tts_info,
+        d.file_size,d.errormsg
+        FROM t_dialog_in d
+        LEFT JOIN tm_customer t ON d.telephone = t.ct_phone and d.company_id=t.company_id
+        LEFT JOIN t_call_agent tc ON d.agent_id = tc.id
+        <if test="tableName != null and tableName != ''">
+            <if test='tableName == "report_family_planning"'>
+                LEFT JOIN report_family_planning r1 ON d.id = r1.dialog_id
+            </if>
+            <if test='tableName == "report_jiangxi_family_planning"'>
+                LEFT JOIN report_jiangxi_family_planning r1 ON d.id = r1.dialog_id
+            </if>
+            <if test='tableName == "report_speechcraft_statistics"'>
+                LEFT JOIN report_speechcraft_statistics r1 ON d.id = r1.dialog_id
+            </if>
+        </if>
+        <where>
+            d.task_id = #{id}
+            <if test="telephone!=null and telephone!=''">
+                and d.telephone like CONCAT('%',#{telephone},'%')
+            </if>
+            <if test="beginDate != null and beginDate != ''" >
+                and d.begin_date &gt;= #{beginDate,jdbcType=TIMESTAMP}
+            </if>
+
+            <if test="endDate != null and endDate != ''">
+                and d.end_date  &lt;=  #{endDate,jdbcType=TIMESTAMP}
+            </if>
+
+            <if test="intentionLevel != null and intentionLevel != ''">
+                <if test='type == "all"'>
+                    AND (d.intention_level = #{intentionLevel,jdbcType=VARCHAR} or d.focus_level = #{intentionLevel,jdbcType=VARCHAR} or d.intent_level = #{intentionLevel,jdbcType=VARCHAR})
+                </if>
+                <if test='type == "intention"'>
+                    and d.intention_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+                <if test='type == "focus"'>
+                    and d.focus_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+                <if test='type == "intent"'>
+                    and d.intent_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+            </if>
+
+            <if test="ctAddress != null and ctAddress != '' ">
+                and t.ct_address = #{ctAddress,jdbcType=VARCHAR}
+            </if>
+            <if test="ctPosition != null and ctPosition != '' ">
+                and t.ct_position =#{ctPosition,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != '' ">
+                <choose>
+                    <when test="status == 18">
+                        and d.status  in (10,18,19,22,30)
+                    </when>
+                    <otherwise>
+                        and d.status  = #{status,jdbcType=INTEGER}
+                    </otherwise>
+                </choose>
+            </if>
+
+            <if test="isIntention != null and isIntention != '' ">
+                <if test="isIntention == 24">
+                    and d.is_intention  = #{isIntention,jdbcType=INTEGER}
+                </if>
+                <if test="isIntention == 23">
+                    <if test='type == "all"'>
+                        AND (d.intention_level not in ('A','B','C','D') and d.focus_level not in ('A','B','C','D') and d.intent_level not in ('A','B','C','D')) and d.status=2
+                    </if>
+                    <if test='type == "intention"'>
+                        AND d.intention_level = 'E' and d.status=2
+                    </if>
+                    <if test='type == "focus"'>
+                        AND d.focus_level = 'E' and d.status=2
+                    </if>
+                    <if test='type == "intent"'>
+                        AND d.intent_level = 'E' and d.status=2
+                    </if>
+                </if>
+            </if>
+            <if test="allIsIntention != null and allIsIntention == 'true' ">
+                <if test='type == "all"'>
+                    AND (d.intention_level IN ('A','B','C') or d.focus_level in ('A','B','C') or d.intent_level in ('A','B','C'))
+                </if>
+                <if test='type == "intention"'>
+                    and d.intention_level in ('A','B','C')
+                </if>
+                <if test='type == "focus"'>
+                    and d.focus_level in ('A','B','C')
+                </if>
+                <if test='type == "intent"'>
+                    and d.intent_level in ('A','B','C')
+                </if>
+            </if>
+            <if test="tableName != null and tableName != ''">
+                <if test='tableName == "report_family_planning"'>
+                    AND r1.status = 'SUCCESS'
+                </if>
+                <if test='tableName == "report_jiangxi_family_planning"'>
+                    AND r1.status = 'SUCCESS'
+                </if>
+                <if test='tableName == "report_speechcraft_statistics"'>
+                    AND r1.status = 'VISIT_SUCCESS'
+                </if>
+            </if>
+        </where>
+        order by
+        CASE d.STATUS
+        WHEN 0 then 3
+        END,`status` asc,d.begin_date asc
+    </select>
+
+
+    <select id="selectCallInTDialogList" resultMap="BaseResultMapTDialogModelDto" parameterType="java.util.Map">
+        SELECT
+        d.id AS id,
+        '' AS ct_name,
+        d.telephone,
+        d.is_intention,
+        d. STATUS,
+        d.begin_date,
+        d.total_seconds AS duration,
+        tc.out_number,
+        d.intention_level,
+        d.focus_level,
+        d.intent_level,
+        '' AS ct_address,
+        d.tts_info,
+        d.file_size,
+        d.errormsg
+        FROM
+        t_dialog_in d,
+        t_call_agent tc
+        <where>
+
+            d.company_id = tc.company_id
+           
+            AND  tc.id = #{id}
+
+            <if test="telephone!=null and telephone!=''">
+                and d.telephone like CONCAT('%',#{telephone},'%')
+            </if>
+            <if test="beginDate != null and beginDate != ''" >
+                <![CDATA[ and d.begin_date>= #{beginDate,jdbcType=TIMESTAMP}]]>
+            </if>
+
+            <if test="endDate != null and endDate != ''">
+                <![CDATA[ and d.end_date  <=  #{endDate,jdbcType=TIMESTAMP}]]>
+            </if>
+
+
+            <if test="ctAddress != null and ctAddress != '' ">
+                and t.ct_address = #{ctAddress,jdbcType=VARCHAR}
+            </if>
+            <if test="ctPosition != null and ctPosition != '' ">
+                and t.ct_position =#{ctPosition,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != '' ">
+                <choose>
+                    <when test="status == 18">
+                        and d.status  in (10,18,19,22,30)
+                    </when>
+                    <otherwise>
+                        and d.status  = #{status,jdbcType=INTEGER}
+                    </otherwise>
+                </choose>
+            </if>
+
+            <if test="isIntention != null and isIntention != '' ">
+                <if test="isIntention == 24">
+                    and d.is_intention  = #{isIntention,jdbcType=INTEGER}
+                </if>
+                <if test="isIntention == 23">
+                    <if test='type == "all"'>
+                        AND (d.intention_level not in ('A','B','C','D') and d.focus_level not in ('A','B','C','D') and d.intent_level not in ('A','B','C','D')) and d.status=2
+                    </if>
+                    <if test='type == "intention"'>
+                        AND d.intention_level = 'E' and d.status=2
+                    </if>
+                    <if test='type == "focus"'>
+                        AND d.focus_level = 'E' and d.status=2
+                    </if>
+                    <if test='type == "intent"'>
+                        AND d.intent_level = 'E' and d.status=2
+                    </if>
+                </if>
+            </if>
+            <if test="allIsIntention != null and allIsIntention == 'true' ">
+                <if test='type == "all"'>
+                    AND (d.intention_level IN ('A','B','C') or d.focus_level in ('A','B','C') or d.intent_level in ('A','B','C'))
+                </if>
+                <if test='type == "intention"'>
+                    and d.intention_level in ('A','B','C')
+                </if>
+                <if test='type == "focus"'>
+                    and d.focus_level in ('A','B','C')
+                </if>
+                <if test='type == "intent"'>
+                    and d.intent_level in ('A','B','C')
+                </if>
+            </if>
+
+
+        </where>
+        order by id  desc 
+    </select>
+
+
+    <select id="getPhoeList" resultType="java.lang.String">
+    SELECT telephone FROM t_dialog${postfix}
+    WHERE  task_id = #{task_id}
+    AND company_id = #{company_id}
+    </select>
+
+    <select id="selectByCallTaskIdAndTelephone" parameterType="java.util.Map" resultType="com.pl.model.TDialog">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_dialog${postfix}
+        WHERE task_id = #{taskId}
+        AND telephone = #{telephone}
+    </select>
+
+    <select id="getDialogbyPhone" resultType="com.pl.model.TDialog">
+        select
+        *
+        FROM t_dialog${postfix}
+        where task_id = #{task_id}
+        AND telephone= #{telephone}
+        LIMIT 0,1
+    </select>
+
+    <update id="updateDialogStatus">
+        UPDATE t_dialog${postfix} SET
+
+        status = #{status}
+        <if test="agent_id != null">
+            , agent_id = #{agent_id}
+        </if>
+
+        where task_id = #{task_id}
+        AND telephone= #{telephone}
+    </update>
+
+    <update id="updateTDialog" parameterType="com.pl.model.TDialog">
+        update t_dialog${tablePostfix}
+        <set>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=BIGINT},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="beginDate != null">
+                begin_date = #{beginDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endDate != null">
+                end_date = #{endDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="file_path != null">
+                file_path = #{file_path,jdbcType=VARCHAR},
+            </if>
+            <if test="agentId != null">
+                agent_id = #{agentId,jdbcType=BIGINT},
+            </if>
+            <if test="isIntention != null">
+                is_intention = #{isIntention,jdbcType=INTEGER},
+            </if>
+            <if test="intentionLevel != null">
+                intention_level = #{intentionLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="total_seconds != null">
+                total_seconds = #{total_seconds}
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectTCallAgentSelect" resultMap="BaseResultMapTCallAgentSelect" parameterType="java.util.Map" >
+
+        SELECT
+        t.STATUS AS dialogstatus,
+        tm.ctname ,t.agent_id,
+        t.begin_date as begindate,
+        t.end_date as enddate,
+        t.create_date as createdate
+
+        FROM
+        t_dialog${postfix} t
+        LEFT JOIN tm_customer tm  ON tm.company_id=t.company_id and tm.ct_phone=t.telephone
+        WHERE
+
+        t.STATUS = 1 AND t.task_id = #{usedtaskid} AND
+        t.agent_id  IN (
+        <foreach collection ="agentIdList" item ="item" index ="index" separator ="," close="">
+            #{item,jdbcType=BIGINT}
+        </foreach >
+        )
+
+        ;
+    </select>
+    <select id="selectAllIsIntentionByCompanyIdAndTaskId" resultType="java.lang.Long">
+        SELECT
+          COUNT(id)
+        FROM
+          t_dialog${postfix}
+        WHERE
+          company_id=#{companyId}
+          AND task_id=#{taskId}
+          <if test='type == "all"'>
+            AND (intention_level IN ('A','B','C','D') or focus_level in ('A','B','C','D') or intent_level in ('A','B','C','D'))
+          </if>
+          <if test='type == "intention"'>
+            AND intention_level IN ('A','B','C','D')
+          </if>
+          <if test='type == "focus"'>
+            AND focus_level in ('A','B','C','D')
+          </if>
+          <if test='type == "intent"'>
+            AND intent_level in ('A','B','C','D')
+          </if>
+    </select>
+    <select id="selectNoIntentionByCompanyIdAndTaskId" resultType="java.lang.Integer">
+        SELECT
+          COUNT(id)
+        FROM
+          t_dialog${postfix}
+        WHERE
+          company_id=#{companyId}
+          AND task_id=#{taskId}
+          <if test='type == "all"'>
+            AND (intention_level not IN ('A','B','C','D') and focus_level not in ('A','B','C','D') and intent_level not in ('A','B','C','D')) and status=2
+          </if>
+          <if test='type == "intention"'>
+            AND intention_level = 'E' and status=2
+          </if>
+          <if test='type == "focus"'>
+            AND focus_level = 'E' and status=2
+          </if>
+          <if test='type == "intent"'>
+            AND intent_level = 'E' and status=2
+          </if>
+    </select>
+
+    <select id="countDialogByTaskId" resultType="java.lang.Integer">
+        SELECT count(id)
+        FROM t_dialog${postfix}
+        WHERE
+        company_id=#{companyId}
+          AND task_id=#{taskId}
+    </select>
+    
+    <select id="countFinishTodayDialogByTaskId" resultType="java.lang.Integer">
+        SELECT count(id)
+        FROM t_dialog${postfix}
+        WHERE
+        company_id=#{companyId}
+          AND task_id=#{taskId}
+          and status  > 1 and begin_date >   date(now())
+    </select>
+    
+    <select id="countFinishAllDialogByTaskId" resultType="java.lang.Integer">
+        SELECT count(id)
+        FROM t_dialog${postfix}
+        WHERE
+        company_id=#{companyId}
+          AND task_id=#{taskId}
+          and status  > 1 
+    </select>    
+   
+    
+    <!--总呼叫时长-->
+    <select id="callTimeSumByCompanyId" resultType="java.lang.Long">
+        select COALESCE(SUM(total_seconds),0)
+        from t_dialog_${postfix}
+        where company_id = #{companyId} and status = 2
+    </select>
+
+    <!--接通次数-->
+    <select id="getCallRecordsOnlineByCompanyId" resultType="com.pl.indexserver.model.CallTaskIndexDto">
+        SELECT create_date as endTime, COUNT(id) as sumRecords
+        FROM t_dialog_${postfix}
+        <where>
+            company_id=#{companyId} and status = 2
+            <if test="starTime != null">
+                and DATE(create_date) &lt;= DATE_FORMAT(#{starTime},'%Y-%m-%d')
+            </if>
+            <if test="endTime != null">
+                and DATE(create_date) &gt;= DATE_FORMAT(#{endTime},'%Y-%m-%d')
+            </if>
+        </where>
+        group by DATE(create_date)
+        order by DATE(create_date) desc
+    </select>
+
+    <select id="countUndoTelephone" resultType="java.lang.Integer">
+        select
+          <foreach collection="months" item="i" open="(" close=")" separator="+">
+              (SELECT COUNT(t.id) from t_dialog_${i} t,call_task c where c.id=t.task_id and t.task_id in
+              (
+              <foreach collection="taskIds" separator="," item="item">#{item}</foreach>
+              )
+              )
+          </foreach>
+    </select>
+
+    <select id="selectByQuery" resultMap="BaseResultMap" parameterType="com.pl.indexserver.query.TDialogQuery">
+        SELECT d.telephone,d.file_path
+        FROM t_dialog${tablePostfix} d
+        <if test="tableName != null and tableName != ''">
+            <if test='tableName == "report_family_planning"'>
+                LEFT JOIN report_family_planning r1 ON d.id = r1.dialog_id
+            </if>
+            <if test='tableName == "report_jiangxi_family_planning"'>
+                LEFT JOIN report_jiangxi_family_planning r1 ON d.id = r1.dialog_id
+            </if>
+            <if test='tableName == "report_speechcraft_statistics"'>
+                LEFT JOIN report_speechcraft_statistics r1 ON d.id = r1.dialog_id
+            </if>
+        </if>
+        <where>
+            d.task_id = #{taskId}
+            <if test="telephone!=null and telephone!=''">
+                and d.telephone like CONCAT('%',#{telephone},'%')
+            </if>
+            <if test="beginDate != null and beginDate != ''" >
+                <![CDATA[ and d.begin_date>= #{beginDate,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="endDate != null and endDate != ''">
+                <![CDATA[ and d.end_date  <=  #{endDate,jdbcType=TIMESTAMP}]]>
+            </if>
+            <if test="intentionLevel != null and intentionLevel != ''">
+                <if test='type == "all"'>
+                    AND (d.intention_level = #{intentionLevel,jdbcType=VARCHAR} or d.focus_level = #{intentionLevel,jdbcType=VARCHAR} or d.intent_level = #{intentionLevel,jdbcType=VARCHAR})
+                </if>
+                <if test='type == "intention"'>
+                    and d.intention_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+                <if test='type == "focus"'>
+                    and d.focus_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+                <if test='type == "intent"'>
+                    and d.intent_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+            </if>
+            <if test="status != null and status != '' ">
+                <choose>
+                    <when test="status == 18">
+                        and d.status  in (10,18,19,22,30)
+                    </when>
+                    <otherwise>
+                        and d.status  = #{status,jdbcType=INTEGER}
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="isIntention != null and isIntention != '' ">
+                <if test="isIntention == 24">
+                    and d.is_intention  = #{isIntention,jdbcType=INTEGER}
+                </if>
+                <if test="isIntention == 23">
+                    <if test='type == "all"'>
+                        AND (d.intention_level not in ('A','B','C','D') and d.focus_level not in ('A','B','C','D') and d.intent_level not in ('A','B','C','D')) and d.status=2
+                    </if>
+                    <if test='type == "intention"'>
+                        AND d.intention_level = 'E' and d.status=2
+                    </if>
+                    <if test='type == "focus"'>
+                        AND d.focus_level = 'E' and d.status=2
+                    </if>
+                    <if test='type == "intent"'>
+                        AND d.intent_level = 'E' and d.status=2
+                    </if>
+                </if>
+            </if>
+            <if test="allIsIntention">
+                <if test='type == "all"'>
+                    AND (d.intention_level IN ('A','B','C') or d.focus_level in ('A','B','C') or d.intent_level in ('A','B','C'))
+                </if>
+                <if test='type == "intention"'>
+                    and d.intention_level in ('A','B','C')
+                </if>
+                <if test='type == "focus"'>
+                    and d.focus_level in ('A','B','C')
+                </if>
+                <if test='type == "intent"'>
+                    and d.intent_level in ('A','B','C')
+                </if>
+            </if>
+            <if test="tableName != null and tableName != ''">
+                <if test='tableName == "report_family_planning"'>
+                    AND r1.status = 'SUCCESS'
+                </if>
+                <if test='tableName == "report_jiangxi_family_planning"'>
+                    AND r1.status = 'SUCCESS'
+                </if>
+                <if test='tableName == "report_speechcraft_statistics"'>
+                    AND r1.status = 'VISIT_SUCCESS'
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCallInByQuery" resultMap="BaseResultMap" parameterType="com.pl.indexserver.query.TDialogQuery">
+        SELECT d.telephone,d.file_path
+        FROM t_dialog_in d
+        <if test="tableName != null and tableName != ''">
+            <if test='tableName == "report_family_planning"'>
+                LEFT JOIN report_family_planning r1 ON d.id = r1.dialog_id
+            </if>
+            <if test='tableName == "report_jiangxi_family_planning"'>
+                LEFT JOIN report_jiangxi_family_planning r1 ON d.id = r1.dialog_id
+            </if>
+            <if test='tableName == "report_speechcraft_statistics"'>
+                LEFT JOIN report_speechcraft_statistics r1 ON d.id = r1.dialog_id
+            </if>
+        </if>
+        <where>
+            d.task_id = #{taskId}
+            <if test="telephone!=null and telephone!=''">
+                and d.telephone like CONCAT('%',#{telephone},'%')
+            </if>
+            <if test="beginDate != null and beginDate != ''" >
+                and d.begin_date &gt;= #{beginDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                and d.end_date  &lt;=  #{endDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="intentionLevel != null and intentionLevel != ''">
+                <if test='type == "all"'>
+                    AND (d.intention_level = #{intentionLevel,jdbcType=VARCHAR} or d.focus_level = #{intentionLevel,jdbcType=VARCHAR} or d.intent_level = #{intentionLevel,jdbcType=VARCHAR})
+                </if>
+                <if test='type == "intention"'>
+                    and d.intention_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+                <if test='type == "focus"'>
+                    and d.focus_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+                <if test='type == "intent"'>
+                    and d.intent_level = #{intentionLevel,jdbcType=VARCHAR}
+                </if>
+            </if>
+            <if test="status != null and status != '' ">
+                <choose>
+                    <when test="status == 18">
+                        and d.status  in (10,18,19,22,30)
+                    </when>
+                    <otherwise>
+                        and d.status  = #{status,jdbcType=INTEGER}
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="isIntention != null and isIntention != '' ">
+                <if test="isIntention == 24">
+                    and d.is_intention  = #{isIntention,jdbcType=INTEGER}
+                </if>
+                <if test="isIntention == 23">
+                    <if test='type == "all"'>
+                        AND (d.intention_level not in ('A','B','C','D') and d.focus_level not in ('A','B','C','D') and d.intent_level not in ('A','B','C','D')) and d.status=2
+                    </if>
+                    <if test='type == "intention"'>
+                        AND d.intention_level = 'E' and d.status=2
+                    </if>
+                    <if test='type == "focus"'>
+                        AND d.focus_level = 'E' and d.status=2
+                    </if>
+                    <if test='type == "intent"'>
+                        AND d.intent_level = 'E' and d.status=2
+                    </if>
+                </if>
+            </if>
+            <if test="allIsIntention">
+                <if test='type == "all"'>
+                    AND (d.intention_level IN ('A','B','C') or d.focus_level in ('A','B','C') or d.intent_level in ('A','B','C'))
+                </if>
+                <if test='type == "intention"'>
+                    and d.intention_level in ('A','B','C')
+                </if>
+                <if test='type == "focus"'>
+                    and d.focus_level in ('A','B','C')
+                </if>
+                <if test='type == "intent"'>
+                    and d.intent_level in ('A','B','C')
+                </if>
+            </if>
+            <if test="tableName != null and tableName != ''">
+                <if test='tableName == "report_family_planning"'>
+                    AND r1.status = 'SUCCESS'
+                </if>
+                <if test='tableName == "report_jiangxi_family_planning"'>
+                    AND r1.status = 'SUCCESS'
+                </if>
+                <if test='tableName == "report_speechcraft_statistics"'>
+                    AND r1.status = 'VISIT_SUCCESS'
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectReportFamilyPlaningCountByStatus" resultType="java.lang.Integer">
+        select count(*) from t_dialog${postfix} t
+        left join report_family_planning t1
+        on t.id = t1.dialog_id
+        where t.company_id=#{companyId}
+        AND t.task_id=#{taskId}
+        AND t1.status = #{status}
+    </select>
+
+    <select id="selectReportJiangxiFamilyPlaningCountByStatus" resultType="java.lang.Integer">
+        select count(*) from t_dialog${postfix} t
+        left join report_jiangxi_family_planning t1
+        on t.id = t1.dialog_id
+        where t.company_id=#{companyId}
+        AND t.task_id=#{taskId}
+        AND t1.status = #{status}
+    </select>
+
+    <select id="selectReportSpeechcraftStatisticsCountByStatus" resultType="java.lang.Integer">
+        select count(*) from t_dialog${postfix} t
+        left join report_speechcraft_statistics t1
+        on t.id = t1.dialog_id
+        where t.company_id=#{companyId}
+        AND t.task_id=#{taskId}
+        AND t1.status = #{status}
+    </select>
+
+    <delete id="delAnswerListById" parameterType="long">
+        DELETE FROM t_dialog_in WHERE id = #{dialogId}
+    </delete>
+
+</mapper>

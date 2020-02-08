@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pl.mapper.TmUserMapper" >
+ <resultMap id="BaseResultMap" type="com.pl.model.TmUser">
+		<id column="userid" property="userid" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="company_id" property="companyId" jdbcType="BIGINT" />
+		<result column="describe" property="describe" jdbcType="VARCHAR" />
+		<result column="display_name" property="displayName" jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone" jdbcType="VARCHAR" />
+		<result column="header_file" property="headerFile" jdbcType="VARCHAR" />
+		<result column="file_size" property="fileSize" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="is_admin" property="isAdmin" jdbcType="INTEGER" />
+		<result column="weixin_openid" property="weixinOpenid" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		userid, username, password, company_id, `describe`,
+		display_name, telephone,
+		header_file,
+		file_size, status, is_admin, weixin_openid
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from tm_user
+		where userid = #{userid,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		tm_user
+		where userid = #{userid,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.pl.model.TmUser">
+		insert into tm_user (userid,
+		username, password,
+		company_id, `describe`, display_name,
+		telephone,
+		header_file, file_size,
+		status, is_admin)
+		values
+		(#{userid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{companyId,jdbcType=BIGINT},
+		#{describe,jdbcType=VARCHAR}, #{displayName,jdbcType=VARCHAR},
+		#{telephone,jdbcType=VARCHAR}, #{headerFile,jdbcType=VARCHAR},
+		#{fileSize,jdbcType=INTEGER},
+		#{status,jdbcType=INTEGER},
+		#{isAdmin,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.pl.model.TmUser">
+		insert into tm_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userid != null">
+				userid,
+			</if>
+			<if test="username != null">
+				username,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="companyId != null">
+				company_id,
+			</if>
+			<if test="describe != null">
+				`describe`,
+			</if>
+			<if test="displayName != null">
+				display_name,
+			</if>
+			<if test="telephone != null">
+				telephone,
+			</if>
+			<if test="headerFile != null">
+				header_file,
+			</if>
+			<if test="fileSize != null">
+				file_size,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="isAdmin != null">
+				is_admin,
+			</if>
+			<if test="weixinOpenid != null">
+				weixin_openid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userid != null">
+				#{userid,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="companyId != null">
+				#{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="describe != null">
+				#{describe,jdbcType=VARCHAR},
+			</if>
+			<if test="displayName != null">
+				#{displayName,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				#{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="headerFile != null">
+				#{headerFile,jdbcType=VARCHAR},
+			</if>
+			<if test="fileSize != null">
+				#{fileSize,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="isAdmin != null">
+				#{isAdmin,jdbcType=INTEGER},
+			</if>
+			<if test="weixinOpenid != null">
+				#{weixinOpenid,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.pl.model.TmUser">
+		update tm_user
+		<set>
+			<if test="username != null">
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="describe != null">
+				`describe` = #{describe,jdbcType=VARCHAR},
+			</if>
+			<if test="displayName != null">
+				display_name = #{displayName,jdbcType=VARCHAR},
+			</if>
+			<if test="telephone != null">
+				telephone = #{telephone,jdbcType=VARCHAR},
+			</if>
+			<if test="headerFile != null">
+				header_file = #{headerFile,jdbcType=VARCHAR},
+			</if>
+			<if test="fileSize != null">
+				file_size = #{fileSize,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="isAdmin != null">
+				is_admin = #{isAdmin,jdbcType=INTEGER},
+			</if>
+			<if test="weixinOpenid != null">
+				weixin_openid = #{weixinOpenid,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where userid = #{userid,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.pl.model.TmUser">
+		update tm_user
+		set
+		username = #{username,jdbcType=VARCHAR},
+		password =
+		#{password,jdbcType=VARCHAR},
+		company_id =
+		#{companyId,jdbcType=BIGINT},
+		`describe` =
+		#{describe,jdbcType=VARCHAR},
+		display_name =
+		#{displayName,jdbcType=VARCHAR},
+		telephone =
+		#{telephone,jdbcType=VARCHAR},
+		header_file =
+		#{headerFile,jdbcType=VARCHAR},
+		file_size =
+		#{fileSize,jdbcType=INTEGER},
+		status = #{status,jdbcType=INTEGER},
+		is_admin = #{isAdmin,jdbcType=INTEGER},
+		weixin_openid = #{weixinOpenid,jdbcType=VARCHAR}
+		where userid =
+		#{userid,jdbcType=VARCHAR}
+	</update>
+
+  <select id="getUserById" resultType="com.pl.model.TmUser">
+    select * from tm_user where userid = #{userid}
+  </select>
+  <select id="getUserByName" resultType="com.pl.model.TmUser">
+    select * from tm_user where username = #{username}
+  </select>
+  <update id="updatePassword" >
+    update tm_user set `password`=#{password} where  userid =#{userid}
+  </update>
+  <select id="getUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tm_user where username = #{username} and password =#{password}
+	  and `status`=1
+	  LIMIT 0,1
+
+  </select>
+  <select id="getCompanyNameCompany_id" resultType="java.lang.String">
+    select `name` from  t_company where id = #{company_id}
+  </select>
+
+	<select id="selectPositionIdByUserId" parameterType="String" resultType="Integer">
+		SELECT
+		tp.id
+		FROM t_auh_userposition tup
+		LEFT JOIN
+		t_auh_position tp
+		ON tup.position_id=tp.id
+		WHERE user_id=#{userid}
+	</select>
+
+	<select id="selectByOpenid" resultType="com.pl.model.TmUser">
+		SELECT
+		<include refid="Base_Column_List" />
+		from tm_user where weixin_openid = #{openid} limit 1
+	</select>
+
+	<update id="updateOpenidByNameAndPassword">
+		UPDATE tm_user set weixin_openid = #{openid} where username = #{username} and password = #{password}
+	</update>
+</mapper>

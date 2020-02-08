@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.mapper.xbms.GroupTagMapper">
+    <resultMap id="BaseResultMap" type="com.pl.model.xbms.GroupTag">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="phones" jdbcType="VARCHAR" property="phones"/>
+        <result column="tag_id" jdbcType="INTEGER" property="tagId"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="TgroupTagBaseResultMap" type="com.pl.model.xbms.GroupTagDto">
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="tag_id" jdbcType="INTEGER" property="tagId"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="name" jdbcType="TIMESTAMP" property="groupName"/>
+        <result column="friend_name" jdbcType="TIMESTAMP" property="friendName"/>
+    </resultMap>
+    <resultMap id="FriendPhonesBaseResultMap" type="com.pl.model.wx.FriendPhonesDto">
+        <result column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="friend_name" jdbcType="INTEGER" property="friendName"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tagName"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="phones" jdbcType="VARCHAR" property="phones"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+    </resultMap>
+    <resultMap id="TTagGroupBaseResultMap" type="com.pl.model.wx.TTagGroup">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, phones, tag_id, tag_name, type, create_time
+  </sql>
+
+    <select id="selectGtagByOpenidAndPhone" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_back.t_group_tag
+        where user_id = #{userId}
+        and phones = #{telephone}
+    </select>
+
+    <select id="selectByUserIdAndPhone" resultMap="TTagGroupBaseResultMap">
+        SELECT
+        a.id,a.name,a.create_time
+        FROM
+        wx_back.t_tag_group a
+        LEFT JOIN wx_back.t_group_tag b ON a.id = b.tag_id
+        WHERE
+        b.user_id = #{userId}
+        AND b.phones = #{telephone}
+    </select>
+
+    <select id="selectByUseridAndTagname" resultMap="TgroupTagBaseResultMap">
+        select
+        DISTINCT a.user_id,a.tag_id,a.tag_name,a.type,b.NAME,c.friend_name
+        from
+        wx_back.t_group_tag a,
+        wx_back.t_tag_group b,
+        wx_back.t_book c
+        <where>
+            a.tag_id = b.id
+            <if test="userId != null and userId != ''">
+                AND a.user_id = #{userId}
+            </if>
+            <if test="tagName != null and tagName != ''">
+                AND a.tag_name = #{tagName}
+            </if>
+            AND a.phones = c.phone
+            AND c.user_id = a.user_id
+        </where>
+    </select>
+
+    <select id="selectPhoneList" resultMap="FriendPhonesBaseResultMap">
+        select
+        b.id,a.friend_name,a.phone,b.phones,b.tag_name
+        from
+        wx_back.t_book a,
+        wx_back.t_group_tag b
+        <where>
+            a.user_id = b.user_id AND a.phone = b.phones
+            <if test="userId != null and userId != ''">
+                AND a.user_id = #{userId}
+            </if>
+            <if test="tagName != null and tagName != ''">
+                AND b.tag_name = #{tagName}
+            </if>
+            <if test="friendName != null and friendName != ''">
+                AND a.friend_name = #{friendName}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectTagNameByTagId" parameterType="java.lang.Integer" resultMap="TTagGroupBaseResultMap">
+        select
+        id,name,create_time
+        from wx_back.t_tag_group
+        where id = #{tagId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertGroupTag" parameterType="com.pl.model.xbms.GroupTag">
+        insert into wx_back.t_group_tag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="phones != null">
+                phones,
+            </if>
+            <if test="tagId != null">
+                tag_id,
+            </if>
+            <if test="tagName != null">
+                tag_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            create_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="phones != null">
+                #{phones,jdbcType=VARCHAR},
+            </if>
+            <if test="tagId != null">
+                #{tagId,jdbcType=INTEGER},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            now(),
+        </trim>
+        ON DUPLICATE KEY UPDATE
+        user_id=VALUES(user_id),phones=VALUES(phones),tag_id=VALUES(tag_id),tag_name=VALUES(tag_name),type=VALUES(type),create_time=now()
+    </insert>
+
+    <delete id="deletePhonesDto" >
+        delete from wx_back.t_group_tag
+        where user_id = #{userId}
+        and phones = #{phone}
+        and tag_name = #{tagName}
+    </delete>
+
+    <delete id="deleteByOpenidAndPhone">
+        delete from wx_back.t_group_tag
+        where user_id = #{userId}
+        and phones = #{phone}
+    </delete>
+
+</mapper>
