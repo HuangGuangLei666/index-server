@@ -36,4 +36,8 @@ public interface GroupTagMapper {
                          @Param("tagName")String name);
 
     int deleteByOpenidAndPhone(@Param("userId")Integer userId, @Param("phone")String phone);
+
+    GroupTag selectByUseridAndPhone(@Param("userId")Integer userId, @Param("telephone")String telephone);
+
+    List<TTagGroup> selectGroupClassList();
 }

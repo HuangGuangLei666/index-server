@@ -81,6 +81,16 @@
         FROM wx.t_voices
     </select>
 
+    <select id="selectVoices" resultMap="VoicesBaseResultMap">
+        SELECT
+        <include refid="VoicesBase_Column_List"/>
+        FROM wx_back.t_voices
+    </select>
+
+    <select id="selectMyVoiceByUserid" resultMap="VoicesBaseResultMap">
+        SELECT a.id,a.name,a.imageurl FROM wx_back.t_voices a LEFT JOIN wx_back.t_userinfo b on a.id = b.voice_id WHERE b.id = #{userId}
+    </select>
+
     <select id="selectByVoiceId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

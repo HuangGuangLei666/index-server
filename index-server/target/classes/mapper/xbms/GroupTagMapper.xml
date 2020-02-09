@@ -102,6 +102,18 @@
         where id = #{tagId,jdbcType=INTEGER}
     </select>
 
+    <select id="selectByUseridAndPhone" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_back.t_group_tag
+        where user_id = #{userId}
+        and phones = #{telephone}
+    </select>
+
+    <select id="selectGroupClassList" resultMap="TTagGroupBaseResultMap">
+        select id,name,create_time from wx_back.t_tag_group
+    </select>
+
     <insert id="insertGroupTag" parameterType="com.pl.model.xbms.GroupTag">
         insert into wx_back.t_group_tag
         <trim prefix="(" suffix=")" suffixOverrides=",">

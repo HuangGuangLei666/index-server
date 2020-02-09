@@ -137,4 +137,18 @@ public class CustomerrespServiceImpl implements CustomerrespService {
         resp.setRetDesc("新增自定义回复成功");
         return resp;
     }
+
+    @Override
+    public CheckSmsCodeResp customerRespDel(Integer id) {
+        CheckSmsCodeResp resp = new CheckSmsCodeResp();
+        int i = customrespMapper.deleteCustomerresp(id);
+        if (i < 1) {
+            resp.setRetCode(1);
+            resp.setRetDesc("删除自定义回复失败");
+            return resp;
+        }
+        resp.setRetCode(0);
+        resp.setRetDesc("删除自定义回复成功");
+        return resp;
+    }
 }

@@ -15,4 +15,10 @@ public interface RelationMapper {
     Relation selectByUserid(@Param("userId")Integer userId, @Param("relationId")Integer relationId);
 
     List<Relation> selectByRelationUserid(Integer userId);
+
+    int deleterelationBinding(Integer id);
+
+    int updatePassByRelationId(Integer relationId);
+
+    int updateRefuseByRelationId(Integer relationId);
 }

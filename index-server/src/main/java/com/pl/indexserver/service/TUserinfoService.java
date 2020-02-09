@@ -99,4 +99,8 @@ public interface TUserinfoService {
     CheckSmsCodeResp sosPhoneSet(Integer userId, String sosPhone);
 
     List<String> sosPhoneQry(Integer userId);
+
+    CheckSmsCodeResp myStatusChange(Integer userId, Integer id, boolean isCheck);
+
+    CheckSmsCodeResp myVoiceChange(Integer userId, Integer voiceId, boolean isCheck);
 }

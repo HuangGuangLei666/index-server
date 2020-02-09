@@ -110,6 +110,48 @@ public class RelationServiceImpl implements RelationService {
         return bindingOwnUsers;
     }
 
+    @Override
+    public CheckSmsCodeResp relationBindingDel(Integer id) {
+        CheckSmsCodeResp resp = new CheckSmsCodeResp();
+        int i = relationMapper.deleterelationBinding(id);
+        if (i < 1) {
+            resp.setRetCode(1);
+            resp.setRetDesc("解除绑定关系失败");
+            return resp;
+        }
+        resp.setRetCode(0);
+        resp.setRetDesc("解除绑定关系成功");
+        return resp;
+    }
+
+    @Override
+    public CheckSmsCodeResp passBindings(Integer relationId) {
+        CheckSmsCodeResp resp = new CheckSmsCodeResp();
+        int i = relationMapper.updatePassByRelationId(relationId);
+        if (i < 1) {
+            resp.setRetCode(1);
+            resp.setRetDesc("绑定失败");
+            return resp;
+        }
+        resp.setRetCode(0);
+        resp.setRetDesc("通过绑定");
+        return resp;
+    }
+
+    @Override
+    public CheckSmsCodeResp refuseBindings(Integer relationId) {
+        CheckSmsCodeResp resp = new CheckSmsCodeResp();
+        int i = relationMapper.updateRefuseByRelationId(relationId);
+        if (i < 1) {
+            resp.setRetCode(1);
+            resp.setRetDesc("绑定失败");
+            return resp;
+        }
+        resp.setRetCode(0);
+        resp.setRetDesc("拒绝绑定");
+        return resp;
+    }
+
 
     /**
      * @param openid 被绑定者的openid

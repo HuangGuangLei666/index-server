@@ -1,8 +1,12 @@
 package com.pl.indexserver.service.impl;
 
+import com.pl.indexserver.model.CheckSmsCodeResp;
 import com.pl.indexserver.service.TSetService;
+import com.pl.indexserver.web.WxController;
 import com.pl.mapper.TSetMapper;
 import com.pl.model.wx.TSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,8 @@ import java.util.List;
  */
 @Service
 public class TSetServiceImpl implements TSetService {
+
+    private static final Logger logger = LoggerFactory.getLogger(TSetServiceImpl.class);
 
     @Autowired
     private TSetMapper tSetMapper;
@@ -81,6 +87,22 @@ public class TSetServiceImpl implements TSetService {
     @Override
     public List<TSet> selectprologueByUserId(Integer userId) {
         return tSetMapper.selectprologueByUserId(userId);
+    }
+
+    @Override
+    public CheckSmsCodeResp insertSet(TSet set) {
+        CheckSmsCodeResp resp = new CheckSmsCodeResp();
+        int i = tSetMapper.addMyContentSet(set);
+        logger.info("=========i={}========", i);
+        if (i < 1) {
+            resp.setRetCode(1);
+            resp.setRetDesc("开场白设置失败");
+            return resp;
+        }
+
+        resp.setRetCode(0);
+        resp.setRetDesc("开场白设置成功");
+        return resp;
     }
 
 

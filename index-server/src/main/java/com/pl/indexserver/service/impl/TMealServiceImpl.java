@@ -70,4 +70,9 @@ public class TMealServiceImpl implements TMealService {
         }
         return tMeals;
     }
+
+    @Override
+    public List<TMeal> selectMealsList() {
+        return tMealMapper.selectMealsList();
+    }
 }

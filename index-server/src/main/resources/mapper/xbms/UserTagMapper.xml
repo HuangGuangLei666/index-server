@@ -61,6 +61,10 @@
         and phone = #{phone}
     </select>
 
+    <select id="selectuserTagList" resultMap="TtagBaseResultMap">
+        select id,name,create_time from wx_back.t_tag
+    </select>
+
     <insert id="insertUserTag" parameterType="com.pl.model.xbms.UserTag">
         insert into wx_back.t_user_tag
         <trim prefix="(" suffix=")" suffixOverrides=",">

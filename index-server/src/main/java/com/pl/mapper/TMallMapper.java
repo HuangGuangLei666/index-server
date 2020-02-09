@@ -42,4 +42,14 @@ public interface TMallMapper {
     List<TMall> selectAllByUserid();
 
     List<TMall> selectByUserid(Integer userId);
+
+    TMall selectByLabelIdAndDefault(Integer id);
+
+    TMall selectByLabelIdAndUserid(@Param("fatherId")Integer fatherId, @Param("userId")Integer userId);
+
+    int insertlabels(TMall tMall);
+
+    int deleteLabels(@Param("id")Integer id, @Param("userId")Integer userId);
+
+    TMall selectByIdAndUserId(@Param("status")Integer status, @Param("userId")Integer userId);
 }

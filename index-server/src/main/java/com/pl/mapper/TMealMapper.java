@@ -29,4 +29,6 @@ public interface TMealMapper {
     List<TMeal> selectAllMealList();
 
     TMeal selectByCodeAndMealId(String code);
+
+    List<TMeal> selectMealsList();
 }

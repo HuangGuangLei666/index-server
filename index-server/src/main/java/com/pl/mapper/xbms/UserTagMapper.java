@@ -1,5 +1,6 @@
 package com.pl.mapper.xbms;
 
+import com.pl.model.wx.TTag;
 import com.pl.model.xbms.UserTag;
 import com.pl.model.xbms.UserTagDto;
 import org.apache.ibatis.annotations.Param;
@@ -22,4 +23,6 @@ public interface UserTagMapper {
     UserTag selectByPhone(@Param("userId")Integer userId, @Param("phone")String phone);
 
     int deleteByUseridAndPhone(@Param("userId")Integer userId, @Param("phone")String phone);
+
+    List<TTag> selectuserTagList();
 }

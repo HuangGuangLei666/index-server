@@ -57,4 +57,6 @@ public interface TSetMapper {
     int addContentSet(TSet set);
 
     List<TSet> selectprologueByUserId(Integer userId);
+
+    int addMyContentSet(TSet set);
 }

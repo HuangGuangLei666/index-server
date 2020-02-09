@@ -34,4 +34,10 @@ public class Voices {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public Voices(String name) {
+        this.name = name;
+    }
+    public Voices() {
+    }
 }

@@ -1,5 +1,6 @@
 package com.pl.indexserver.service;
 
+import com.pl.indexserver.model.CheckSmsCodeResp;
 import com.pl.model.wx.TSet;
 
 import java.util.List;
@@ -34,4 +35,6 @@ public interface TSetService {
     int addContentSet(TSet set);
 
     List<TSet> selectprologueByUserId(Integer userId);
+
+    CheckSmsCodeResp insertSet(TSet set);
 }

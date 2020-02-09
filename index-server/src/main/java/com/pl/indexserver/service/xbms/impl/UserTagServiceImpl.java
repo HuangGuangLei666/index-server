@@ -101,4 +101,9 @@ public class UserTagServiceImpl implements UserTagService {
         resp.setRetDesc("用户标签删除成功");
         return resp;
     }
+
+    @Override
+    public List<TTag> selectuserTagList() {
+        return userTagMapper.selectuserTagList();
+    }
 }

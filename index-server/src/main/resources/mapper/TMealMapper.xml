@@ -63,6 +63,12 @@
     from wx.t_meal
   </select>
 
+  <select id="selectMealsList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_meal
+  </select>
+
   <select id="selectAllMealList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

@@ -1,5 +1,6 @@
 package com.pl.indexserver.service;
 
+import com.pl.model.wx.MyVoice;
 import com.pl.model.wx.TVoice;
 import com.pl.model.wx.Voices;
 
@@ -23,4 +24,8 @@ public interface TVoiceService {
     List<TVoice> selectByUserId(Integer userId);
 
     List<Voices> selectVoiceList();
+
+    List<Voices> selectVoices();
+
+    Voices selectMyVoiceByUserid(Integer userId);
 }

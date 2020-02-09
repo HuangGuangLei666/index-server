@@ -196,4 +196,9 @@ public class GroupTagServiceImpl implements GroupTagService {
         resp.setRetDesc("群标签删除成功");
         return resp;
     }
+
+    @Override
+    public List<TTagGroup> selectGroupClassList() {
+        return groupTagMapper.selectGroupClassList();
+    }
 }

@@ -127,4 +127,14 @@ public interface TUserinfoMapper {
     List<TUserinfo> selectByRecommender(Integer userId);
 
     int updateSosPhoneByUserid(@Param("userId")Integer userId, @Param("sosPhone")String sosPhone);
+
+    int updateStatus(@Param("userId")Integer userId, @Param("id")Integer id);
+
+    int cancelStatus(@Param("userId")Integer userId,@Param("id")Integer id);
+
+    int cancelAndUpdateStatus(@Param("userId")Integer userId,@Param("id")Integer id);
+
+    int updateVoice(@Param("userId")Integer userId, @Param("voiceId")Integer voiceId);
+
+    int cancelVoice(@Param("userId")Integer userId, @Param("voiceId")Integer voiceId);
 }

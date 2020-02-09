@@ -239,6 +239,68 @@
         </trim>
     </insert>
 
+    <insert id="addMyContentSet" parameterType="com.pl.model.wx.TSet">
+        insert into wx_back.t_set
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="value != null">
+                value,
+            </if>
+            begin_time,
+            end_time,
+            create_time,
+            <if test="voiceId != null">
+                voice_id,
+            </if>
+            <if test="operationId != null">
+                operationId,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="fileName != null">
+                filename,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="value != null">
+                #{value,jdbcType=VARCHAR},
+            </if>
+            now(),
+            now(),
+            now(),
+            <if test="voiceId != null">
+                #{voiceId},
+            </if>
+            <if test="operationId != null">
+                #{operationId},
+            </if>
+            <if test="content != null">
+                #{content},
+            </if>
+            <if test="fileName != null">
+                #{fileName},
+            </if>
+        </trim>
+    </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TSet">
         update wx.wx.t_set
         <set>

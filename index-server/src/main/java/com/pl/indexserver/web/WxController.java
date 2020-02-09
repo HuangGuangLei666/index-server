@@ -1894,7 +1894,7 @@ public class WxController {
 
 
     /**
-     * 自定义开场白
+     * 开场白试听
      *
      * @param content
      * @param voice
@@ -1927,7 +1927,7 @@ public class WxController {
 
 
     /**
-     * 自定义开场白
+     * 开场白试听
      *
      * @param content
      * @param voice

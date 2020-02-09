@@ -14,4 +14,6 @@ public interface CustomrespMapper {
                                        @Param("knowledgeId")String knowledgeId);
 
     int addCustomerresp(Customresp tCustomresp);
+
+    int deleteCustomerresp(Integer id);
 }

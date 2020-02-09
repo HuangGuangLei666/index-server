@@ -527,8 +527,22 @@
     id = #{userId}
   </update>
 
+    <update id="updateStatus" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
+        SET status = #{id}
+        WHERE
+        id = #{userId}
+    </update>
+
     <update id="updateMyVoice" parameterType="com.pl.model.wx.TUserinfo">
         UPDATE wx.t_userinfo
+        SET voice_id = #{voiceId}
+        WHERE
+        id = #{userId}
+    </update>
+
+    <update id="updateVoice" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
         SET voice_id = #{voiceId}
         WHERE
         id = #{userId}
@@ -713,8 +727,22 @@
     id = #{userId}
   </update>
 
+    <update id="cancelStatus" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
+        SET status = NULL
+        WHERE
+        id = #{userId}
+    </update>
+
     <update id="cancelMyVoice" parameterType="com.pl.model.wx.TUserinfo">
         UPDATE wx.t_userinfo
+        SET voice_id = #{voiceId}
+        WHERE
+        id = #{userId}
+    </update>
+
+    <update id="cancelVoice" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
         SET voice_id = #{voiceId}
         WHERE
         id = #{userId}
@@ -726,6 +754,14 @@
         WHERE
         id = #{userId}
     </update>
+
+    <update id="cancelAndUpdateStatus" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
+        SET status = #{id}
+        WHERE
+        id = #{userId}
+    </update>
+
     <update id="setPhoneByUnionid">
         update wx.t_userinfo
         set phonenumber = #{phone}

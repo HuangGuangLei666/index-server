@@ -20,6 +20,14 @@
         and user_id = #{userId}
     </select>
 
+    <select id="selectByIdAndUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_back.t_mall
+        where id = #{status,jdbcType=INTEGER}
+        and user_id = #{userId}
+    </select>
+
     <select id="selectByIdAndDefault" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -28,10 +36,26 @@
         and user_id = 0
     </select>
 
+    <select id="selectByLabelIdAndDefault" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_back.t_mall
+        where id = #{id,jdbcType=INTEGER}
+        and user_id = 0
+    </select>
+
     <select id="selectByIdAndUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from wx.t_mall
+        where id = #{fatherId,jdbcType=INTEGER}
+        and user_id = #{userId}
+    </select>
+
+    <select id="selectByLabelIdAndUserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_back.t_mall
         where id = #{fatherId,jdbcType=INTEGER}
         and user_id = #{userId}
     </select>
@@ -95,6 +119,12 @@
 
     <delete id="deleteLabel" parameterType="java.lang.Integer">
         delete from wx.t_mall
+        where id = #{id,jdbcType=INTEGER}
+        and user_id = #{userId}
+    </delete>
+
+    <delete id="deleteLabels" parameterType="java.lang.Integer">
+        delete from wx_back.t_mall
         where id = #{id,jdbcType=INTEGER}
         and user_id = #{userId}
     </delete>
@@ -168,6 +198,50 @@
 
     <insert id="insertlabel" parameterType="com.pl.model.wx.TMall">
         insert into wx.t_mall
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="fatherId != null">
+                father_id,
+            </if>
+            <if test="imageUrl != null">
+                image_url,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="fatherId != null">
+                #{fatherId,jdbcType=INTEGER},
+            </if>
+            <if test="imageUrl != null">
+                #{imageUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertlabels" parameterType="com.pl.model.wx.TMall">
+        insert into wx_back.t_mall
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,

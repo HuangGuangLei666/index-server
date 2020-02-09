@@ -1,5 +1,6 @@
 package com.pl.indexserver.service;
 
+import com.pl.indexserver.model.CheckSmsCodeResp;
 import com.pl.model.wx.TMall;
 
 import java.util.List;
@@ -32,4 +33,10 @@ public interface TMallService {
     List<TMall> selectAllByOpenid();
 
     List<TMall> userIntrestingQry(Integer userId);
+
+    CheckSmsCodeResp insertlabels(Integer id, Integer userId);
+
+    CheckSmsCodeResp deleteLabels(Integer id, Integer userId);
+
+    TMall myStatusQry(Integer userId);
 }

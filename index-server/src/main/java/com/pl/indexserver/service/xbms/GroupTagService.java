@@ -27,4 +27,6 @@ public interface GroupTagService {
     CheckSmsCodeResp friendPhonesUpd(Integer userId, String friendName, String desName, String[] phones, Integer tagId, String type);
 
     CheckSmsCodeResp groupTagDel(Integer userId, String phone);
+
+    List<TTagGroup> selectGroupClassList();
 }

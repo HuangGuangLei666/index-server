@@ -20,4 +20,6 @@ public interface CustomerrespService {
     List<QuestionDto> questionListQry(Integer userId);
 
     CheckSmsCodeResp customerRespAdd(Customresp tCustomresp);
+
+    CheckSmsCodeResp customerRespDel(Integer id);
 }

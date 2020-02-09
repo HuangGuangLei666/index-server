@@ -435,4 +435,70 @@ public class TUserinfoServiceImpl implements TUserinfoService {
         list.add(sosPhone);
         return list;
     }
+
+    @Override
+    public CheckSmsCodeResp myStatusChange(Integer userId, Integer id, boolean isCheck) {
+        CheckSmsCodeResp resp = new CheckSmsCodeResp();
+        TUserinfo tUserinfo = tUserinfoMapper.selectByUserId(userId);
+        Integer status = tUserinfo.getStatus();
+        if (id.equals(status)) {
+            if (isCheck == true) {
+                int i = tUserinfoMapper.updateStatus(userId, id);
+                if (i < 1) {
+                    resp.setRetCode(1);
+                    resp.setRetDesc("添加我的状态失败");
+                    return resp;
+                }
+                resp.setRetCode(0);
+                resp.setRetDesc("添加我的状态成功");
+                return resp;
+            }
+
+            int i = tUserinfoMapper.cancelStatus(userId, id);
+            if (i < 1) {
+                resp.setRetCode(1);
+                resp.setRetDesc("撤销我的状态失败");
+                return resp;
+            }
+            resp.setRetCode(0);
+            resp.setRetDesc("撤销我的状态成功");
+            return resp;
+        }
+
+        int i = tUserinfoMapper.cancelAndUpdateStatus(userId, id);
+        if (i < 1) {
+            resp.setRetCode(1);
+            resp.setRetDesc("修改我的状态失败");
+            return resp;
+        }
+        resp.setRetCode(0);
+        resp.setRetDesc("修改我的状态成功");
+        return resp;
+    }
+
+    @Override
+    public CheckSmsCodeResp myVoiceChange(Integer userId, Integer voiceId, boolean isCheck) {
+        CheckSmsCodeResp resp = new CheckSmsCodeResp();
+        if (isCheck == true) {
+            int i = tUserinfoMapper.updateVoice(userId, voiceId);
+            if (i < 1) {
+                resp.setRetCode(1);
+                resp.setRetDesc("添加我的声音失败");
+                return resp;
+            }
+            resp.setRetCode(0);
+            resp.setRetDesc("添加我的声音成功");
+            return resp;
+        }
+
+        int i = tUserinfoMapper.cancelVoice(userId, voiceId);
+        if (i < 1) {
+            resp.setRetCode(1);
+            resp.setRetDesc("修改我的声音失败");
+            return resp;
+        }
+        resp.setRetCode(0);
+        resp.setRetDesc("修改我的声音成功");
+        return resp;
+    }
 }

@@ -65,4 +65,21 @@
       1,
     </trim>
   </insert>
+
+  <update id="updatePassByRelationId" parameterType="com.pl.model.xbms.Relation">
+    update wx_back.t_relation
+    set status = 2
+    where id = #{relationId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateRefuseByRelationId" parameterType="com.pl.model.xbms.Relation">
+    update wx_back.t_relation
+    set status = 3
+    where id = #{relationId,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleterelationBinding" parameterType="java.lang.Integer">
+    delete from wx_back.t_relation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
 </mapper>

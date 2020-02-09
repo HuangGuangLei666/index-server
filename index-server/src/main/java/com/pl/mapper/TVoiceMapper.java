@@ -36,4 +36,8 @@ public interface TVoiceMapper {
     List<TVoice> selectByUserId(Integer userId);
 
     List<Voices> selectVoiceList();
+
+    List<Voices> selectVoices();
+
+    Voices selectMyVoiceByUserid(Integer userId);
 }

@@ -18,4 +18,6 @@ public interface TMealService {
     TMeal selectByTradeNo(String ordersSn);
 
     List<TMeal> mealListQry(Integer userId);
+
+    List<TMeal> selectMealsList();
 }

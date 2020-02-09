@@ -1,6 +1,7 @@
 package com.pl.indexserver.service;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.pl.indexserver.model.CheckSmsCodeResp;
 import com.pl.indexserver.model.TDialogModelDto;
 import com.pl.indexserver.query.TDialogQuery;
 import com.pl.model.*;
@@ -117,4 +118,7 @@ public interface TDialogService {
     Page<DialogDto> getBindingDialogListOfPage(int pageIndex, int pageNum, String openid);
 
     Page<DialogDto> getBdingDialogListOfPage(int pageIndex, int pageNum, Integer userId);
+
+    Page<DialogDto> getAnswerListPageQry(int pageIndex, int pageNum, Integer userId);
+
 }

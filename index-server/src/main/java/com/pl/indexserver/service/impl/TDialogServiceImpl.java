@@ -3,6 +3,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.pl.indexserver.model.CheckSmsCodeResp;
 import com.pl.indexserver.model.SpeechcraftTagDto;
 import com.pl.indexserver.model.TDialogModelDto;
 import com.pl.indexserver.model.TDialogStatusInfoDto;
@@ -951,6 +952,140 @@ public class TDialogServiceImpl implements TDialogService {
                 dialogDto.setIsRead(tDialog.getIntentLevel());
                 dialogDtoList.add(dialogDto);
             }
+        }
+        page.setRecords(dialogDtoList);
+        return page;
+    }
+
+    @Override
+    public Page<DialogDto> getAnswerListPageQry(int pageIndex, int pageSize, Integer userId) {
+        Page<DialogDto> page = new Page<>(pageIndex, pageSize);
+        List<DialogDto> dialogDtoList = new ArrayList<>();
+        //根据userId查询该用户的号码，得出此人的清单
+        TUserinfo tUserinfo = tUserinfoMapper.selectByUserId(userId);
+        if (StringUtils.isEmpty(tUserinfo)) {
+            page.setRecords(new ArrayList<>());
+            return page;
+        }
+        String phonenumber = tUserinfo.getPhonenumber();
+        //通过号码查询 通话记录
+        List<TDialog> tDialogList = tDialogMapper.selectDialogPageByTaskId(page,phonenumber);
+        if (CollectionUtils.isEmpty(tDialogList)) {
+            page.setRecords(new ArrayList<>());
+            return page;
+        }
+        logger.info("=======tDialogList={}==========", tDialogList.size());
+        for (TDialog tDialog : tDialogList) {
+            DialogDto dialogDto = new DialogDto();
+
+            //查询通话详情
+            TDialogDetailExt tDialogDetailExt = tDialogDetailExtMapper.selectByDialoginId(tDialog.getId());
+            logger.info("=========tDialogDetailExt={}==========", tDialogDetailExt);
+            String detailRecords = tDialogDetailExt.getDetailRecords();
+            logger.info("=========detailRecords={}==========", detailRecords);
+            //通话详情 json数组
+            JSONArray jsonArray = JSONArray.parseArray(detailRecords);
+            logger.info("=========jsonArray={}==========", jsonArray);
+            //查询大于两轮的有效通话详情
+            //关注点 默认null
+            List<String> focus = new ArrayList<>();
+            //摘要 默认null
+            String simpleWord = "";
+            //取出用户说话大于5个字的内容
+            if (jsonArray.size() >= 2) {
+                for (Object obj : jsonArray) {
+                    //关注点：取出走进子流程的节点名称
+                    JSONObject jsonObject = JSONObject.parseObject(obj.toString());
+                    Object info_map = jsonObject.get("info_map");
+                    JSONObject object = JSONObject.parseObject(info_map.toString());
+                    Object algorithmContent = object.get("algorithmContent");
+                    if (!StringUtils.isEmpty(algorithmContent)) {
+                        JSONObject parseObject = JSONObject.parseObject(algorithmContent.toString());
+                        Object name = parseObject.get("name");
+                        if (!StringUtils.isEmpty(name)) {
+                            focus.add(name.toString());
+                        }
+                    }
+                    Object customer = jsonObject.get("content_customer");
+                    if (!StringUtils.isEmpty(customer)) {
+                        JSONArray array = JSONArray.parseArray(customer.toString());
+                        simpleWord = array.get(0).toString();
+                        logger.info("========simpleWord={}=========", simpleWord);
+                        //取出长度大于5
+                        if (simpleWord.length() > 5) {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (jsonArray.size() >= 2) {
+                //取出第二轮通话（主叫说的话）
+                Object o = jsonArray.get(1);
+                JSONObject jsonObject = JSONObject.parseObject(o.toString());
+                Object content_customer = jsonObject.get("content_customer");
+                JSONArray array = JSONArray.parseArray(content_customer.toString());
+                //取更长的通话内容
+                if (simpleWord.length() <= array.get(0).toString().length()) {
+                    simpleWord = (String) array.get(0);
+                }
+
+                logger.info("=========simpleWord={}==========", simpleWord);
+
+                //关注点：取出走进子流程的节点名称
+                Object info_map = jsonObject.get("info_map");
+                JSONObject object = JSONObject.parseObject(info_map.toString());
+                Object algorithmContent = object.get("algorithmContent");
+                if (!StringUtils.isEmpty(algorithmContent)) {
+                    JSONObject parseObject = JSONObject.parseObject(algorithmContent.toString());
+                    //如果匹配流程，摘要就为匹配流程节点的那句话
+                    Object req_content = parseObject.get("req_content");
+                    if (!StringUtils.isEmpty(req_content)) {
+                        simpleWord = req_content.toString();
+                    }
+                }
+            }
+
+            String telephone = tDialog.getTelephone();
+            //号码被标记的类型
+            String phoneType = "";
+            UserTag tUserTag = userTagMapper.selectByPhone(tUserinfo.getId(), telephone);
+            if (!StringUtils.isEmpty(tUserTag)) {
+                phoneType = tUserTag.getTagName();
+            } else {
+                GroupTag tGroupTag = groupTagMapper.selectByUseridAndPhone(tUserinfo.getId(), telephone);
+                if (!StringUtils.isEmpty(tGroupTag)) {
+                    phoneType = tGroupTag.getTagName();
+                }
+            }
+
+            //通讯录分类
+            TTagGroup tTagGroup = groupTagMapper.selectByUserIdAndPhone(tUserinfo.getId(),telephone);
+
+            //好友姓名默认null
+            String friendName = "";
+            Book tBook = bookMapper.selectByPhoneAnduserId(telephone, tUserinfo.getId());
+            if (!StringUtils.isEmpty(tBook)) {
+                friendName = tBook.getFriendName();
+            }
+
+            dialogDto.setId(new Long(tDialog.getId()).intValue());
+            dialogDto.setBeginDate(tDialog.getBeginDate());
+            dialogDto.setCalledPhone(tDialog.getTaskId() + "");
+            dialogDto.setCallerPhone(telephone);
+            dialogDto.setCreateDate(tDialog.getCreateDate());
+            dialogDto.setEndDate(tDialog.getEndDate());
+            dialogDto.setTotal_seconds(tDialog.getTotal_seconds());
+            dialogDto.setSimpleWord(simpleWord);
+            dialogDto.setCallerPhoneType(phoneType);
+            dialogDto.setFriendName(friendName);
+            //关注点
+            dialogDto.setFocus(focus);
+            //清单是否已读
+            dialogDto.setIsRead(tDialog.getIntentLevel());
+            //通讯录分类
+            dialogDto.setGroupName((StringUtils.isEmpty(tTagGroup))?null:tTagGroup.getName());
+            dialogDtoList.add(dialogDto);
         }
         page.setRecords(dialogDtoList);
         return page;

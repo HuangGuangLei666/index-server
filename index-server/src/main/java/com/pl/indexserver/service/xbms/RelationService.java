@@ -23,4 +23,10 @@ public interface RelationService {
     List<UserRelationDto> relationBindingQry(Integer userId);
 
     List<BindingOwnUser> bindingOwnUserQry(Integer userId);
+
+    CheckSmsCodeResp relationBindingDel(Integer id);
+
+    CheckSmsCodeResp passBindings(Integer relationId);
+
+    CheckSmsCodeResp refuseBindings(Integer relationId);
 }

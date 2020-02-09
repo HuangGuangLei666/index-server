@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ import java.util.List;
 public class XbmsController {
 
     private static final Logger logger = LoggerFactory.getLogger(XbmsController.class);
+    private static int seq = (int) (System.currentTimeMillis() % 100000000);
 
     @Reference(version = "${thirdparty.service.version}",
             application = "${dubbo.application.id}", timeout = 180000)
@@ -83,6 +86,8 @@ public class XbmsController {
     private PhonetypeService phonetypeService;
     @Autowired
     private TMallService tMallService;
+    @Autowired
+    private TVoiceService tVoiceService;
 
 
     //极光验证短信
@@ -201,6 +206,26 @@ public class XbmsController {
             return "您暂时还没自定义开场白";
         }
         return tSetList.get(0).getContent();
+    }
+
+
+    /**
+     * 接听清单分页查询
+     *
+     * @param userId
+     * @param pageIndex
+     * @param pageNum
+     * @return
+     */
+    @RequestMapping(value = "/answerListPageQry.do")
+    @ResponseBody
+    public ReturnMsg answerListPageQry(Integer userId, int pageIndex, int pageNum) {
+        Page<DialogDto> page = tDialogService.getAnswerListPageQry(pageIndex, pageNum, userId);
+
+        ReturnMsg returnMsg = new ReturnMsg();
+        returnMsg.setCode(0);
+        returnMsg.setContent(page);
+        return returnMsg;
     }
 
 
@@ -812,11 +837,140 @@ public class XbmsController {
         return tUserinfoService.sosPhoneQry(userId);
     }
 
+    /**
+     * 根据号码获取用户基本信息
+     *
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "/getUserInfo.do")
+    @ResponseBody
+    public TUserinfo getUserInfo(String phone) {
+        TUserinfo tUserinfo = tUserinfoService.selectByPhoneNumber(phone);
+        if (StringUtils.isEmpty(tUserinfo)) {
+            return new TUserinfo();
+        }
+        return tUserinfo;
+    }
 
+    /**
+     * 勾选我感兴趣的标签
+     *
+     * @param id 标签id
+     * @param userId 用户id
+     * @return
+     */
+    @RequestMapping(value = "/insertLabel.do")
+    @ResponseBody
+    public CheckSmsCodeResp insertlabel(Integer id, Integer userId) {
 
+        return tMallService.insertlabels(id,userId);
+    }
 
+    /**
+     * 删除我选中的标签
+     *
+     * @param id
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/deleteLabel.do")
+    @ResponseBody
+    public CheckSmsCodeResp deleteLabel(Integer id, Integer userId) {
+        return tMallService.deleteLabels(id,userId);
+    }
 
+    /**
+     * 设置自定义开场白
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/set.do")
+    @ResponseBody
+    public CheckSmsCodeResp set(HttpServletRequest request) {
+        CheckSmsCodeResp resp = new CheckSmsCodeResp();
+        String userId = request.getParameter("userId");
+        String content = request.getParameter("content");
+        if (!StringUtils.isEmpty(content)) {
+            try {
+                content = java.net.URLDecoder.decode(content, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
 
+        if (StringUtils.isEmpty(userId)) {
+            resp.setRetCode(1);
+            resp.setRetDesc("userId为null");
+            return resp;
+        }
+        Integer temp = seq++;
+        String fileName = "";
+        try {
+            if (content != null && content.trim().length() > 0) {
+                String deContent = content;
+                fileName = MD5.MD5_32bit(deContent) + ".wav";
+                new Thread() {
+                    @Override
+                    public void run() {
+                        String[] voices = {"", "ssFemale", "ssFemale", "ssMale", "ssFemale"};
+                        String cq[] = {"玩游戏", "开会", "飞机", "运动", "上班", "上课", "睡觉", "约会", "不方便"};
+                        String con = deContent.replaceAll("他正在.*，", "他正在XXX，");
+                        con = deContent.replaceAll("他现在.*，", "他正在XXX，");
+
+                        String filePath = 2122 + "/BUSINESS-" + 134680578;
+                        String fileName = "";
+                        String text = "";
+                        for (int i = 1; i <= 4; i++) {
+                            //您好，我是TA的秘书，他正在上班，请问您有什么事情吗？
+                            String filePath1 = filePath + "/" + i;
+                            for (String s : cq) {
+                                if ("不方便".equals(s)) {
+                                    text = con.replaceAll("他正在XXX", "他现在不方便");
+                                } else {
+                                    text = con.replaceAll("XXX", s);
+                                }
+                                try {
+                                    fileName = MD5.MD5_32bit(text) + ".wav";
+                                } catch (NoSuchAlgorithmException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+                                Result<String> stringResult = voiceService.ttsVoice(filePath1, fileName, text + voices[i], TtsVoiceNameEnum.PQ);
+
+                                logger.info("小兵秘书自定义开场白调用filePath={},content={},tts合成服务返回结果:{}", filePath1, text, JSONObject.toJSONString(stringResult));
+                            }
+                            String text1 = con.replaceAll("他正在XXX，", "");
+                            text1 = con.replaceAll("他现在XXX，", "");
+                            try {
+                                fileName = MD5.MD5_32bit(text1) + ".wav";
+                            } catch (NoSuchAlgorithmException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            Result<String> stringResult = voiceService.ttsVoice(filePath1, fileName, text1 + voices[i], TtsVoiceNameEnum.PQ);
+
+                            logger.info("小兵秘书自定义开场白调用filePath={},content={},tts合成服务返回结果:{}", filePath1, text1, JSONObject.toJSONString(stringResult));
+                        }
+                    }
+                }.start();
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        logger.info("=======userId===={}==", userId);
+
+        TSet set = new TSet();
+        set.setUserId(Integer.parseInt(userId));
+        set.setType("2");
+        set.setValue("99990");
+        set.setVoiceId(666666);
+        set.setOperationId(temp);
+        set.setContent(content);
+        set.setFileName(fileName);
+        return tSetService.insertSet(set);
+    }
 
     /**
      * 开场白试听
@@ -848,4 +1002,161 @@ public class XbmsController {
         stringResult.setData(url + stringResult.getData());
         return stringResult;
     }
+
+
+    /**
+     * 添加撤销我的状态
+     *
+     * @param userId
+     * @param id
+     * @param isCheck
+     * @return
+     */
+    @RequestMapping(value = "/myStatusChange.do")
+    @ResponseBody
+    public CheckSmsCodeResp myStatusChange(Integer userId, Integer id, boolean isCheck) {
+        return tUserinfoService.myStatusChange(userId,id,isCheck);
+    }
+
+    /**
+     * 切换我的声音
+     *
+     * @param userId
+     * @param isCheck
+     * @return
+     */
+    @RequestMapping(value = "/myVoiceChange.do")
+    @ResponseBody
+    public CheckSmsCodeResp myVoiceChange(Integer userId, Integer voiceId, boolean isCheck) {
+        return tUserinfoService.myVoiceChange(userId,voiceId,isCheck);
+    }
+
+
+    /**
+     * 查看我的状态(所勾选的情景模式)
+     *
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/myStatusQry.do")
+    @ResponseBody
+    public TMall myStatusQry(Integer userId) {
+        return tMallService.myStatusQry(userId);
+    }
+
+    /**
+     * 声音列表查询
+     *
+     * @return
+     */
+    @RequestMapping(value = "/voicesListQry.do")
+    @ResponseBody
+    public List<Voices> voicesListQry() {
+        List<Voices> voicesList = tVoiceService.selectVoices();
+        if (CollectionUtils.isEmpty(voicesList)) {
+            return new ArrayList<>();
+        }
+        return voicesList;
+    }
+
+    /**
+     * 查看我的声音(所勾选的声音)
+     *
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/myIscheckedVoiceQry.do")
+    @ResponseBody
+    public Voices myIscheckedVoiceQry(Integer userId) {
+        return tVoiceService.selectMyVoiceByUserid(userId);
+    }
+
+    /**
+     * 送秘书支付套餐ui
+     * @return
+     */
+    @RequestMapping(value = "/sendMealListQry.do")
+    @ResponseBody
+    public List<TMeal> sendMealListQry() {
+        return tMealService.selectMealsList();
+    }
+
+    /**
+     * 查询群分类列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "/groupClassQry.do")
+    @ResponseBody
+    public List<TTagGroup> groupClassQry() {
+        List<TTagGroup> tTagGroupList = groupTagService.selectGroupClassList();
+        if (CollectionUtils.isEmpty(tTagGroupList)) {
+            return new ArrayList<>();
+        }
+        return tTagGroupList;
+    }
+
+
+    /**
+     * 查询用户标记分类
+     *
+     * @return
+     */
+    @RequestMapping(value = "/userTagListQry.do")
+    @ResponseBody
+    public List<TTag> userTagListQry() {
+        List<TTag> tTagList = userTagService.selectuserTagList();
+        if (CollectionUtils.isEmpty(tTagList)) {
+            return new ArrayList<>();
+        }
+        return tTagList;
+    }
+
+    /**
+     * 删除快捷自定义回复
+     *
+     * @return
+     */
+    @RequestMapping(value = "/customerRespDel.do")
+    @ResponseBody
+    public CheckSmsCodeResp customerRespDel(Integer id) {
+        return customerrespService.customerRespDel(id);
+    }
+
+    /**
+     * 解除绑定关系
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/relationBindingDel.do")
+    @ResponseBody
+    public CheckSmsCodeResp relationBindingDel(Integer id) {
+        return relationService.relationBindingDel(id);
+    }
+
+    /**
+     * 通过绑定
+     *
+     * @param relationId
+     * @return
+     */
+    @RequestMapping(value = "/passBindings.do")
+    @ResponseBody
+    public CheckSmsCodeResp passBindings(Integer relationId) {
+        return relationService.passBindings(relationId);
+    }
+
+    /**
+     * 拒绝绑定
+     *
+     * @param relationId
+     * @return
+     */
+    @RequestMapping(value = "/refuseBindings.do")
+    @ResponseBody
+    public CheckSmsCodeResp refuseBindings(Integer relationId) {
+        return relationService.refuseBindings(relationId);
+    }
+
 }

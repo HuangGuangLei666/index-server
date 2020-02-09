@@ -20,4 +20,6 @@ public interface UserTagService {
     List<UserTagDto> userTagQry(Integer userId, String tagName);
 
     CheckSmsCodeResp userTagDel(Integer userId, String phone);
+
+    List<TTag> selectuserTagList();
 }
