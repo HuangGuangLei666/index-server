@@ -1159,4 +1159,28 @@ public class XbmsController {
         return relationService.refuseBindings(relationId);
     }
 
+    /**
+     * 删除号码类型
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/phoneTypeDel.do")
+    @ResponseBody
+    public CheckSmsCodeResp phoneTypeDel(Integer id) {
+        return phonetypeService.phoneTypeDel(id);
+    }
+
+    /**
+     * 根据unionid获取用户信息
+     *
+     * @param unionid
+     * @return
+     */
+    @RequestMapping(value = "/getUserByUnionid.do")
+    @ResponseBody
+    public TUserinfo getUserByUnionid(String unionid) {
+        return tUserinfoService.getUserByUnionid(unionid);
+    }
+
 }

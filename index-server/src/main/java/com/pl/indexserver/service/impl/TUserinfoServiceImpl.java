@@ -501,4 +501,16 @@ public class TUserinfoServiceImpl implements TUserinfoService {
         resp.setRetDesc("修改我的声音成功");
         return resp;
     }
+
+    @Override
+    public TUserinfo getUserByUnionid(String unionid) {
+        if (StringUtils.isEmpty(unionid)) {
+            return new TUserinfo("unionid is null");
+        }
+        TUserinfo userinfo = tUserinfoMapper.selectByUnionId(unionid);
+        if (StringUtils.isEmpty(userinfo)) {
+            return new TUserinfo("unionid is fault or user not exit");
+        }
+        return userinfo;
+    }
 }

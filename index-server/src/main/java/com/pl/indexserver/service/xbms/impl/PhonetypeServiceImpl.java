@@ -11,6 +11,7 @@ import com.pl.model.xbms.Phonetype;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,5 +60,26 @@ public class PhonetypeServiceImpl implements PhonetypeService {
         }
 
         return tPhonetypeList;
+    }
+
+    @Override
+    public CheckSmsCodeResp phoneTypeDel(Integer id) {
+        CheckSmsCodeResp resp = new CheckSmsCodeResp();
+        Phonetype tPhonetype = phonetypeMapper.selectById(id);
+        if (StringUtils.isEmpty(tPhonetype)) {
+            resp.setRetCode(1);
+            resp.setRetDesc("没有此记录，删除失败");
+            return resp;
+        }
+
+        int i = phonetypeMapper.delectById(id);
+        if (i < 1) {
+            resp.setRetCode(1);
+            resp.setRetDesc("删除号码类型失败");
+            return resp;
+        }
+        resp.setRetCode(0);
+        resp.setRetDesc("删除号码类型成功");
+        return resp;
     }
 }

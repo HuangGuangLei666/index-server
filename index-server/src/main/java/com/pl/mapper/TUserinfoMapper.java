@@ -137,4 +137,6 @@ public interface TUserinfoMapper {
     int updateVoice(@Param("userId")Integer userId, @Param("voiceId")Integer voiceId);
 
     int cancelVoice(@Param("userId")Integer userId, @Param("voiceId")Integer voiceId);
+
+    TUserinfo selectByUnionId(String unionid);
 }

@@ -17,4 +17,6 @@ public interface PhonetypeService {
     CheckSmsCodeResp phoneTypeAdd(Phonetype tPhonetype);
 
     List<Phonetype> phoneTypeQry(Integer userId, String type);
+
+    CheckSmsCodeResp phoneTypeDel(Integer id);
 }

@@ -51,6 +51,13 @@
         where unionid = #{unionid,jdbcType=INTEGER}
     </select>
 
+    <select id="selectByUnionId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_back.t_userinfo
+        where unionid = #{unionid}
+    </select>
+
     <select id="selectUserByPhoneNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

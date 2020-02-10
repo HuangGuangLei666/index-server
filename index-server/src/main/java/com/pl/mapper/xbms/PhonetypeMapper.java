@@ -9,4 +9,8 @@ public interface PhonetypeMapper {
     int addPhoneType(Phonetype tPhonetype);
 
     List<Phonetype> selectByUseridAndType(@Param("userId") Integer userId, @Param("type")String type);
+
+    Phonetype selectById(Integer id);
+
+    int delectById(Integer id);
 }

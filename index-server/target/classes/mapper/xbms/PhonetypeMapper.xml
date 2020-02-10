@@ -31,6 +31,13 @@
     and type = #{type}
   </select>
 
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_phonetype
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
 
   <insert id="addPhoneType" parameterType="com.pl.model.xbms.Phonetype">
     insert into wx_back.t_phonetype
@@ -66,4 +73,9 @@
     </trim>
     ON DUPLICATE KEY UPDATE user_id=VALUES(user_id),phone=VALUES(phone),type=VALUES(type),create_time=VALUES(create_time)
   </insert>
+
+  <delete id="delectById" parameterType="java.lang.Integer">
+    delete from wx_back.t_phonetype
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
 </mapper>

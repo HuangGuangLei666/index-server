@@ -80,37 +80,118 @@
       <file leaf-file-name="WxController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/web/WxController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="5655" column="44" lean-forward="true" selection-start-line="5655" selection-start-column="44" selection-end-line="5655" selection-end-column="44" />
+            <state relative-caret-position="446">
+              <caret line="5089" column="49" lean-forward="true" selection-start-line="5089" selection-start-column="49" selection-end-line="5089" selection-end-column="49" />
               <folding>
-                <element signature="e#94559#94560#0" expanded="true" />
-                <element signature="e#94631#94632#0" expanded="true" />
-                <element signature="e#126125#126126#0" expanded="true" />
-                <element signature="e#126177#126178#0" expanded="true" />
+                <element signature="e#58370#60977#0" expanded="true" />
+                <element signature="e#60976#60977#0" expanded="true" />
+                <element signature="e#97842#97858#0" expanded="true" />
+                <element signature="e#100887#100903#0" expanded="true" />
+                <element signature="e#102886#102902#0" expanded="true" />
+                <element signature="e#106393#106409#0" expanded="true" />
+                <element signature="e#108668#108684#0" expanded="true" />
+                <element signature="e#111309#111325#0" expanded="true" />
+                <element signature="e#122814#122830#0" expanded="true" />
+                <element signature="e#158083#158269#0" expanded="true" />
+                <element signature="e#158268#158269#0" expanded="true" />
+                <element signature="e#193861#193885#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TRelationServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TRelationServiceImpl.java">
+      <file leaf-file-name="TUserinfoServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TUserinfoServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="34" column="52" lean-forward="false" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="52" />
+            <state relative-caret-position="539">
+              <caret line="509" column="57" lean-forward="false" selection-start-line="509" selection-start-column="57" selection-end-line="509" selection-end-column="57" />
               <folding>
-                <element signature="e#898#899#0" expanded="true" />
-                <element signature="e#962#963#0" expanded="true" />
+                <element signature="e#3693#3694#0" expanded="true" />
+                <element signature="e#3752#3753#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TRelationMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/TRelationMapper.xml">
+      <file leaf-file-name="TUserinfoMapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/mapper/TUserinfoMapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="165" column="11" lean-forward="true" selection-start-line="161" selection-start-column="2" selection-end-line="165" selection-end-column="11" />
+            <state relative-caret-position="698">
+              <caret line="140" column="13" lean-forward="false" selection-start-line="140" selection-start-column="4" selection-end-line="140" selection-end-column="13" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TUserinfoMapper.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/TUserinfoMapper.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="338">
+              <caret line="57" column="34" lean-forward="true" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+              <folding>
+                <marker date="1581319620949" expanded="true" signature="2925:3052" ph="select from t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="3169:3298" ph="select from t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="3415:3532" ph="select from t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="3657:3777" ph="select from t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="3898:4023" ph="select from t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="4143:4253" ph="select from t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="4376:4482" ph="select from t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="4599:4710" ph="select from t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="4832:4942" ph="select from t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="5057:5171" ph="select from t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="5295:5838" ph="SELECT a.id,... t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="5963:6482" ph="SELECT a.id,... t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="6606:6748" ph="SELECT FROM t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="6870:7009" ph="SELECT FROM t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="7131:7270" ph="SELECT FROM t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="7395:7540" ph="SELECT FROM t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="7654:8152" ph="SELECT a.id,... t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="8270:8751" ph="SELECT a.id,... t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="8875:9073" ph="SELECT FROM t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="8875:9229" ph="SELECT FROM " />
+                <marker date="1581319620949" expanded="true" signature="9003:9071" ph="SELECT id FR... t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="9088:9229" ph="SELECT FROM t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="9345:9500" ph="SELECT FROM t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="9624:9778" ph="SELECT FROM t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="9907:10057" ph="SELECT id,op... t_userinfo" />
+                <marker date="1581319620949" expanded="true" signature="10148:10211" ph="delete from " />
+                <marker date="1581319620949" expanded="true" signature="10295:11218" ph="insert into wx.t_userinfo... " />
+                <marker date="1581319620949" expanded="true" signature="17156:19263" ph="update wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="19366:19738" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="19833:20210" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="20305:20377" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="20472:20561" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="20659:20750" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="20846:20942" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="21046:21138" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="21239:21397" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="21497:21652" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="21762:21918" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="22019:22177" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="22277:22432" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="22542:22698" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="22802:22962" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="23065:23226" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="23339:23501" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="23605:23765" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="23868:24024" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="24137:24299" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="24406:24510" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="24617:24722" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="24824:25033" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="25138:25321" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="25425:25518" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="25620:25714" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="25819:25917" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="26020:26131" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="26226:26297" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="26392:26480" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="26578:26669" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="26765:26861" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="26969:27053" ph="UPDATE wx.t_... " />
+                <marker date="1581319620949" expanded="true" signature="27159:27248" ph="UPDATE wx_ba... " />
+                <marker date="1581319620949" expanded="true" signature="27308:27406" ph="update wx.t_... " />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -118,71 +199,26 @@
       <file leaf-file-name="XbmsController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/web/XbmsController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-96">
-              <caret line="1146" column="43" lean-forward="false" selection-start-line="1146" selection-start-column="31" selection-end-line="1146" selection-end-column="43" />
+            <state relative-caret-position="429">
+              <caret line="1174" column="22" lean-forward="false" selection-start-line="1174" selection-start-column="7" selection-end-line="1174" selection-end-column="22" />
               <folding>
-                <element signature="e#30450#30451#0" expanded="true" />
-                <element signature="e#30505#30506#0" expanded="true" />
-                <element signature="e#31074#31075#0" expanded="true" />
-                <element signature="e#31140#31141#0" expanded="true" />
-                <element signature="e#31301#31302#0" expanded="true" />
-                <element signature="e#31354#31355#0" expanded="true" />
-                <element signature="e#32280#32281#0" expanded="true" />
-                <element signature="e#32342#32343#0" expanded="true" />
-                <element signature="e#32545#32546#0" expanded="true" />
-                <element signature="e#32606#32607#0" expanded="true" />
                 <element signature="e#32811#32812#0" expanded="true" />
                 <element signature="e#32874#32875#0" expanded="true" />
-                <element signature="e#33083#33084#0" expanded="true" />
-                <element signature="e#33148#33149#0" expanded="true" />
+                <element signature="e#33339#33340#0" expanded="true" />
+                <element signature="e#33395#33396#0" expanded="true" />
+                <element signature="e#33605#33606#0" expanded="true" />
+                <element signature="e#33670#33671#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RelationService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/RelationService.java">
+      <file leaf-file-name="TUserinfoService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/TUserinfoService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="30" column="20" lean-forward="true" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="20" />
+            <state relative-caret-position="676">
+              <caret line="106" column="13" lean-forward="false" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="13" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RelationServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/impl/RelationServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="129" column="53" lean-forward="false" selection-start-line="129" selection-start-column="31" selection-end-line="129" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RelationMapper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/mapper/xbms/RelationMapper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RelationMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/xbms/RelationMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="473">
-              <caret line="74" column="83" lean-forward="true" selection-start-line="74" selection-start-column="83" selection-end-line="74" selection-end-column="83" />
-              <folding>
-                <marker date="1581260109781" expanded="true" signature="840:986" ph="select from t_relation" />
-                <marker date="1581260109781" expanded="true" signature="1095:1241" ph="select from t_relation" />
-                <marker date="1581260109781" expanded="true" signature="1324:1457" ph="select from t_relation" />
-                <marker date="1581260109781" expanded="true" signature="2320:2410" ph="update wx_ba... " />
-                <marker date="1581260109781" expanded="true" signature="2512:2602" ph="update wx_ba... " />
-                <marker date="1581260109781" expanded="true" signature="2692:2760" ph="delete from " />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -199,9 +235,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>updateSosPhoneByOpenid</find>
-      <find>updateSosPhoneByUserid</find>
-      <find>绑定关系（</find>
       <find>selectByPhoneNumber</find>
       <find>添加好友</find>
       <find>查询紧急联系人号码</find>
@@ -229,6 +262,9 @@
       <find>接听清单</find>
       <find>updateRefuseByRelationId</find>
       <find>自定义回复</find>
+      <find>selectById</find>
+      <find>拒绝绑定</find>
+      <find>selectByUnionid</find>
     </findStrings>
     <replaceStrings>
       <replace>TUserVoice</replace>
@@ -291,22 +327,13 @@
         <option value="$PROJECT_DIR$/src/main/java/com/pl/mapper/xbms/UserQaMapper.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mapper/xbms/UserQaMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/model/xbms/Phonetype.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/PhonetypeService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/pl/mapper/xbms/PhonetypeMapper.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/mapper/xbms/PhonetypeMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/impl/PhonetypeServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/TSetService.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mapper/TSetMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TSetServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/mapper/TSetMapper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/web/WxController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/mapper/xbms/BookMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/TDialogService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TDialogServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/TUserinfoService.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/mapper/TUserinfoMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TUserinfoServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/pl/mapper/TUserinfoMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/TMallService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TMallServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/mapper/TMallMapper.java" />
@@ -332,11 +359,20 @@
         <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/impl/CustomerrespServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/mapper/xbms/CustomrespMapper.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mapper/xbms/CustomrespMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/web/XbmsController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/RelationService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/impl/RelationServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/pl/mapper/xbms/RelationMapper.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mapper/xbms/RelationMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/PhonetypeService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/impl/PhonetypeServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/pl/mapper/xbms/PhonetypeMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mapper/xbms/PhonetypeMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/web/XbmsController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/TUserinfoService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TUserinfoServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/pl/mapper/TUserinfoMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mapper/TUserinfoMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/pl/indexserver/web/WxController.java" />
       </list>
     </option>
   </component>
@@ -380,7 +416,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
     <option name="width" value="1938" />
@@ -455,10 +491,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="Scratches" />
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -516,7 +552,11 @@
               <item name="index-server" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="pl" type="462c0819:PsiDirectoryNode" />
+              <item name="indexserver" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="impl" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="index-server" type="b2602c69:ProjectViewProjectNode" />
@@ -524,16 +564,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="index-server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="index-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
-              <item name="xbms" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -856,6 +886,7 @@
       <workItem from="1581155687747" duration="1698000" />
       <workItem from="1581161039011" duration="4255000" />
       <workItem from="1581239504235" duration="12613000" />
+      <workItem from="1581315213516" duration="5136000" />
     </task>
     <task id="LOCAL-00071" summary="修复 用户、群标签的查询bug">
       <created>1574219674865</created>
@@ -1204,7 +1235,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2087176000" />
+    <option name="totallyTimeSpent" value="2092312000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -1216,7 +1247,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1276,7 +1307,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40950227" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.78194445" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23980686" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23980686" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32966322" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1635,192 +1666,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/xbms/BookMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="21" column="2" lean-forward="false" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
-          <folding>
-            <marker date="1579242654274" expanded="true" signature="713:859" ph="select from t_book" />
-            <marker date="1579242654274" expanded="true" signature="942:1067" ph="select from t_book" />
-            <marker date="1579242654274" expanded="true" signature="1160:1784" ph="insert into wx_back.t_book... " />
-            <marker date="1579242654274" expanded="true" signature="1785:1835" ph="UPDATE phone... " />
-            <marker date="1579242654274" expanded="true" signature="1915:2539" ph="insert into wx_back.t_book... " />
-            <marker date="1579242654274" expanded="true" signature="2540:2622" ph="UPDATE phone... " />
-            <marker date="1579242654274" expanded="true" signature="2681:2773" ph="delete from " />
-            <marker date="1579242654274" expanded="true" signature="2825:2917" ph="delete from " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/mapper/xbms/BookMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="14" column="9" lean-forward="false" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/TDialogService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="676">
-          <caret line="123" column="1" lean-forward="true" selection-start-line="123" selection-start-column="1" selection-end-line="123" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TDialogServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="605">
-          <caret line="1093" column="0" lean-forward="false" selection-start-line="1093" selection-start-column="0" selection-end-line="1093" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/TUserinfoService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="649">
-          <caret line="104" column="20" lean-forward="true" selection-start-line="104" selection-start-column="4" selection-end-line="104" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TUserinfoServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="493" column="40" lean-forward="false" selection-start-line="493" selection-start-column="40" selection-end-line="493" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/mapper/TUserinfoMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="759">
-          <caret line="138" column="84" lean-forward="false" selection-start-line="138" selection-start-column="84" selection-end-line="138" selection-end-column="84" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/TMallService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="770">
-          <caret line="40" column="9" lean-forward="false" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/TUserinfoMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="81" column="4" lean-forward="false" selection-start-line="81" selection-start-column="4" selection-end-line="81" selection-end-column="4" />
-          <folding>
-            <marker date="1581245927668" expanded="true" signature="2925:3052" ph="select from t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="3169:3298" ph="select from t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="3423:3543" ph="select from t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="3664:3789" ph="select from t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="3909:4019" ph="select from t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="4142:4248" ph="select from t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="4365:4476" ph="select from t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="4598:4708" ph="select from t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="4823:4937" ph="select from t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="5061:5604" ph="SELECT a.id,... t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="5729:6248" ph="SELECT a.id,... t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="6372:6514" ph="SELECT FROM t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="6636:6775" ph="SELECT FROM t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="6897:7036" ph="SELECT FROM t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="7161:7306" ph="SELECT FROM t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="7420:7918" ph="SELECT a.id,... t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="8036:8517" ph="SELECT a.id,... t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="8641:8839" ph="SELECT FROM t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="8641:8995" ph="SELECT FROM " />
-            <marker date="1581245927668" expanded="true" signature="8769:8837" ph="SELECT id FR... t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="8854:8995" ph="SELECT FROM t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="9111:9266" ph="SELECT FROM t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="9390:9544" ph="SELECT FROM t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="9673:9823" ph="SELECT id,op... t_userinfo" />
-            <marker date="1581245927668" expanded="true" signature="9914:9977" ph="delete from " />
-            <marker date="1581245927668" expanded="true" signature="10061:10984" ph="insert into wx.t_userinfo... " />
-            <marker date="1581245927668" expanded="true" signature="16922:19029" ph="update wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="19132:19504" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="19599:19976" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="20071:20143" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="20238:20327" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="20425:20516" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="20612:20708" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="20812:20904" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="21005:21163" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="21263:21418" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="21528:21684" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="21785:21943" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="22043:22198" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="22308:22464" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="22568:22728" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="22831:22992" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="23105:23267" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="23371:23531" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="23634:23790" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="23903:24065" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="24172:24276" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="24383:24488" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="24590:24799" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="24904:25087" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="25191:25284" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="25386:25480" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="25585:25683" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="25786:25897" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="25992:26063" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="26158:26246" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="26344:26435" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="26531:26627" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="26735:26819" ph="UPDATE wx.t_... " />
-            <marker date="1581245927668" expanded="true" signature="26925:27014" ph="UPDATE wx_ba... " />
-            <marker date="1581245927668" expanded="true" signature="27074:27172" ph="update wx.t_... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TMallServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="195" column="61" lean-forward="false" selection-start-line="195" selection-start-column="42" selection-end-line="195" selection-end-column="61" />
-          <folding>
-            <element signature="e#1288#1289#0" expanded="true" />
-            <element signature="e#1352#1353#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/TMallMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="22" column="4" lean-forward="false" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
-          <folding>
-            <marker date="1581247015789" expanded="true" signature="891:1038" ph="select from t_mall" />
-            <marker date="1581247015789" expanded="true" signature="1160:1316" ph="select from t_mall" />
-            <marker date="1581247015789" expanded="true" signature="1439:1578" ph="select from t_mall" />
-            <marker date="1581247015789" expanded="true" signature="1706:1850" ph="select from t_mall" />
-            <marker date="1581247015789" expanded="true" signature="1972:2125" ph="select from t_mall" />
-            <marker date="1581247015789" expanded="true" signature="2252:2410" ph="select from t_mall" />
-            <marker date="1581247015789" expanded="true" signature="2526:2761" ph="SELECT FROM t_mall" />
-            <marker date="1581247015789" expanded="true" signature="2883:3018" ph="SELECT FROM t_mall" />
-            <marker date="1581247015789" expanded="true" signature="3137:3250" ph="SELECT FROM t_mall" />
-            <marker date="1581247015789" expanded="true" signature="3366:3550" ph="SELECT id, n... t_mall" />
-            <marker date="1581247015789" expanded="true" signature="3480:3537" ph="SELECT id FR... t_userinfo" />
-            <marker date="1581247015789" expanded="true" signature="3667:3857" ph="SELECT id, n... t_mall" />
-            <marker date="1581247015789" expanded="true" signature="3786:3844" ph="SELECT id FR... t_userinfo" />
-            <marker date="1581247015789" expanded="true" signature="3976:4102" ph="SELECT id, n... t_mall" />
-            <marker date="1581247015789" expanded="true" signature="4221:4352" ph="SELECT id, n... t_mall" />
-            <marker date="1581247015789" expanded="true" signature="4443:4502" ph="delete from " />
-            <marker date="1581247015789" expanded="true" signature="4588:4683" ph="delete from " />
-            <marker date="1581247015789" expanded="true" signature="4772:4872" ph="delete from " />
-            <marker date="1581247015789" expanded="true" signature="4955:5230" ph="insert into wx.t_mall... " />
-            <marker date="1581247015789" expanded="true" signature="5319:5537" ph="INSERT INTO wx.t_mall... " />
-            <marker date="1581247015789" expanded="true" signature="5341:5537" ph="SELECT `id`,... t_mall" />
-            <marker date="1581247015789" expanded="true" signature="9702:10345" ph="update wx.t_... " />
-            <marker date="1581247015789" expanded="true" signature="10439:10714" ph="update wx.t_... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/mapper/TMallMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="309">
@@ -1833,7 +1678,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="73" column="50" lean-forward="false" selection-start-line="73" selection-start-column="19" selection-end-line="73" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1841,7 +1685,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1849,7 +1692,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="550">
           <caret line="29" column="10" lean-forward="false" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1857,10 +1699,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="638">
           <caret line="41" column="5" lean-forward="true" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
-          <folding>
-            <element signature="e#654#655#0" expanded="true" />
-            <element signature="e#686#687#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1868,12 +1706,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="627">
           <caret line="65" column="39" lean-forward="true" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="39" />
-          <folding>
-            <element signature="e#1579#1580#0" expanded="true" />
-            <element signature="e#1632#1633#0" expanded="true" />
-            <element signature="e#1688#1689#0" expanded="true" />
-            <element signature="e#1738#1739#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1881,7 +1713,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="671">
           <caret line="41" column="47" lean-forward="false" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1953,10 +1784,10 @@
         <state relative-caret-position="627">
           <caret line="75" column="38" lean-forward="true" selection-start-line="75" selection-start-column="38" selection-end-line="75" selection-end-column="38" />
           <folding>
-            <element signature="e#734#735#0" expanded="true" />
-            <element signature="e#785#786#0" expanded="true" />
-            <element signature="e#2218#2219#0" expanded="true" />
-            <element signature="e#2270#2271#0" expanded="true" />
+            <element signature="e#734#735#0" expanded="false" />
+            <element signature="e#785#786#0" expanded="false" />
+            <element signature="e#2218#2219#0" expanded="false" />
+            <element signature="e#2270#2271#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1965,7 +1796,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="660">
           <caret line="32" column="34" lean-forward="true" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1994,7 +1824,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2010,10 +1839,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="632">
           <caret line="87" column="51" lean-forward="false" selection-start-line="87" selection-start-column="31" selection-end-line="87" selection-end-column="51" />
-          <folding>
-            <element signature="e#2651#2652#0" expanded="false" />
-            <element signature="e#2712#2713#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2047,7 +1872,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="649">
           <caret line="41" column="20" lean-forward="false" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2056,8 +1880,8 @@
         <state relative-caret-position="627">
           <caret line="201" column="50" lean-forward="false" selection-start-line="201" selection-start-column="30" selection-end-line="201" selection-end-column="50" />
           <folding>
-            <element signature="e#7514#7515#0" expanded="true" />
-            <element signature="e#7574#7575#0" expanded="true" />
+            <element signature="e#7514#7515#0" expanded="false" />
+            <element signature="e#7574#7575#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2112,8 +1936,8 @@
         <state relative-caret-position="627">
           <caret line="106" column="46" lean-forward="false" selection-start-line="106" selection-start-column="29" selection-end-line="106" selection-end-column="46" />
           <folding>
-            <element signature="e#3678#3679#0" expanded="true" />
-            <element signature="e#3734#3735#0" expanded="true" />
+            <element signature="e#3678#3679#0" expanded="false" />
+            <element signature="e#3734#3735#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2122,7 +1946,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2161,12 +1984,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="451">
           <caret line="30" column="51" lean-forward="false" selection-start-line="30" selection-start-column="33" selection-end-line="30" selection-end-column="51" />
-          <folding>
-            <element signature="e#657#658#0" expanded="false" />
-            <element signature="e#726#727#0" expanded="false" />
-            <element signature="e#789#790#0" expanded="false" />
-            <element signature="e#852#853#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2202,33 +2019,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="17" column="8" lean-forward="false" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TRelationServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="550">
           <caret line="34" column="52" lean-forward="false" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="52" />
           <folding>
-            <element signature="e#898#899#0" expanded="true" />
-            <element signature="e#962#963#0" expanded="true" />
+            <element signature="e#898#899#0" expanded="false" />
+            <element signature="e#962#963#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/RelationService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="30" column="20" lean-forward="true" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="20" />
+        <state relative-caret-position="528">
+          <caret line="30" column="20" lean-forward="false" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/TRelationMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="165" column="11" lean-forward="true" selection-start-line="161" selection-start-column="2" selection-end-line="165" selection-end-column="11" />
+        <state relative-caret-position="3630">
+          <caret line="165" column="11" lean-forward="false" selection-start-line="161" selection-start-column="2" selection-end-line="165" selection-end-column="11" />
           <folding />
         </state>
       </provider>
@@ -2236,14 +2052,14 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/mapper/xbms/RelationMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
-          <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="7" />
+          <caret line="22" column="7" lean-forward="false" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/impl/RelationServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
+        <state relative-caret-position="2420">
           <caret line="129" column="53" lean-forward="false" selection-start-line="129" selection-start-column="31" selection-end-line="129" selection-end-column="53" />
           <folding />
         </state>
@@ -2251,8 +2067,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/xbms/RelationMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="74" column="83" lean-forward="true" selection-start-line="74" selection-start-column="83" selection-end-line="74" selection-end-column="83" />
+        <state relative-caret-position="1628">
+          <caret line="74" column="83" lean-forward="false" selection-start-line="74" selection-start-column="83" selection-end-line="74" selection-end-column="83" />
           <folding>
             <marker date="1581260109781" expanded="true" signature="840:986" ph="select from t_relation" />
             <marker date="1581260109781" expanded="true" signature="1095:1241" ph="select from t_relation" />
@@ -2264,38 +2080,215 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/PhonetypeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="20" column="20" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/model/wx/TPhonetype.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TPhonetypeServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="40" column="50" lean-forward="false" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="50" />
+          <folding>
+            <element signature="e#931#932#0" expanded="false" />
+            <element signature="e#993#994#0" expanded="false" />
+            <element signature="e#1048#1049#0" expanded="false" />
+            <element signature="e#1110#1111#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/TPhonetypeMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="59" column="11" lean-forward="true" selection-start-line="56" selection-start-column="2" selection-end-line="59" selection-end-column="11" />
+          <folding>
+            <marker date="1577506858801" expanded="true" signature="1347:1457" ph="select from t_phonetype" />
+            <marker date="1577506858801" expanded="true" signature="1573:1704" ph="select from t_phonetype" />
+            <marker date="1577506858801" expanded="true" signature="1786:1909" ph="select from t_phonetype" />
+            <marker date="1577506858801" expanded="true" signature="2003:2205" ph="select from t_intercept_statistics" />
+            <marker date="1577506858801" expanded="true" signature="2292:2356" ph="delete from " />
+            <marker date="1577506858801" expanded="true" signature="2439:2669" ph="insert into wx.t_phonetype... " />
+            <marker date="1577506858801" expanded="true" signature="2769:2919" ph="insert into wx.t_intercept_statistics... " />
+            <marker date="1577506858801" expanded="true" signature="3966:4726" ph="insert into wx.t_phonetype... " />
+            <marker date="1577506858801" expanded="true" signature="4727:4825" ph="UPDATE openi... " />
+            <marker date="1577506858801" expanded="true" signature="4930:5376" ph="update wx.t_... " />
+            <marker date="1577506858801" expanded="true" signature="5471:5708" ph="update wx.t_... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/mapper/xbms/PhonetypeMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="14" column="8" lean-forward="false" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/xbms/impl/PhonetypeServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="74" column="42" lean-forward="false" selection-start-line="74" selection-start-column="32" selection-end-line="74" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/xbms/PhonetypeMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="572">
+          <caret line="76" column="2" lean-forward="false" selection-start-line="76" selection-start-column="2" selection-end-line="76" selection-end-column="2" />
+          <folding>
+            <marker date="1581315944007" expanded="true" signature="1324:1453" ph="select from t_phonetype" />
+            <marker date="1581315944007" expanded="true" signature="1558:1672" ph="select from t_phonetype" />
+            <marker date="1581315944007" expanded="true" signature="1764:2526" ph="insert into wx_back.t_phonetype... " />
+            <marker date="1581315944007" expanded="true" signature="2527:2627" ph="UPDATE user_... " />
+            <marker date="1581315944007" expanded="true" signature="2706:2775" ph="delete from " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/TUserinfoService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="676">
+          <caret line="106" column="13" lean-forward="false" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/service/impl/TUserinfoServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="539">
+          <caret line="509" column="57" lean-forward="false" selection-start-line="509" selection-start-column="57" selection-end-line="509" selection-end-column="57" />
+          <folding>
+            <element signature="e#3693#3694#0" expanded="true" />
+            <element signature="e#3752#3753#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/mapper/TUserinfoMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="698">
+          <caret line="140" column="13" lean-forward="false" selection-start-line="140" selection-start-column="4" selection-end-line="140" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/TUserinfoMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="57" column="34" lean-forward="true" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+          <folding>
+            <marker date="1581319620949" expanded="true" signature="2925:3052" ph="select from t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="3169:3298" ph="select from t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="3415:3532" ph="select from t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="3657:3777" ph="select from t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="3898:4023" ph="select from t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="4143:4253" ph="select from t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="4376:4482" ph="select from t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="4599:4710" ph="select from t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="4832:4942" ph="select from t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="5057:5171" ph="select from t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="5295:5838" ph="SELECT a.id,... t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="5963:6482" ph="SELECT a.id,... t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="6606:6748" ph="SELECT FROM t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="6870:7009" ph="SELECT FROM t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="7131:7270" ph="SELECT FROM t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="7395:7540" ph="SELECT FROM t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="7654:8152" ph="SELECT a.id,... t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="8270:8751" ph="SELECT a.id,... t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="8875:9073" ph="SELECT FROM t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="8875:9229" ph="SELECT FROM " />
+            <marker date="1581319620949" expanded="true" signature="9003:9071" ph="SELECT id FR... t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="9088:9229" ph="SELECT FROM t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="9345:9500" ph="SELECT FROM t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="9624:9778" ph="SELECT FROM t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="9907:10057" ph="SELECT id,op... t_userinfo" />
+            <marker date="1581319620949" expanded="true" signature="10148:10211" ph="delete from " />
+            <marker date="1581319620949" expanded="true" signature="10295:11218" ph="insert into wx.t_userinfo... " />
+            <marker date="1581319620949" expanded="true" signature="17156:19263" ph="update wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="19366:19738" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="19833:20210" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="20305:20377" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="20472:20561" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="20659:20750" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="20846:20942" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="21046:21138" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="21239:21397" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="21497:21652" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="21762:21918" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="22019:22177" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="22277:22432" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="22542:22698" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="22802:22962" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="23065:23226" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="23339:23501" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="23605:23765" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="23868:24024" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="24137:24299" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="24406:24510" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="24617:24722" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="24824:25033" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="25138:25321" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="25425:25518" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="25620:25714" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="25819:25917" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="26020:26131" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="26226:26297" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="26392:26480" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="26578:26669" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="26765:26861" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="26969:27053" ph="UPDATE wx.t_... " />
+            <marker date="1581319620949" expanded="true" signature="27159:27248" ph="UPDATE wx_ba... " />
+            <marker date="1581319620949" expanded="true" signature="27308:27406" ph="update wx.t_... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/web/XbmsController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-96">
-          <caret line="1146" column="43" lean-forward="false" selection-start-line="1146" selection-start-column="31" selection-end-line="1146" selection-end-column="43" />
+        <state relative-caret-position="429">
+          <caret line="1174" column="22" lean-forward="false" selection-start-line="1174" selection-start-column="7" selection-end-line="1174" selection-end-column="22" />
           <folding>
-            <element signature="e#30450#30451#0" expanded="true" />
-            <element signature="e#30505#30506#0" expanded="true" />
-            <element signature="e#31074#31075#0" expanded="true" />
-            <element signature="e#31140#31141#0" expanded="true" />
-            <element signature="e#31301#31302#0" expanded="true" />
-            <element signature="e#31354#31355#0" expanded="true" />
-            <element signature="e#32280#32281#0" expanded="true" />
-            <element signature="e#32342#32343#0" expanded="true" />
-            <element signature="e#32545#32546#0" expanded="true" />
-            <element signature="e#32606#32607#0" expanded="true" />
             <element signature="e#32811#32812#0" expanded="true" />
             <element signature="e#32874#32875#0" expanded="true" />
-            <element signature="e#33083#33084#0" expanded="true" />
-            <element signature="e#33148#33149#0" expanded="true" />
+            <element signature="e#33339#33340#0" expanded="true" />
+            <element signature="e#33395#33396#0" expanded="true" />
+            <element signature="e#33605#33606#0" expanded="true" />
+            <element signature="e#33670#33671#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/pl/indexserver/web/WxController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="5655" column="44" lean-forward="true" selection-start-line="5655" selection-start-column="44" selection-end-line="5655" selection-end-column="44" />
+        <state relative-caret-position="446">
+          <caret line="5089" column="49" lean-forward="true" selection-start-line="5089" selection-start-column="49" selection-end-line="5089" selection-end-column="49" />
           <folding>
-            <element signature="e#94559#94560#0" expanded="true" />
-            <element signature="e#94631#94632#0" expanded="true" />
-            <element signature="e#126125#126126#0" expanded="true" />
-            <element signature="e#126177#126178#0" expanded="true" />
+            <element signature="e#58370#60977#0" expanded="true" />
+            <element signature="e#60976#60977#0" expanded="true" />
+            <element signature="e#97842#97858#0" expanded="true" />
+            <element signature="e#100887#100903#0" expanded="true" />
+            <element signature="e#102886#102902#0" expanded="true" />
+            <element signature="e#106393#106409#0" expanded="true" />
+            <element signature="e#108668#108684#0" expanded="true" />
+            <element signature="e#111309#111325#0" expanded="true" />
+            <element signature="e#122814#122830#0" expanded="true" />
+            <element signature="e#158083#158269#0" expanded="true" />
+            <element signature="e#158268#158269#0" expanded="true" />
+            <element signature="e#193861#193885#0" expanded="true" />
           </folding>
         </state>
       </provider>

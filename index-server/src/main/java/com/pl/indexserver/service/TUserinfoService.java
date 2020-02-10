@@ -103,4 +103,6 @@ public interface TUserinfoService {
     CheckSmsCodeResp myStatusChange(Integer userId, Integer id, boolean isCheck);
 
     CheckSmsCodeResp myVoiceChange(Integer userId, Integer voiceId, boolean isCheck);
+
+    TUserinfo getUserByUnionid(String unionid);
 }
