@@ -76,6 +76,13 @@
     where trade_no = #{ordersSn}
   </select>
 
+  <select id="selectByTradeno" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_order
+    where trade_no = #{ordersSn}
+  </select>
+
   <select id="selectOrderHistoryByOpenid" parameterType="java.lang.String" resultMap="TMealResultMap">
     SELECT
         a.openid,c.name,a.price,a.number,a.pay_money,a.type,a.status,a.create_time,a.pay_time,a.trade_no
@@ -299,6 +306,87 @@
     </trim>
   </insert>
 
+  <insert id="insertOrder" parameterType="com.pl.model.wx.TOrder">
+    insert into wx_back.t_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="payMoney != null">
+        pay_money,
+      </if>
+      <if test="type != null and type != ''">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+
+      create_time,
+
+      pay_time,
+      <if test="tradeNo != null and tradeNo != ''">
+        trade_no,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="payMoney != null">
+        #{payMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null and type != ''">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      now(),
+      now(),
+      <if test="tradeNo != null and tradeNo != ''">
+        #{tradeNo},
+      </if>
+    </trim>
+  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.pl.model.wx.TOrder">
     update wx.t_order
     <set>
@@ -348,6 +436,12 @@
 
   <update id="updateOrderStatus" parameterType="com.pl.model.wx.TOrder">
     update wx.t_order
+    set status = 2
+    where trade_no = #{ordersSn}
+  </update>
+
+  <update id="updOrderStatus" parameterType="com.pl.model.wx.TOrder">
+    update wx_back.t_order
     set status = 2
     where trade_no = #{ordersSn}
   </update>

@@ -610,6 +610,14 @@
         unionid = #{unionid}
     </update>
 
+    <update id="updateMembershipByUnionid" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
+        SET is_membership = 1,
+        expire_time = DATE_ADD(now(),INTERVAL #{useDays} day)
+        WHERE
+        unionid = #{unionid}
+    </update>
+
     <update id="updateMemberinfoAdd" parameterType="com.pl.model.wx.TUserinfo">
         UPDATE wx.t_userinfo
         SET is_membership = 1,
@@ -628,6 +636,14 @@
 
     <update id="updateMemberinfoAddByUnionid" parameterType="com.pl.model.wx.TUserinfo">
         UPDATE wx.t_userinfo
+        SET is_membership = 1,
+        expire_time = DATE_ADD(expire_time,INTERVAL #{useDays} day)
+        WHERE
+        unionid = #{unionid}
+    </update>
+
+    <update id="updateMembershipAddByUnionid" parameterType="com.pl.model.wx.TUserinfo">
+        UPDATE wx_back.t_userinfo
         SET is_membership = 1,
         expire_time = DATE_ADD(expire_time,INTERVAL #{useDays} day)
         WHERE

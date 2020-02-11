@@ -31,4 +31,8 @@ public interface TMealMapper {
     TMeal selectByCodeAndMealId(String code);
 
     List<TMeal> selectMealsList();
+
+    TMeal selectByTradeno(String ordersSn);
+
+    TMeal selectBygoodsid(Integer goodsId);
 }

@@ -34,4 +34,10 @@ public interface TQctivationcodeMapper {
     int updateMembershipByCode(@Param("code") String code, @Param("userId")Integer userId);
 
     List<TQctivationcode> selectByAgentIdAndStatus(@Param("id")Integer id);
+
+    TQctivationcode selectByTradeno(String ordersSn);
+
+    void insertTQctivationcode(TQctivationcode code);
+
+    TQctivationcode selectByactCode(String activationCode);
 }

@@ -27,6 +27,13 @@
     where id = #{goodsId,jdbcType=INTEGER}
   </select>
 
+  <select id="selectBygoodsid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_meal
+    where id = #{goodsId,jdbcType=INTEGER}
+  </select>
+
   <select id="selectByCodeMealId" parameterType="java.lang.String" resultMap="BaseResultMap">
     SELECT
         a.id, a.type, a.price, a.name, a.original_price, a.use_days, a.create_time
@@ -55,6 +62,16 @@
         LEFT JOIN wx.t_order b ON a.id = b.goods_id
     WHERE
         b.trade_no = #{ordersSn}
+  </select>
+
+  <select id="selectByTradeno" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    a.id, a.type, a.price, a.name, a.original_price, a.use_days, a.create_time
+    FROM
+    wx_back.t_meal a
+    LEFT JOIN wx_back.t_order b ON a.id = b.goods_id
+    WHERE
+    b.trade_no = #{ordersSn}
   </select>
 
   <select id="selectMealList" resultMap="BaseResultMap">

@@ -38,4 +38,10 @@ public interface TOrderMapper {
     List<OrderHistory> selectOrderHistoryByUserId(Integer userId);
 
     List<OrderHistory> selectCodeOrderByUserId(Integer userId);
+
+    int insertOrder(TOrder tOrder);
+
+    void updOrderStatus(String ordersSn);
+
+    TOrder selectByTradeno(String ordersSn);
 }

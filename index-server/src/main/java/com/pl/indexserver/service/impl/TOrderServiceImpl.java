@@ -127,4 +127,9 @@ public class TOrderServiceImpl implements TOrderService {
         resp.setRetData(orderHistories);
         return resp;
     }
+
+    @Override
+    public List<TOrder> selectByUseridAndStatus(Integer userId) {
+        return tOrderMapper.selectByUseridAndStatus(userId);
+    }
 }

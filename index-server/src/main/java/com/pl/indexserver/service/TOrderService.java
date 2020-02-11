@@ -28,4 +28,6 @@ public interface TOrderService {
     List<TOrder> selectByUserIdAndStatus(Integer userId);
 
     OrderHistoryResp orderHistoryQry(Integer userId);
+
+    List<TOrder> selectByUseridAndStatus(Integer userId);
 }

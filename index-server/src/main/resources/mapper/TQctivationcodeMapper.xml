@@ -32,6 +32,13 @@
     where code = #{activationCode,jdbcType=VARCHAR}
   </select>
 
+  <select id="selectByactCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_qctivationcode
+    where code = #{activationCode,jdbcType=VARCHAR}
+  </select>
+
   <select id="selectQctivationByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -43,6 +50,13 @@
     select
     <include refid="Base_Column_List" />
     from wx.t_qctivationcode
+    where trade_no = #{ordersSn,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByTradeno" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_back.t_qctivationcode
     where trade_no = #{ordersSn,jdbcType=VARCHAR}
   </select>
 
@@ -140,6 +154,71 @@
       </if>
     </trim>
   </insert>
+
+  <insert id="insertTQctivationcode" parameterType="com.pl.model.wx.TQctivationcode">
+    insert into wx_back.t_qctivationcode
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="usedUserId != null">
+        used_user_id,
+      </if>
+      <if test="codeMealId != null">
+        code_meal_id,
+      </if>
+      <if test="agentId != null">
+        agent_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="codeType != null">
+        code_type,
+      </if>
+
+      create_time,
+
+      expire_time,
+      <if test="tradeNo != null and tradeNo != ''">
+        trade_no,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="usedUserId != null">
+        #{usedUserId,jdbcType=INTEGER},
+      </if>
+      <if test="codeMealId != null">
+        #{codeMealId,jdbcType=VARCHAR},
+      </if>
+      <if test="agentId != null">
+        #{agentId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="codeType != null">
+        #{codeType,jdbcType=VARCHAR},
+      </if>
+      now(),
+
+      DATE_ADD(now(),INTERVAL 365 day),
+      <if test="tradeNo != null">
+        #{tradeNo},
+      </if>
+    </trim>
+  </insert>
+
   <insert id="insertSelective" parameterType="com.pl.model.wx.TQctivationcode">
     insert into wx.t_qctivationcode
     <trim prefix="(" suffix=")" suffixOverrides=",">

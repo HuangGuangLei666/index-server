@@ -26,16 +26,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @version 1.0
@@ -88,6 +88,8 @@ public class XbmsController {
     private TMallService tMallService;
     @Autowired
     private TVoiceService tVoiceService;
+    @Autowired
+    private WxPayService wxPayService;
 
 
     //极光验证短信
@@ -1181,6 +1183,73 @@ public class XbmsController {
     @ResponseBody
     public TUserinfo getUserByUnionid(String unionid) {
         return tUserinfoService.getUserByUnionid(unionid);
+    }
+
+    /**
+     * 小兵秘书支付接口（开通会员通用版）
+     * @param request
+     * @param userId 用户id
+     * @param totalFee 支付金额
+     * @param goodsId 商品id
+     * @param unionid 用户unionid
+     * @return
+     */
+    @RequestMapping(value = "/openMembershipPay.do", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> openMembershipPay(HttpServletRequest request, Integer userId, String totalFee, Integer goodsId, String unionid) {
+        //传进来的totalFee查数据库判断一下，不匹配就付款失败
+        //查询此用户是否是新用户
+        List<TOrder> tOrderList = tOrderService.selectByUseridAndStatus(userId);
+        TMeal tMeal = tMealService.selectBygoodsId(goodsId);
+        if (!totalFee.equals(tMeal.getPrice()) && !"0.1".equals(totalFee)) {
+            return new HashMap<>();
+        }
+        if ("0.1".equals(totalFee)) {
+            if (!CollectionUtils.isEmpty(tOrderList)) {
+                return new HashMap<>();
+            }
+        }
+
+        return wxPayService.openMembershipPay(request,totalFee,goodsId,unionid);
+    }
+
+    /**
+     * 小兵秘书回调接口（开通会员通用版）
+     *
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/openMembershipPayCallback.do")
+    @ResponseBody
+    public void openMembershipPayCallback(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        wxPayService.openMembershipPayCallback(request,response);
+    }
+
+    /**
+     * 小兵秘书支付接口（送秘书通用版）
+     * @param request
+     * @param userId 用户的id
+     * @param goodsId
+     * @param unionid
+     * @return
+     */
+    @RequestMapping(value = "/giveSecretaryPay.do", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> giveSecretaryPay(HttpServletRequest request,Integer userId,Integer goodsId,String unionid) {
+        return wxPayService.giveSecretaryPay(request,userId,goodsId,unionid);
+    }
+
+    /**
+     * 小兵秘书回调接口（送秘书通用版）
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/giveSecretaryPayCallback.do")
+    @ResponseBody
+    public TQctivationcode giveSecretaryPayCallback(HttpServletRequest request, HttpServletResponse response) {
+        return wxPayService.giveSecretaryPayCallback(request,response);
     }
 
 }
