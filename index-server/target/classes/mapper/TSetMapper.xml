@@ -20,7 +20,7 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from wx.wx.t_set
+        from wx_back.t_set
         where id = #{id,jdbcType=INTEGER}
     </select>
 
@@ -95,8 +95,16 @@
         order by id desc
     </select>
 
+    <select id="selectCurrentSetContentByUserId" parameterType="com.pl.model.wx.TSet" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wx_back.t_set
+        where user_id = #{userId}
+        order by id desc LIMIT 1
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from wx.wx.t_set
+    delete from wx_back.t_set
     where id = #{id,jdbcType=INTEGER}
   </delete>
 

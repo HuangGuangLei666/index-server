@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.pl:pl-base:1.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/pl/pl-base/1.0.0-SNAPSHOT/pl-base-1.0.0-20181107.093920-4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/pl/pl-base/1.0.0-SNAPSHOT/pl-base-1.0.0-20181107.093920-4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/pl/pl-base/1.0.0-SNAPSHOT/pl-base-1.0.0-20181107.093920-4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

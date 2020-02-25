@@ -9,6 +9,7 @@ import com.pl.indexserver.model.CheckSmsCodeResp;
 import com.pl.indexserver.model.ReturnMsg;
 import com.pl.indexserver.service.*;
 import com.pl.indexserver.service.xbms.*;
+import com.pl.indexserver.untils.AsrBaidu;
 import com.pl.indexserver.untils.MD5;
 import com.pl.indexserver.untils.jiguang.ValidSMSResult;
 import com.pl.indexserver.untils.jiguang.common.SMSClient;
@@ -25,14 +26,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -90,6 +89,8 @@ public class XbmsController {
     private TVoiceService tVoiceService;
     @Autowired
     private WxPayService wxPayService;
+    @Autowired
+    private FileTransferService fileTransferService;
 
 
     //极光验证短信
@@ -208,6 +209,43 @@ public class XbmsController {
             return "您暂时还没自定义开场白";
         }
         return tSetList.get(0).getContent();
+    }
+
+
+    /**
+     * 查询用户自定义开场白类型
+     *
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/prologueTypeQry.do")
+    @ResponseBody
+    public PrologueDto prologueTypeQry(Integer userId) {
+        return tSetService.prologueTypeQry(userId);
+    }
+
+
+    /**
+     * 删除用户自己录音的开场白
+     *
+     * @param id
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/prologueDel.do")
+    @ResponseBody
+    public CheckSmsCodeResp prologueDel(Integer id,Integer userId) {
+        CheckSmsCodeResp resp = new CheckSmsCodeResp();
+        //查询是否此用户的开场白
+        TSet set = tSetService.selectById(id);
+        if (!userId.equals(set.getUserId())){
+            resp.setRetCode(1);
+            resp.setRetDesc("此录音不属于你，无法删除~~~");
+            return resp;
+        }
+        //录音文件名
+        String fileName = set.getFileName();
+        return tSetService.prologueDel(id,userId,fileName);
     }
 
 
@@ -517,7 +555,6 @@ public class XbmsController {
      * 批量添加好友号码
      *
      * @param friendName
-     * @param tagName
      * @param phones
      * @param userId
      * @param tagId
@@ -527,7 +564,6 @@ public class XbmsController {
     @RequestMapping(value = "/friendPhonesAdd.do")
     @ResponseBody
     public CheckSmsCodeResp friendPhonesDel(String friendName,
-//                                            String tagName,
                                             String[] phones,
                                             Integer userId,
                                             Integer tagId,
@@ -965,6 +1001,7 @@ public class XbmsController {
 
         TSet set = new TSet();
         set.setUserId(Integer.parseInt(userId));
+        //type为2是tts合成的开场白
         set.setType("2");
         set.setValue("99990");
         set.setVoiceId(666666);
@@ -1003,6 +1040,96 @@ public class XbmsController {
         }
         stringResult.setData(url + stringResult.getData());
         return stringResult;
+    }
+
+    /**
+     * 语音识别开场白录音
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/baiduAsrMyRecordings.do")
+    @ResponseBody
+    public String baiduAsrMyRecordings(@RequestParam("file") MultipartFile file) {
+        File toFile = null;
+        if (file.equals("") || file.getSize() <= 0) {
+            file = null;
+        } else {
+            InputStream ins = null;
+            try {
+                ins = file.getInputStream();
+                toFile = new File(file.getOriginalFilename());
+                //MultipartFile转化为File
+                inputStreamToFile(ins, toFile);
+                byte[] audioDatas = AsrBaidu.loadFile(toFile);
+                String asr = AsrBaidu.asr(audioDatas, true);
+                logger.info("========asr={}============",asr);
+                ins.close();
+                return asr;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "无效录音";
+    }
+
+    //MultipartFile转化为File
+    //获取流文件
+    private static void inputStreamToFile(InputStream ins, File file) {
+        try {
+            OutputStream os = new FileOutputStream(file);
+            int bytesRead = 0;
+            byte[] buffer = new byte[8192];
+            while ((bytesRead = ins.read(buffer, 0, 8192)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+            os.close();
+            ins.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 上传开场白录音文件到服务器
+     * @param file
+     * @param userId
+     */
+    @RequestMapping(value = "/uploadMyRecording.do")
+    @ResponseBody
+    public Integer uploadMyRecording(@RequestParam("file") MultipartFile file,Integer userId) {
+        //用百度asr识别出录音的内容
+        String recordContent = baiduAsrMyRecordings(file);
+        //上传到服务器的路径/mnt/tm/2122/BUSINESS-134680578/
+        String filePath = "2122/BUSINESS-134680578/own_recordings/" + userId;
+        logger.info("=======filePath={}===========",filePath);
+        //存到db和服务器的录音文件名
+        String fileName = "";
+        InputStream is = null;
+        //时间戳
+        Integer temp = seq++;
+        //上传录音文件
+        try {
+            fileName = MD5.MD5_32bit(recordContent) + ".wav";
+            is = file.getInputStream();
+            boolean flag = fileTransferService.uploadFileToFTP(filePath, fileName, is);
+
+            TSet set = new TSet();
+            set.setUserId(userId);
+            //type为1是自己录音的开场白
+            set.setType("1");
+            set.setValue("99990");
+            set.setVoiceId(666666);
+            set.setOperationId(temp);
+            set.setContent(recordContent);
+            set.setFileName(fileName);
+            tSetService.insertSet(set);
+            return tSetService.prologueIdQry(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

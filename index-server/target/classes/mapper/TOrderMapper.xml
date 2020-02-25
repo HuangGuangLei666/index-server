@@ -107,7 +107,7 @@
     c.id = a.goods_id
     AND a.user_id = #{userId}
     AND a.status = 2
-    and a.type like CONCAT('%','RECHARGE','%')
+    and a.type like CONCAT('%','RECHARGE-XBMS','%')
     order by create_time desc
   </select>
 
@@ -139,7 +139,7 @@
     AND c.id = a.goods_id
     AND a.user_id = #{userId}
     AND a.status = 2
-    and a.type like CONCAT('%','SEND','%')
+    and a.type like CONCAT('%','SEND-XBMS','%')
     order by create_time desc
   </select>
 

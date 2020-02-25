@@ -5600,7 +5600,7 @@ public class WxController {
                 FileInputStream is = new FileInputStream(new File(tempFile.getAbsolutePath()));
                 byte[] bytes = IOUtils.toByteArray(is);
 
-//                sex = voiceGenderService.genderRecognition(bytes);
+                sex = voiceGenderService.genderRecognition(bytes);
                 logger.info("==========sex=========="+sex);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -5639,7 +5639,7 @@ public class WxController {
                 FileInputStream is = new FileInputStream(new File(tempFile.getAbsolutePath()));
                 byte[] bytes = IOUtils.toByteArray(is);
 
-//                sex = voiceGenderService.genderRecognition(bytes);
+                sex = voiceGenderService.genderRecognition(bytes);
                 logger.info("==========sex=========="+sex);
             } catch (Exception e) {
                 e.printStackTrace();

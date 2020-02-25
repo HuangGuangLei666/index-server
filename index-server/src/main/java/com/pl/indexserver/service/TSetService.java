@@ -2,6 +2,7 @@ package com.pl.indexserver.service;
 
 import com.pl.indexserver.model.CheckSmsCodeResp;
 import com.pl.model.wx.TSet;
+import com.pl.model.xbms.PrologueDto;
 
 import java.util.List;
 
@@ -37,4 +38,12 @@ public interface TSetService {
     List<TSet> selectprologueByUserId(Integer userId);
 
     CheckSmsCodeResp insertSet(TSet set);
+
+    PrologueDto prologueTypeQry(Integer userId);
+
+    CheckSmsCodeResp prologueDel(Integer id, Integer userId,String fileName);
+
+    TSet selectById(Integer id);
+
+    Integer prologueIdQry(Integer userId);
 }

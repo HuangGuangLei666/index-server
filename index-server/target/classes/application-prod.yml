@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driver-class-name:  com.mysql.jdbc.Driver
-    username: root
-    password: pulan123!
-    url: jdbc:mysql://120.79.201.60:3306/yousayidoprop?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: yousayido
+    password: yousayido123!
+    url: jdbc:mysql://172.18.141.18:3306/yousayidoprop?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
     type: com.alibaba.druid.pool.DruidDataSource
     maxActive: 20
     initialSize: 1
@@ -33,7 +33,7 @@ spring:
 
 jedis:
   pool:
-    host: 120.79.243.95
+    host: 172.18.141.14
     port: 6379
     password: AI-assist-MQ
     maxTotal: 100
@@ -89,7 +89,7 @@ pl:
 
 #ftp相关配置
 ftp:
-  address: 120.79.243.95
+  address: 172.18.141.14
   port: 8021
   name: pulan_ftp
   password: Pulan_ftp!QAZXSW@
@@ -107,7 +107,7 @@ tts:
 # 智库方案的默认呼叫地址
 t_business:
   default:
-    controll_addr: http://120.79.243.95:9100/busiManagement/dialog/startCallTask
+    controll_addr: http://172.18.141.14:9100/busiManagement/dialog/startCallTask
 
 #微信第三方登录
 weixin:
@@ -149,5 +149,5 @@ dubbo:
         port: 20880
     registry:
         protocol: zookeeper
-        address: 120.79.201.60:2181,120.79.248.8:2181,120.79.243.95:2181
+        address: 172.18.141.18:2181,172.18.141.19:2181,172.18.141.14:2181
         id: plRegistry
